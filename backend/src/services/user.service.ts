@@ -40,9 +40,7 @@ export const createUserSession = async (userId: string) => {
     const userSession = await prisma.userSession.create({
       data: {
         userId,
-        expiresAt: new Date(
-          Date.now() + (ENV.REFRESH_TOKEN_INTERVAL as number)
-        ),
+        expiresAt: new Date(Date.now() + ENV.REFRESH_TOKEN_INTERVAL),
       },
     });
     return userSession;
@@ -52,9 +50,7 @@ export const createUserSession = async (userId: string) => {
     const userSession = await prisma.userSession.update({
       data: {
         userId,
-        expiresAt: new Date(
-          Date.now() + (ENV.REFRESH_TOKEN_INTERVAL as number)
-        ),
+        expiresAt: new Date(Date.now() + ENV.REFRESH_TOKEN_INTERVAL),
       },
       where: {
         userId,
@@ -91,7 +87,7 @@ export const createAccessToken = (userSession: UserSession) => {
     { id: userSession.id, uid: userSession.userId },
     ENV.ACCESS_TOKEN_SECRET as string,
     {
-      expiresIn: (ENV.ACCESS_TOKEN_INTERVAL as number) / 1000,
+      expiresIn: ENV.ACCESS_TOKEN_INTERVAL / 1000,
     }
   );
   return accessToken;
@@ -108,7 +104,7 @@ export const createAccessAndRefreshTokens = (userSession: UserSession) => {
     },
     ENV.REFRESH_TOKEN_SECRET as string,
     {
-      expiresIn: (ENV.REFRESH_TOKEN_INTERVAL as number) / 1000,
+      expiresIn: ENV.REFRESH_TOKEN_INTERVAL / 1000,
     }
   );
   return { refreshToken, accessToken: createAccessToken(userSession) };
@@ -133,9 +129,7 @@ export const validateSession = async (refreshToken: any) => {
 
     await prisma.userSession.update({
       data: {
-        expiresAt: new Date(
-          Date.now() + (ENV.REFRESH_TOKEN_INTERVAL as number)
-        ),
+        expiresAt: new Date(Date.now() + ENV.REFRESH_TOKEN_INTERVAL),
       },
       where: {
         id: refreshPayload.id,
@@ -216,115 +210,9 @@ export const sanitizeUser = (user: User): SafeUser => {
 
 export const deleteUserSession = async (userId: string | undefined) => {
   if (userId === undefined) return;
-  // try {
   await prisma.userSession.deleteMany({
     where: {
       userId: userId,
     },
   });
-  // } catch (error) {
-  //   return;
-  // }
 };
-
-// export const createUserSession = async (userId: string) => {
-//   const existingUserSession = await prisma.userSession.findFirst({
-//     where: {
-//       userId,
-//     },
-//   });
-
-//   if (existingUserSession === null) {
-//     // create new session
-//     const userSession = await prisma.userSession.create({
-//       data: {
-//         userId,
-//         expiredAt: new Date(
-//           Date.now() + (ENV.SESSION_EXPIRE_INTERVAL as number)
-//         ),
-//       },
-//     });
-//     return userSession;
-//   } else {
-//     // session exists
-
-//     if (existingUserSession.expiredAt.getTime() - Date.now() > 0) {
-//       // session not expired
-
-//       if (
-//         Date.now() - existingUserSession.lastRefreshedAt.getTime() >
-//         (ENV.SESSION_REFRESH_INTERVAL as number)
-//       ) {
-//         // refresh interval has passed
-
-//         const userSession = await prisma.userSession.update({
-//           data: {
-//             lastRefreshedAt: new Date(),
-//             expiredAt: new Date(
-//               Date.now() + (ENV.SESSION_EXPIRE_INTERVAL as number)
-//             ),
-//           },
-//           where: {
-//             userId,
-//           },
-//         });
-//         return userSession;
-//       } else existingUserSession;
-//     } else {
-//       // session expired
-
-//       return null;
-//       // const userSession = await prisma.userSession.update({
-//       //   data: {
-//       //     lastRefreshedAt: new Date(),
-//       //     expiredAt: new Date(
-//       //       Date.now() + (ENV.SESSION_EXPIRE_INTERVAL as number)
-//       //     ),
-//       //   },
-//       //   where: {
-//       //     userId,
-//       //   },
-//       // });
-//       // return userSession;
-//     }
-
-//     /* if (
-//       Date.now() - existingUserSession.lastRefreshedAt.getTime() >
-//       (ENV.SESSION_REFRESH_INTERVAL as number)
-//     ) {
-//       // refresh interval has passed
-//       if (existingUserSession.expiredAt.getTime() - Date.now() > 0) {
-//         // session not expired
-//         await prisma.userSession.update({
-//           data: {
-//             lastRefreshedAt: new Date(Date.now()),
-//           },
-//           where: {
-//             userId,
-//           },
-//         });
-//         return existingUserSession;
-//       } else {
-//         // session expired
-
-//         // delete session
-//         await prisma.userSession.delete({
-//           where: {
-//             userId,
-//           },
-//         });
-
-//         // create new session
-//         const userSession = await prisma.userSession.create({
-//           data: {
-//             userId,
-//             expiredAt: new Date(
-//               Date.now() + (ENV.SESSION_EXPIRE_INTERVAL as number)
-//             ),
-//           },
-//         });
-//         return userSession;
-//       }
-//     } else return existingUserSession; */
-//   }
-// };

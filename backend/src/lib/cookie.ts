@@ -25,5 +25,5 @@ export const setAuthCookies = ({
   res.cookie(ENV.REFRESH_TOKEN_COOKIE as string, refreshToken, {
     ...defaultCookieOptions,
     path: "/api/user/session/access",
-    expires: new Date(Date.now() + (ENV.REFRESH_TOKEN_INTERVAL as number)),
+    expires: new Date(Date.now() + ENV.REFRESH_TOKEN_INTERVAL),
   });
