@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 const Features = () => {
   return (
     <section className="text-primary">
-      <div className="container mx-auto px-5 py-24">
+      <div className="container mx-auto px-5 pt-24">
         {/* Feature */}
         {FEATURES.map((feature, i) => (
           <div

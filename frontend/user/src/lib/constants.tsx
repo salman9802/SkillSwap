@@ -1,4 +1,10 @@
-import { FaCalendarAlt, FaGlobe } from "react-icons/fa";
+import {
+  FaCalendarAlt,
+  FaGithub,
+  FaGlobe,
+  FaLinkedinIn,
+  FaTelegramPlane,
+} from "react-icons/fa";
 import { TbArrowsExchange } from "react-icons/tb";
 
 export const FEATURES = [
@@ -22,5 +28,20 @@ export const FEATURES = [
     description:
       "Set your availability and connect with others at times that work for you. Learning fits around your life, not the other way around.",
     reverse: false,
+  },
+];
+
+export const SOCIALS = [
+  {
+    url: "https://github.com/salman9802/",
+    icon: <FaGithub className="size-5" />,
+  },
+  {
+    url: "https://www.linkedin.com/in/salman9802",
+    icon: <FaLinkedinIn className="size-5" />,
+  },
+  {
+    url: "https://t.me/Storm_Fortress",
+    icon: <FaTelegramPlane className="size-5" />,
   },
 ];
