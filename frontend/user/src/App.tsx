@@ -1,16 +1,37 @@
-import Features from "./components/Features";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
+import { Route, Routes } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import AuthLayout from "./pages/layouts/AuthLayout";
+import MarketplacePage from "./pages/MarketplacePage";
+import RegisterPage from "./pages/user/RegisterPage";
+import LoginPage from "./pages/user/LoginPage";
 
 const App = () => {
   return (
-    <div className="w-full">
-      <Header />
-      <Hero />
-      <Features />
-      <Footer />
-    </div>
+    <Routes>
+      <Route index element={<HomePage />} />
+
+      {/* // TODO: user auth context */}
+
+      {/* // TODO: check user authentication */}
+      <Route element={<AuthLayout />}>
+        <Route path="marketplace" element={<MarketplacePage />} />
+
+        <Route path="user">
+          <Route index element={undefined} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="login" element={<LoginPage />} />
+
+          {/* // TODO: general user layout */}
+          <Route element={undefined}>
+            <Route path="dashboard" element={undefined} />
+            <Route path="new-request" element={undefined} />
+            <Route path="profile" element={undefined} />
+          </Route>
+        </Route>
+      </Route>
+      {/* // TODO: NotFoundPage (404) */}
+    </Routes>
   );
 };
 

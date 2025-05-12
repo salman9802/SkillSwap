@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { Button } from "./ui/button";
 
 const Hero = () => {
@@ -16,15 +18,19 @@ const Hero = () => {
             exchanging knowledge today—no money required, just passion.
           </p>
           <div className="flex justify-center gap-4">
-            <Button className="cursor-pointer px-12 py-6 text-lg">
-              Join now
-            </Button>
-            <Button
-              className="cursor-pointer px-12 py-6 text-lg"
-              variant="primary-outline"
-            >
-              Visit marketplace
-            </Button>
+            <Link to="/user/login">
+              <Button className="cursor-pointer px-12 py-6 text-lg">
+                Join now
+              </Button>
+            </Link>
+            <Link to="/marketplace">
+              <Button
+                className="cursor-pointer px-12 py-6 text-lg"
+                variant="primary-outline"
+              >
+                Visit marketplace
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">

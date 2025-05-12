@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -26,13 +27,19 @@ const Header = () => {
         </button>
         {/* Buttons */}
         <div className="hidden items-center justify-center gap-4 md:flex">
-          <Button className="cursor-pointer">Create an account</Button>
-          <Button className="cursor-pointer" variant="primary-outline">
-            Log in
-          </Button>
-          <Button className="cursor-pointer" variant="ghost">
-            Visit Marketplace
-          </Button>
+          <Link to="user/register">
+            <Button className="cursor-pointer">Create an account</Button>
+          </Link>
+          <Link to="/user/login">
+            <Button className="cursor-pointer" variant="primary-outline">
+              Log in
+            </Button>
+          </Link>
+          <Link to="/marketplace">
+            <Button className="cursor-pointer" variant="ghost">
+              Visit Marketplace
+            </Button>
+          </Link>
         </div>
       </div>
       <div
@@ -42,13 +49,19 @@ const Header = () => {
           !isHamburgerOpen && "pointer-events-none scale-95 opacity-0",
         )}
       >
-        <Button className="cursor-pointer">Create an account</Button>
-        <Button className="cursor-pointer" variant="primary-outline">
-          Log in
-        </Button>
-        <Button className="cursor-pointer" variant="ghost">
-          Visit Marketplace
-        </Button>
+        <Link to="user/register">
+          <Button className="cursor-pointer">Create an account</Button>
+        </Link>
+        <Link to="/user/login">
+          <Button className="cursor-pointer" variant="primary-outline">
+            Log in
+          </Button>
+        </Link>
+        <Link to="/marketplace">
+          <Button className="cursor-pointer" variant="ghost">
+            Visit Marketplace
+          </Button>
+        </Link>
       </div>
     </header>
   );
