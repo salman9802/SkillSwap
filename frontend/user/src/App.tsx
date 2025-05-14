@@ -5,6 +5,7 @@ import AuthLayout from "./pages/layouts/AuthLayout";
 import MarketplacePage from "./pages/MarketplacePage";
 import RegisterPage from "./pages/user/RegisterPage";
 import LoginPage from "./pages/user/LoginPage";
+import RequestPage from "./pages/RequestPage";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       {/* // TODO: check user authentication */}
       <Route element={<AuthLayout />}>
         <Route path="marketplace" element={<MarketplacePage />} />
+        <Route path="request/:requestId" element={<RequestPage />} />
 
         <Route path="user">
           <Route index element={undefined} />
