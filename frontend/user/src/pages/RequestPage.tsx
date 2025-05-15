@@ -21,21 +21,23 @@ const schedules = [
 
 const RequestPage = () => {
   return (
-    <div className="container mx-auto flex flex-col gap-6 px-3 py-12">
+    <div className="container mx-auto flex flex-col gap-14 px-3 py-12">
       <h1 className="text-2xl md:text-3xl lg:text-4xl">Session Request</h1>
       {/* Requester */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-7">
         <h2 className="text-xl md:text-2xl lg:text-3xl">Requester</h2>
-        <div className="grid grid-cols-1 gap-1.5 text-lg sm:grid-cols-2 md:gap-3 lg:gap-6">
+        <div className="grid grid-cols-1 gap-1.5 text-lg sm:grid-cols-2 md:gap-3 lg:gap-8">
           <Card className="">
             <CardHeader>
-              <CardTitle>Name</CardTitle>
+              <CardTitle className="text-lg font-medium">Name</CardTitle>
             </CardHeader>
             <CardContent>John Marston</CardContent>
           </Card>
           <Card className="">
             <CardHeader>
-              <CardTitle>Review score</CardTitle>
+              <CardTitle className="text-lg font-medium">
+                Review score
+              </CardTitle>
             </CardHeader>
             <CardContent className="flex items-center justify-start gap-2">
               <GoStarFill className="text-yellow-500" /> 4.3
@@ -43,13 +45,17 @@ const RequestPage = () => {
           </Card>
           <Card className="">
             <CardHeader>
-              <CardTitle>Requested skill</CardTitle>
+              <CardTitle className="text-lg font-medium">
+                Requested skill
+              </CardTitle>
             </CardHeader>
             <CardContent className="text-blue-500">Piano</CardContent>
           </Card>
           <Card className="">
             <CardHeader>
-              <CardTitle>Request created</CardTitle>
+              <CardTitle className="text-lg font-medium">
+                Request created
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {getRelativeTime(new Date("May 14, 2025"))}
@@ -58,10 +64,11 @@ const RequestPage = () => {
         </div>
       </div>
       {/* Skills offered */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-7">
         <h2 className="text-xl md:text-2xl lg:text-3xl">Skills offered</h2>
         <div className="flex flex-wrap gap-6">
           <FilterToggleGroup
+            className="[&>*]:cursor-pointer"
             options={requests[0].skillsOffered}
             selected={[]}
             onChange={() => {}}
@@ -69,10 +76,11 @@ const RequestPage = () => {
         </div>
       </div>
       {/* Available schedules */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-7">
         <h2 className="text-xl md:text-2xl lg:text-3xl">Available schedules</h2>
         <div className="flex flex-wrap gap-6">
           <FilterToggleGroup
+            className="[&>*]:cursor-pointer"
             options={schedules.map((s) => s.toLocaleString())}
             selected={[]}
             onChange={() => {}}
@@ -81,8 +89,10 @@ const RequestPage = () => {
       </div>
       {/* Action buttons */}
       <div className="my-12 flex items-center justify-end gap-6">
-        <Button variant="outline">Back</Button>
-        <Button>Create session</Button>
+        <Button className="cursor-pointer" variant="outline">
+          Back
+        </Button>
+        <Button className="cursor-pointer">Create session</Button>
       </div>
     </div>
   );
