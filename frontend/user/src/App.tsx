@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import AuthLayout from "./pages/layouts/AuthLayout";
@@ -6,6 +6,10 @@ import MarketplacePage from "./pages/MarketplacePage";
 import RegisterPage from "./pages/user/RegisterPage";
 import LoginPage from "./pages/user/LoginPage";
 import RequestPage from "./pages/RequestPage";
+import UserAccountLayout from "./pages/layouts/UserAccountLayout";
+import Dashboard from "./components/user/Dashboard";
+import NewRequest from "./components/user/NewRequest";
+import Profile from "./components/user/Profile";
 
 const App = () => {
   return (
@@ -25,10 +29,11 @@ const App = () => {
           <Route path="login" element={<LoginPage />} />
 
           {/* // TODO: general user layout */}
-          <Route element={undefined}>
-            <Route path="dashboard" element={undefined} />
-            <Route path="new-request" element={undefined} />
-            <Route path="profile" element={undefined} />
+          <Route path="account" element={<UserAccountLayout />}>
+            <Route index element={<Navigate to="dashboard" />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="new-request" element={<NewRequest />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
         </Route>
       </Route>

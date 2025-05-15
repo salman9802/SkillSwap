@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { IoClose } from "react-icons/io5";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Header = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   return (
-    <header className="relative">
+    <header className="relative inset-x-0 z-50 bg-white">
       <div className="container flex items-center justify-between px-2 py-4 sm:mx-auto md:py-6">
         {/* Logo */}
         <span className="custom-gradient text-3xl lg:text-5xl">SkillSwap</span>
@@ -27,14 +29,34 @@ const Header = () => {
         </button>
         {/* Buttons */}
         <div className="hidden items-center justify-center gap-4 md:flex">
-          <Link to="user/register">
-            <Button className="cursor-pointer">Create an account</Button>
-          </Link>
-          <Link to="/user/login">
-            <Button className="cursor-pointer" variant="primary-outline">
-              Log in
-            </Button>
-          </Link>
+          {isAuthenticated ? (
+            <Link to="/user/account">
+              <Button
+                variant="outline"
+                className="flex h-auto cursor-pointer items-center justify-between gap-4 px-4 py-2"
+              >
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/shadcn.pngf"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>SK</AvatarFallback>
+                </Avatar>
+                <span className="text-gray-800">Salman Khan</span>
+              </Button>
+            </Link>
+          ) : (
+            <>
+              <Link to="/user/register">
+                <Button className="cursor-pointer">Create an account</Button>
+              </Link>
+              <Link to="/user/login">
+                <Button className="cursor-pointer" variant="primary-outline">
+                  Log in
+                </Button>
+              </Link>
+            </>
+          )}
           <Link to="/marketplace">
             <Button className="cursor-pointer" variant="ghost">
               Visit Marketplace
