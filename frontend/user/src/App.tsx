@@ -7,9 +7,10 @@ import RegisterPage from "./pages/user/RegisterPage";
 import LoginPage from "./pages/user/LoginPage";
 import RequestPage from "./pages/RequestPage";
 import UserAccountLayout from "./pages/layouts/UserAccountLayout";
-import Dashboard from "./components/user/Dashboard";
-import NewRequest from "./components/user/NewRequest";
-import Profile from "./components/user/Profile";
+import DashboardPage from "./pages/user/DashboardPage";
+import NewRequestPage from "./pages/user/NewRequestPage";
+import ProfilePage from "./pages/user/ProfilePage";
+import ManageSessionsPage from "./pages/user/ManageSessionsPage";
 
 const App = () => {
   return (
@@ -30,10 +31,11 @@ const App = () => {
 
           {/* // TODO: general user layout */}
           <Route path="account" element={<UserAccountLayout />}>
-            <Route index element={<Navigate to="dashboard" />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="new-request" element={<NewRequest />} />
-            <Route path="profile" element={<Profile />} />
+            <Route index element={<Navigate to="dashboard" replace />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="new-request" element={<NewRequestPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="manage-sessions" element={<ManageSessionsPage />} />
           </Route>
         </Route>
       </Route>

@@ -1,9 +1,13 @@
 import { FaCamera } from "react-icons/fa";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
-import Section from "../utils/Section";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../components/ui/avatar";
+import { Button } from "../../components/ui/button";
+import Section from "../../components/utils/Section";
 
-const Profile = () => {
+const ProfilePage = () => {
   return (
     <div className="container mx-auto flex flex-col gap-20">
       {/* Profile */}
@@ -150,4 +154,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilePage;
