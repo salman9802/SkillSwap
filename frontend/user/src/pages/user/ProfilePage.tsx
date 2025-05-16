@@ -128,10 +128,10 @@ const ProfilePage = () => {
           </Button>
         </Section.Content>
       </Section>
-      {/* Required Skills */}
+      {/* Requested Skills */}
       <Section>
         <Section.Title className="flex flex-col gap-2">
-          <h3 className="text-lg md:text-xl lg:text-2xl">Required Skills</h3>
+          <h3 className="text-lg md:text-xl lg:text-2xl">Requested Skills</h3>
           <p className="text-gray-600">Skills you want from others. (Upto 5)</p>
         </Section.Title>
         <Section.Content className="flex flex-col items-start [&>*]:px-3 [&>*]:py-1.5 md:[&>*]:px-6 md:[&>*]:py-3 lg:[&>*]:px-12 lg:[&>*]:py-6">
