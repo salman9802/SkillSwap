@@ -24,7 +24,7 @@ const UserAccountLayout = () => {
         <div className="flex flex-col gap-6">
           <button
             onClick={() => setIsHamburgerOpen(true)}
-            className="cursor-pointer self-end"
+            className={"cursor-pointer self-end md:hidden"}
           >
             <RxHamburgerMenu className="size-5" />
           </button>
