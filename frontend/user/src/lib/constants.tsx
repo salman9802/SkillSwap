@@ -1,11 +1,15 @@
+import React from "react";
+
 import {
   FaCalendarAlt,
   FaGithub,
   FaGlobe,
   FaLinkedinIn,
+  FaLongArrowAltUp,
   FaTelegramPlane,
 } from "react-icons/fa";
 import { TbArrowsExchange } from "react-icons/tb";
+import { cn } from "./utils";
 
 export const FEATURES = [
   {
@@ -45,3 +49,55 @@ export const SOCIALS = [
     icon: <FaTelegramPlane className="size-5" />,
   },
 ];
+
+export const SESSION_STATUS = {
+  OPEN: (
+    <div className="w-fit rounded-md bg-gray-100 px-3 py-1.5 text-gray-700">
+      OPEN
+    </div>
+  ),
+  FIXED: (
+    <div className="w-fit rounded-md bg-yellow-100 px-3 py-1.5 text-yellow-700">
+      FIXED
+    </div>
+  ),
+  CLOSED: (
+    <div className="w-fit rounded-md bg-green-100 px-3 py-1.5 text-green-700">
+      CLOSED
+    </div>
+  ),
+} as const;
+
+export const SkillGiven = ({
+  children,
+  className,
+}: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-2 bg-blue-100 px-3 py-1.5 text-blue-700",
+        className,
+      )}
+    >
+      <FaLongArrowAltUp className="size-5" />
+      {children}
+    </div>
+  );
+};
+
+export const SkillReceived = ({
+  children,
+  className,
+}: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
+  return (
+    <div
+      className={cn(
+        "flex items-center gap-2 bg-green-100 px-3 py-1.5 text-green-700",
+        className,
+      )}
+    >
+      <FaLongArrowAltUp className="size-5 rotate-180" />
+      {children}
+    </div>
+  );
+};
