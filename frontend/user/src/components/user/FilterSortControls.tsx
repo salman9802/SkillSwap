@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button } from "@/components/ui/button";
 import { FaCalendarAlt } from "react-icons/fa";
-import FilterToggleGroup from "./FilterToggleGroup";
+import ToggleGroup from "./ToggleGroup";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -48,7 +48,7 @@ const Filters = () => {
       {/* Skills Offered by you */}
       <div className="grid gap-4">
         <div className="font-semibold">Skills offered by you</div>
-        <FilterToggleGroup
+        <ToggleGroup
           options={["React", "Node.js", "Tailwind CSS", "Prisma", "Express"]}
           selected={offerSkills}
           onChange={setOfferSkills}
@@ -57,7 +57,7 @@ const Filters = () => {
       {/* Skills Requested by you */}
       <div className="grid gap-4">
         <div className="font-semibold">Skills requested by you</div>
-        <FilterToggleGroup
+        <ToggleGroup
           options={["MongoDB", "MySQL", "Javascript", "Typescript"]}
           selected={requestSkills}
           onChange={setRequestSkills}

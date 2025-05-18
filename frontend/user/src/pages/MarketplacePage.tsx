@@ -60,6 +60,7 @@ const MarketplacePage = () => {
           </h2>
           <div className="grid grid-cols-1 gap-3 @xl/sidebar-right:grid-cols-2 @4xl/sidebar-right:grid-cols-3 @5xl/sidebar-right:grid-cols-4">
             {/* :@max-md/sidebar-right */}
+            {/* FIXME - Refactor RequestCard */}
             {requests.map((request, i) => (
               <RequestCard key={i} request={request} />
             ))}

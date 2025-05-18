@@ -51,21 +51,57 @@ export const SOCIALS = [
 ];
 
 export const SESSION_STATUS = {
-  OPEN: (
-    <div className="w-fit rounded-md bg-gray-100 px-3 py-1.5 text-gray-700">
-      OPEN
-    </div>
-  ),
-  FIXED: (
-    <div className="w-fit rounded-md bg-yellow-100 px-3 py-1.5 text-yellow-700">
-      FIXED
-    </div>
-  ),
-  CLOSED: (
-    <div className="w-fit rounded-md bg-green-100 px-3 py-1.5 text-green-700">
-      CLOSED
-    </div>
-  ),
+  OPEN: {
+    description: "Session created after request acceptance",
+    jsx: (
+      <div className="w-fit rounded-md bg-blue-100 px-3 py-1.5 text-blue-700">
+        OPEN
+      </div>
+    ),
+  },
+  ACCEPTED: {
+    description: "Session confirmed by accepter",
+    jsx: (
+      <div className="w-fit rounded-md bg-amber-100 px-3 py-1.5 text-amber-700">
+        ACCEPTED
+      </div>
+    ),
+  },
+  SCHEDULED: {
+    description:
+      "Session has been scheduled after confirmation from both parties.",
+    jsx: (
+      <div className="w-fit rounded-md bg-green-100 px-3 py-1.5 text-green-700">
+        SCHEDULED
+      </div>
+    ),
+  },
+  FINISHED: {
+    description:
+      "Session happened. Requester and accepter can rate the session",
+    jsx: (
+      <div className="w-fit rounded-md bg-gray-100 px-3 py-1.5 text-gray-700">
+        FINISHED
+      </div>
+    ),
+  },
+  CLOSED: {
+    description:
+      "Both parties have rated the session and the session is closed",
+    jsx: (
+      <div className="w-fit rounded-md bg-purple-100 px-3 py-1.5 text-purple-700">
+        CLOSED
+      </div>
+    ),
+  },
+  CANCELLED: {
+    description: "One of the party rejected the session",
+    jsx: (
+      <div className="w-fit rounded-md bg-red-100 px-3 py-1.5 text-red-700">
+        CANCELLED
+      </div>
+    ),
+  },
 } as const;
 
 export const SkillGiven = ({

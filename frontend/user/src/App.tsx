@@ -11,6 +11,7 @@ import DashboardPage from "./pages/user/DashboardPage";
 import NewRequestPage from "./pages/user/NewRequestPage";
 import ProfilePage from "./pages/user/ProfilePage";
 import ManageSessionsPage from "./pages/user/ManageSessionsPage";
+import SessionPage from "./pages/user/SessionPage";
 
 const App = () => {
   return (
@@ -25,7 +26,7 @@ const App = () => {
         <Route path="request/:requestId" element={<RequestPage />} />
 
         <Route path="user">
-          <Route index element={undefined} />
+          <Route index element={<Navigate to="/user/account" replace />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="login" element={<LoginPage />} />
 
@@ -37,6 +38,8 @@ const App = () => {
             <Route path="profile" element={<ProfilePage />} />
             <Route path="manage-sessions" element={<ManageSessionsPage />} />
           </Route>
+
+          <Route path="account/sessions/:sessionId" element={<SessionPage />} />
         </Route>
       </Route>
       {/* // TODO: NotFoundPage (404) */}

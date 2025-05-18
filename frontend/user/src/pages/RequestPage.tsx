@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getRelativeTime } from "@/lib/time";
 import type { RequestCardDataType } from "@/lib/types";
 import requestsJSON from "../../__data/requests.json";
-import FilterToggleGroup from "@/components/user/FilterToggleGroup";
+import ToggleGroup from "@/components/user/ToggleGroup";
 import { Button } from "@/components/ui/button";
 
 // NOTE: Mock data
@@ -67,7 +67,7 @@ const RequestPage = () => {
       <div className="flex flex-col gap-7">
         <h2 className="text-xl md:text-2xl lg:text-3xl">Skills offered</h2>
         <div className="flex flex-wrap gap-6">
-          <FilterToggleGroup
+          <ToggleGroup
             className="[&>*]:cursor-pointer"
             options={requests[0].skillsOffered}
             selected={[]}
@@ -79,7 +79,7 @@ const RequestPage = () => {
       <div className="flex flex-col gap-7">
         <h2 className="text-xl md:text-2xl lg:text-3xl">Available schedules</h2>
         <div className="flex flex-wrap gap-6">
-          <FilterToggleGroup
+          <ToggleGroup
             className="[&>*]:cursor-pointer"
             options={schedules.map((s) => s.toLocaleString())}
             selected={[]}

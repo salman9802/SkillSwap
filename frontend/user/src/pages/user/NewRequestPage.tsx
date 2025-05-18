@@ -1,6 +1,6 @@
 import React from "react";
 
-import FilterToggleGroup from "@/components/user/FilterToggleGroup";
+import ToggleGroup from "@/components/user/ToggleGroup";
 import Section from "@/components/utils/Section";
 import requestsJSON from "../../../__data/requests.json";
 import type { RequestCardDataType } from "@/lib/types";
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/command";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // NOTE: Mock data
 const requests = requestsJSON as RequestCardDataType[];
@@ -62,7 +63,12 @@ const NewRequestPage = () => {
             name
           </p>
         </Section.Title>
-        <Section.Content className="w-full [&>*]:py-3">
+        <Section.Content className="flex w-full items-center gap-3 [&>*]:my-3">
+          {/* TODO: add profile picture */}
+          <Avatar className="size-12">
+            <AvatarImage src="https://github.com/shadcn.pngf" alt="@shadcn" />
+            <AvatarFallback>JM</AvatarFallback>
+          </Avatar>
           <div className="font-medium text-gray-700">John Marston</div>
         </Section.Content>
       </Section>
@@ -77,7 +83,7 @@ const NewRequestPage = () => {
           </p>
         </Section.Title>
         <Section.Content className="w-full [&>*]:py-3">
-          <FilterToggleGroup
+          <ToggleGroup
             className="[&>*]:cursor-pointer"
             options={requests[0].skillsOffered}
             selected={[requests[0].skillsOffered[2]]}
@@ -97,7 +103,7 @@ const NewRequestPage = () => {
           </p>
         </Section.Title>
         <Section.Content className="w-full [&>*]:py-3">
-          <FilterToggleGroup
+          <ToggleGroup
             className="[&>*]:bg-gray-100 [&>*]:text-gray-400 [&>*]:hover:bg-gray-100 [&>*]:hover:text-gray-400"
             options={requests[0].skillsOffered}
             selected={[]}

@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-type FilterToggleGroupPropsType = {
+type ToggleGroupPropsType = {
   className?: string;
   options: string[];
   selected: string[];
   onChange: (selection: string[]) => void;
 };
 
-const FilterToggleGroup = ({
+const ToggleGroup = ({
   className,
   options,
   selected,
   onChange,
-}: FilterToggleGroupPropsType) => {
+}: ToggleGroupPropsType) => {
   const toggleOption = (option: string) => {
     const newSelected = selected.includes(option)
       ? selected.filter((s) => s !== option)
@@ -30,7 +30,7 @@ const FilterToggleGroup = ({
           className={cn(
             "shrink-0 rounded-full border px-4 py-2 text-sm shadow-sm transition-colors",
             selected.includes(option)
-              ? "bg-primary text-primary-foreground border-primary"
+              ? "toggle-group-selected bg-primary text-primary-foreground border-primary"
               : "bg-background text-foreground",
           )}
         >
@@ -41,4 +41,4 @@ const FilterToggleGroup = ({
   );
 };
 
-export default FilterToggleGroup;
+export default ToggleGroup;

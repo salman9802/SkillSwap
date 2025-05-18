@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import type { RequestCardDataType } from "@/lib/types";
 import requestsJSON from "../../../__data/requests.json";
 import { getRelativeTime } from "@/lib/time";
+import { Link } from "react-router-dom";
 
 // NOTE - Mock data
 const requests = requestsJSON as RequestCardDataType[];
@@ -32,14 +33,17 @@ const ManageSessionsPage = () => {
         </div>
         {/* Row(s) */}
         {sessions.map((s, i) => (
-          <div
+          <Link
+            to={`/user/account/sessions/${i + 1}`}
             key={i}
-            className="flex items-center gap-4 text-sm md:[&>*]:text-base"
+            className="hover:bg-accent flex cursor-pointer items-center gap-4 text-sm md:[&>*]:text-base"
           >
             <div className="flex flex-2 flex-col gap-4 md:flex-row [&>*]:flex-1">
               <div className="flex flex-col gap-3">
                 <div className="mr-2 text-lg font-medium md:hidden">Status</div>
-                {i % 2 === 0 ? SESSION_STATUS.CLOSED : SESSION_STATUS.FIXED}
+                {i % 2 === 0
+                  ? SESSION_STATUS.CLOSED.jsx
+                  : SESSION_STATUS.SCHEDULED.jsx}
               </div>
               <div className="flex flex-col gap-3">
                 <div className="mr-2 text-lg font-medium md:hidden">
@@ -55,7 +59,7 @@ const ManageSessionsPage = () => {
             <div className="flex-1 self-start text-nowrap">
               {getRelativeTime(new Date(s.when))}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       {/* Pagination */}
