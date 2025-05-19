@@ -6,6 +6,7 @@ import type { RequestCardDataType } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import requestsJSON from "../../../__data/requests.json";
 import { Button } from "@/components/ui/button";
+import ChatContainer from "@/components/user/ChatContainer";
 
 // NOTE: Mock data
 const schedules = [
@@ -44,6 +45,9 @@ const SessionPage = () => {
             <AvatarFallback>JM</AvatarFallback>
           </Avatar>
           <div className="font-medium text-gray-700">John Marston</div>
+          <div className="[&>*]:hover:text-primary mt-6! ml-3 [&>*]:cursor-pointer">
+            <ChatContainer />
+          </div>
         </Section.Content>
       </Section>
       {/* Accepter */}
@@ -132,7 +136,7 @@ const SessionPage = () => {
             ? " (Accepter accepted)"
             : " (Waiting for accepter to accept)"}
         </Button>
-      </div>{" "}
+      </div>
     </div>
   );
 };
