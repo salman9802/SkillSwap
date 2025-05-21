@@ -19,10 +19,51 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model SkillSwapRequest
+ * 
+ */
+export type SkillSwapRequest = $Result.DefaultSelection<Prisma.$SkillSwapRequestPayload>
+/**
+ * Model Schedule
+ * 
+ */
+export type Schedule = $Result.DefaultSelection<Prisma.$SchedulePayload>
+/**
+ * Model SkillSwapSession
+ * 
+ */
+export type SkillSwapSession = $Result.DefaultSelection<Prisma.$SkillSwapSessionPayload>
+/**
+ * Model SkillSwapSessionChatMessage
+ * 
+ */
+export type SkillSwapSessionChatMessage = $Result.DefaultSelection<Prisma.$SkillSwapSessionChatMessagePayload>
+/**
  * Model UserSession
  * 
  */
 export type UserSession = $Result.DefaultSelection<Prisma.$UserSessionPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const ScheduleStatus: {
+  OPEN: 'OPEN',
+  ACCEPTED: 'ACCEPTED',
+  SCHEDULED: 'SCHEDULED',
+  FINISHED: 'FINISHED',
+  CLOSED: 'CLOSED',
+  CANCELLED: 'CANCELLED'
+};
+
+export type ScheduleStatus = (typeof ScheduleStatus)[keyof typeof ScheduleStatus]
+
+}
+
+export type ScheduleStatus = $Enums.ScheduleStatus
+
+export const ScheduleStatus: typeof $Enums.ScheduleStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -125,6 +166,46 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.skillSwapRequest`: Exposes CRUD operations for the **SkillSwapRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SkillSwapRequests
+    * const skillSwapRequests = await prisma.skillSwapRequest.findMany()
+    * ```
+    */
+  get skillSwapRequest(): Prisma.SkillSwapRequestDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.schedule`: Exposes CRUD operations for the **Schedule** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Schedules
+    * const schedules = await prisma.schedule.findMany()
+    * ```
+    */
+  get schedule(): Prisma.ScheduleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.skillSwapSession`: Exposes CRUD operations for the **SkillSwapSession** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SkillSwapSessions
+    * const skillSwapSessions = await prisma.skillSwapSession.findMany()
+    * ```
+    */
+  get skillSwapSession(): Prisma.SkillSwapSessionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.skillSwapSessionChatMessage`: Exposes CRUD operations for the **SkillSwapSessionChatMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SkillSwapSessionChatMessages
+    * const skillSwapSessionChatMessages = await prisma.skillSwapSessionChatMessage.findMany()
+    * ```
+    */
+  get skillSwapSessionChatMessage(): Prisma.SkillSwapSessionChatMessageDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.userSession`: Exposes CRUD operations for the **UserSession** model.
@@ -576,6 +657,10 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    SkillSwapRequest: 'SkillSwapRequest',
+    Schedule: 'Schedule',
+    SkillSwapSession: 'SkillSwapSession',
+    SkillSwapSessionChatMessage: 'SkillSwapSessionChatMessage',
     UserSession: 'UserSession'
   };
 
@@ -595,7 +680,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userSession"
+      modelProps: "user" | "skillSwapRequest" | "schedule" | "skillSwapSession" | "skillSwapSessionChatMessage" | "userSession"
       txIsolationLevel: never
     }
     model: {
@@ -670,6 +755,302 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      SkillSwapRequest: {
+        payload: Prisma.$SkillSwapRequestPayload<ExtArgs>
+        fields: Prisma.SkillSwapRequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SkillSwapRequestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SkillSwapRequestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload>
+          }
+          findFirst: {
+            args: Prisma.SkillSwapRequestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SkillSwapRequestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload>
+          }
+          findMany: {
+            args: Prisma.SkillSwapRequestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload>[]
+          }
+          create: {
+            args: Prisma.SkillSwapRequestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload>
+          }
+          createMany: {
+            args: Prisma.SkillSwapRequestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.SkillSwapRequestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload>
+          }
+          update: {
+            args: Prisma.SkillSwapRequestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.SkillSwapRequestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SkillSwapRequestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SkillSwapRequestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapRequestPayload>
+          }
+          aggregate: {
+            args: Prisma.SkillSwapRequestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSkillSwapRequest>
+          }
+          groupBy: {
+            args: Prisma.SkillSwapRequestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SkillSwapRequestGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.SkillSwapRequestFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.SkillSwapRequestAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.SkillSwapRequestCountArgs<ExtArgs>
+            result: $Utils.Optional<SkillSwapRequestCountAggregateOutputType> | number
+          }
+        }
+      }
+      Schedule: {
+        payload: Prisma.$SchedulePayload<ExtArgs>
+        fields: Prisma.ScheduleFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScheduleFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScheduleFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload>
+          }
+          findFirst: {
+            args: Prisma.ScheduleFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScheduleFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload>
+          }
+          findMany: {
+            args: Prisma.ScheduleFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload>[]
+          }
+          create: {
+            args: Prisma.ScheduleCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload>
+          }
+          createMany: {
+            args: Prisma.ScheduleCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ScheduleDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload>
+          }
+          update: {
+            args: Prisma.ScheduleUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload>
+          }
+          deleteMany: {
+            args: Prisma.ScheduleDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScheduleUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ScheduleUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SchedulePayload>
+          }
+          aggregate: {
+            args: Prisma.ScheduleAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSchedule>
+          }
+          groupBy: {
+            args: Prisma.ScheduleGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScheduleGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.ScheduleFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.ScheduleAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.ScheduleCountArgs<ExtArgs>
+            result: $Utils.Optional<ScheduleCountAggregateOutputType> | number
+          }
+        }
+      }
+      SkillSwapSession: {
+        payload: Prisma.$SkillSwapSessionPayload<ExtArgs>
+        fields: Prisma.SkillSwapSessionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SkillSwapSessionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SkillSwapSessionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload>
+          }
+          findFirst: {
+            args: Prisma.SkillSwapSessionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SkillSwapSessionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload>
+          }
+          findMany: {
+            args: Prisma.SkillSwapSessionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload>[]
+          }
+          create: {
+            args: Prisma.SkillSwapSessionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload>
+          }
+          createMany: {
+            args: Prisma.SkillSwapSessionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.SkillSwapSessionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload>
+          }
+          update: {
+            args: Prisma.SkillSwapSessionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload>
+          }
+          deleteMany: {
+            args: Prisma.SkillSwapSessionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SkillSwapSessionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SkillSwapSessionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionPayload>
+          }
+          aggregate: {
+            args: Prisma.SkillSwapSessionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSkillSwapSession>
+          }
+          groupBy: {
+            args: Prisma.SkillSwapSessionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SkillSwapSessionGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.SkillSwapSessionFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.SkillSwapSessionAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.SkillSwapSessionCountArgs<ExtArgs>
+            result: $Utils.Optional<SkillSwapSessionCountAggregateOutputType> | number
+          }
+        }
+      }
+      SkillSwapSessionChatMessage: {
+        payload: Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>
+        fields: Prisma.SkillSwapSessionChatMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SkillSwapSessionChatMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SkillSwapSessionChatMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.SkillSwapSessionChatMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SkillSwapSessionChatMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload>
+          }
+          findMany: {
+            args: Prisma.SkillSwapSessionChatMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload>[]
+          }
+          create: {
+            args: Prisma.SkillSwapSessionChatMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload>
+          }
+          createMany: {
+            args: Prisma.SkillSwapSessionChatMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.SkillSwapSessionChatMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload>
+          }
+          update: {
+            args: Prisma.SkillSwapSessionChatMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.SkillSwapSessionChatMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SkillSwapSessionChatMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SkillSwapSessionChatMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillSwapSessionChatMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.SkillSwapSessionChatMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSkillSwapSessionChatMessage>
+          }
+          groupBy: {
+            args: Prisma.SkillSwapSessionChatMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SkillSwapSessionChatMessageGroupByOutputType>[]
+          }
+          findRaw: {
+            args: Prisma.SkillSwapSessionChatMessageFindRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          aggregateRaw: {
+            args: Prisma.SkillSwapSessionChatMessageAggregateRawArgs<ExtArgs>
+            result: JsonObject
+          }
+          count: {
+            args: Prisma.SkillSwapSessionChatMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<SkillSwapSessionChatMessageCountAggregateOutputType> | number
           }
         }
       }
@@ -819,6 +1200,10 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    skillSwapRequest?: SkillSwapRequestOmit
+    schedule?: ScheduleOmit
+    skillSwapSession?: SkillSwapSessionOmit
+    skillSwapSessionChatMessage?: SkillSwapSessionChatMessageOmit
     userSession?: UserSessionOmit
   }
 
@@ -909,6 +1294,147 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type UserCountOutputType
+   */
+
+  export type UserCountOutputType = {
+    skillSwapRequestsCreated: number
+    skillSwapRequestsAccepted: number
+    chatMessages: number
+  }
+
+  export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    skillSwapRequestsCreated?: boolean | UserCountOutputTypeCountSkillSwapRequestsCreatedArgs
+    skillSwapRequestsAccepted?: boolean | UserCountOutputTypeCountSkillSwapRequestsAcceptedArgs
+    chatMessages?: boolean | UserCountOutputTypeCountChatMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserCountOutputType
+     */
+    select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSkillSwapRequestsCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSkillSwapRequestsAcceptedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapRequestWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountChatMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapSessionChatMessageWhereInput
+  }
+
+
+  /**
+   * Count Type SkillSwapRequestCountOutputType
+   */
+
+  export type SkillSwapRequestCountOutputType = {
+    availability: number
+  }
+
+  export type SkillSwapRequestCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    availability?: boolean | SkillSwapRequestCountOutputTypeCountAvailabilityArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SkillSwapRequestCountOutputType without action
+   */
+  export type SkillSwapRequestCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequestCountOutputType
+     */
+    select?: SkillSwapRequestCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SkillSwapRequestCountOutputType without action
+   */
+  export type SkillSwapRequestCountOutputTypeCountAvailabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScheduleWhereInput
+  }
+
+
+  /**
+   * Count Type ScheduleCountOutputType
+   */
+
+  export type ScheduleCountOutputType = {
+    skillSwapSession: number
+  }
+
+  export type ScheduleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    skillSwapSession?: boolean | ScheduleCountOutputTypeCountSkillSwapSessionArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ScheduleCountOutputType without action
+   */
+  export type ScheduleCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScheduleCountOutputType
+     */
+    select?: ScheduleCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ScheduleCountOutputType without action
+   */
+  export type ScheduleCountOutputTypeCountSkillSwapSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapSessionWhereInput
+  }
+
+
+  /**
+   * Count Type SkillSwapSessionCountOutputType
+   */
+
+  export type SkillSwapSessionCountOutputType = {
+    chatMessages: number
+  }
+
+  export type SkillSwapSessionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chatMessages?: boolean | SkillSwapSessionCountOutputTypeCountChatMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SkillSwapSessionCountOutputType without action
+   */
+  export type SkillSwapSessionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionCountOutputType
+     */
+    select?: SkillSwapSessionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SkillSwapSessionCountOutputType without action
+   */
+  export type SkillSwapSessionCountOutputTypeCountChatMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapSessionChatMessageWhereInput
+  }
+
 
   /**
    * Models
@@ -929,6 +1455,9 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    picture: string | null
+    country: string | null
+    timezone: string | null
     createdAt: Date | null
   }
 
@@ -937,6 +1466,9 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    picture: string | null
+    country: string | null
+    timezone: string | null
     createdAt: Date | null
   }
 
@@ -945,6 +1477,11 @@ export namespace Prisma {
     name: number
     email: number
     password: number
+    picture: number
+    country: number
+    timezone: number
+    offeredSkills: number
+    requestedSkills: number
     createdAt: number
     _all: number
   }
@@ -955,6 +1492,9 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    picture?: true
+    country?: true
+    timezone?: true
     createdAt?: true
   }
 
@@ -963,6 +1503,9 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    picture?: true
+    country?: true
+    timezone?: true
     createdAt?: true
   }
 
@@ -971,6 +1514,11 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    picture?: true
+    country?: true
+    timezone?: true
+    offeredSkills?: true
+    requestedSkills?: true
     createdAt?: true
     _all?: true
   }
@@ -1052,6 +1600,11 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    picture: string | null
+    country: string | null
+    timezone: string | null
+    offeredSkills: string[]
+    requestedSkills: string[]
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -1077,8 +1630,17 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    picture?: boolean
+    country?: boolean
+    timezone?: boolean
+    offeredSkills?: boolean
+    requestedSkills?: boolean
     createdAt?: boolean
     userSessions?: boolean | User$userSessionsArgs<ExtArgs>
+    skillSwapRequestsCreated?: boolean | User$skillSwapRequestsCreatedArgs<ExtArgs>
+    skillSwapRequestsAccepted?: boolean | User$skillSwapRequestsAcceptedArgs<ExtArgs>
+    chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
 
@@ -1088,24 +1650,41 @@ export namespace Prisma {
     name?: boolean
     email?: boolean
     password?: boolean
+    picture?: boolean
+    country?: boolean
+    timezone?: boolean
+    offeredSkills?: boolean
+    requestedSkills?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "picture" | "country" | "timezone" | "offeredSkills" | "requestedSkills" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     userSessions?: boolean | User$userSessionsArgs<ExtArgs>
+    skillSwapRequestsCreated?: boolean | User$skillSwapRequestsCreatedArgs<ExtArgs>
+    skillSwapRequestsAccepted?: boolean | User$skillSwapRequestsAcceptedArgs<ExtArgs>
+    chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
+    _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
       userSessions: Prisma.$UserSessionPayload<ExtArgs> | null
+      skillSwapRequestsCreated: Prisma.$SkillSwapRequestPayload<ExtArgs>[]
+      skillSwapRequestsAccepted: Prisma.$SkillSwapRequestPayload<ExtArgs>[]
+      chatMessages: Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       email: string
       password: string
+      picture: string | null
+      country: string | null
+      timezone: string | null
+      offeredSkills: string[]
+      requestedSkills: string[]
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1471,6 +2050,9 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     userSessions<T extends User$userSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$userSessionsArgs<ExtArgs>>): Prisma__UserSessionClient<$Result.GetResult<Prisma.$UserSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    skillSwapRequestsCreated<T extends User$skillSwapRequestsCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$skillSwapRequestsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    skillSwapRequestsAccepted<T extends User$skillSwapRequestsAcceptedArgs<ExtArgs> = {}>(args?: Subset<T, User$skillSwapRequestsAcceptedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    chatMessages<T extends User$chatMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1504,6 +2086,11 @@ export namespace Prisma {
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly picture: FieldRef<"User", 'String'>
+    readonly country: FieldRef<"User", 'String'>
+    readonly timezone: FieldRef<"User", 'String'>
+    readonly offeredSkills: FieldRef<"User", 'String[]'>
+    readonly requestedSkills: FieldRef<"User", 'String[]'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -1894,6 +2481,78 @@ export namespace Prisma {
   }
 
   /**
+   * User.skillSwapRequestsCreated
+   */
+  export type User$skillSwapRequestsCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    where?: SkillSwapRequestWhereInput
+    orderBy?: SkillSwapRequestOrderByWithRelationInput | SkillSwapRequestOrderByWithRelationInput[]
+    cursor?: SkillSwapRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkillSwapRequestScalarFieldEnum | SkillSwapRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.skillSwapRequestsAccepted
+   */
+  export type User$skillSwapRequestsAcceptedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    where?: SkillSwapRequestWhereInput
+    orderBy?: SkillSwapRequestOrderByWithRelationInput | SkillSwapRequestOrderByWithRelationInput[]
+    cursor?: SkillSwapRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkillSwapRequestScalarFieldEnum | SkillSwapRequestScalarFieldEnum[]
+  }
+
+  /**
+   * User.chatMessages
+   */
+  export type User$chatMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    where?: SkillSwapSessionChatMessageWhereInput
+    orderBy?: SkillSwapSessionChatMessageOrderByWithRelationInput | SkillSwapSessionChatMessageOrderByWithRelationInput[]
+    cursor?: SkillSwapSessionChatMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkillSwapSessionChatMessageScalarFieldEnum | SkillSwapSessionChatMessageScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1909,6 +2568,4110 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SkillSwapRequest
+   */
+
+  export type AggregateSkillSwapRequest = {
+    _count: SkillSwapRequestCountAggregateOutputType | null
+    _min: SkillSwapRequestMinAggregateOutputType | null
+    _max: SkillSwapRequestMaxAggregateOutputType | null
+  }
+
+  export type SkillSwapRequestMinAggregateOutputType = {
+    id: string | null
+    requesterTimezone: string | null
+    closed: boolean | null
+    closedAt: Date | null
+    requestedSkill: string | null
+    createdAt: Date | null
+    requesterId: string | null
+    accepterId: string | null
+  }
+
+  export type SkillSwapRequestMaxAggregateOutputType = {
+    id: string | null
+    requesterTimezone: string | null
+    closed: boolean | null
+    closedAt: Date | null
+    requestedSkill: string | null
+    createdAt: Date | null
+    requesterId: string | null
+    accepterId: string | null
+  }
+
+  export type SkillSwapRequestCountAggregateOutputType = {
+    id: number
+    requesterTimezone: number
+    closed: number
+    closedAt: number
+    requestedSkill: number
+    createdAt: number
+    requesterId: number
+    accepterId: number
+    _all: number
+  }
+
+
+  export type SkillSwapRequestMinAggregateInputType = {
+    id?: true
+    requesterTimezone?: true
+    closed?: true
+    closedAt?: true
+    requestedSkill?: true
+    createdAt?: true
+    requesterId?: true
+    accepterId?: true
+  }
+
+  export type SkillSwapRequestMaxAggregateInputType = {
+    id?: true
+    requesterTimezone?: true
+    closed?: true
+    closedAt?: true
+    requestedSkill?: true
+    createdAt?: true
+    requesterId?: true
+    accepterId?: true
+  }
+
+  export type SkillSwapRequestCountAggregateInputType = {
+    id?: true
+    requesterTimezone?: true
+    closed?: true
+    closedAt?: true
+    requestedSkill?: true
+    createdAt?: true
+    requesterId?: true
+    accepterId?: true
+    _all?: true
+  }
+
+  export type SkillSwapRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillSwapRequest to aggregate.
+     */
+    where?: SkillSwapRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapRequests to fetch.
+     */
+    orderBy?: SkillSwapRequestOrderByWithRelationInput | SkillSwapRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SkillSwapRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SkillSwapRequests
+    **/
+    _count?: true | SkillSwapRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SkillSwapRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SkillSwapRequestMaxAggregateInputType
+  }
+
+  export type GetSkillSwapRequestAggregateType<T extends SkillSwapRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateSkillSwapRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSkillSwapRequest[P]>
+      : GetScalarType<T[P], AggregateSkillSwapRequest[P]>
+  }
+
+
+
+
+  export type SkillSwapRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapRequestWhereInput
+    orderBy?: SkillSwapRequestOrderByWithAggregationInput | SkillSwapRequestOrderByWithAggregationInput[]
+    by: SkillSwapRequestScalarFieldEnum[] | SkillSwapRequestScalarFieldEnum
+    having?: SkillSwapRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SkillSwapRequestCountAggregateInputType | true
+    _min?: SkillSwapRequestMinAggregateInputType
+    _max?: SkillSwapRequestMaxAggregateInputType
+  }
+
+  export type SkillSwapRequestGroupByOutputType = {
+    id: string
+    requesterTimezone: string
+    closed: boolean
+    closedAt: Date | null
+    requestedSkill: string
+    createdAt: Date
+    requesterId: string
+    accepterId: string | null
+    _count: SkillSwapRequestCountAggregateOutputType | null
+    _min: SkillSwapRequestMinAggregateOutputType | null
+    _max: SkillSwapRequestMaxAggregateOutputType | null
+  }
+
+  type GetSkillSwapRequestGroupByPayload<T extends SkillSwapRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SkillSwapRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SkillSwapRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SkillSwapRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], SkillSwapRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SkillSwapRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    requesterTimezone?: boolean
+    closed?: boolean
+    closedAt?: boolean
+    requestedSkill?: boolean
+    createdAt?: boolean
+    requesterId?: boolean
+    accepterId?: boolean
+    availability?: boolean | SkillSwapRequest$availabilityArgs<ExtArgs>
+    requester?: boolean | UserDefaultArgs<ExtArgs>
+    accepter?: boolean | SkillSwapRequest$accepterArgs<ExtArgs>
+    skillSwapSession?: boolean | SkillSwapRequest$skillSwapSessionArgs<ExtArgs>
+    _count?: boolean | SkillSwapRequestCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skillSwapRequest"]>
+
+
+
+  export type SkillSwapRequestSelectScalar = {
+    id?: boolean
+    requesterTimezone?: boolean
+    closed?: boolean
+    closedAt?: boolean
+    requestedSkill?: boolean
+    createdAt?: boolean
+    requesterId?: boolean
+    accepterId?: boolean
+  }
+
+  export type SkillSwapRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "requesterTimezone" | "closed" | "closedAt" | "requestedSkill" | "createdAt" | "requesterId" | "accepterId", ExtArgs["result"]["skillSwapRequest"]>
+  export type SkillSwapRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    availability?: boolean | SkillSwapRequest$availabilityArgs<ExtArgs>
+    requester?: boolean | UserDefaultArgs<ExtArgs>
+    accepter?: boolean | SkillSwapRequest$accepterArgs<ExtArgs>
+    skillSwapSession?: boolean | SkillSwapRequest$skillSwapSessionArgs<ExtArgs>
+    _count?: boolean | SkillSwapRequestCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $SkillSwapRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SkillSwapRequest"
+    objects: {
+      availability: Prisma.$SchedulePayload<ExtArgs>[]
+      requester: Prisma.$UserPayload<ExtArgs>
+      accepter: Prisma.$UserPayload<ExtArgs> | null
+      skillSwapSession: Prisma.$SkillSwapSessionPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      requesterTimezone: string
+      closed: boolean
+      closedAt: Date | null
+      requestedSkill: string
+      createdAt: Date
+      requesterId: string
+      accepterId: string | null
+    }, ExtArgs["result"]["skillSwapRequest"]>
+    composites: {}
+  }
+
+  type SkillSwapRequestGetPayload<S extends boolean | null | undefined | SkillSwapRequestDefaultArgs> = $Result.GetResult<Prisma.$SkillSwapRequestPayload, S>
+
+  type SkillSwapRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SkillSwapRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SkillSwapRequestCountAggregateInputType | true
+    }
+
+  export interface SkillSwapRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SkillSwapRequest'], meta: { name: 'SkillSwapRequest' } }
+    /**
+     * Find zero or one SkillSwapRequest that matches the filter.
+     * @param {SkillSwapRequestFindUniqueArgs} args - Arguments to find a SkillSwapRequest
+     * @example
+     * // Get one SkillSwapRequest
+     * const skillSwapRequest = await prisma.skillSwapRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SkillSwapRequestFindUniqueArgs>(args: SelectSubset<T, SkillSwapRequestFindUniqueArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SkillSwapRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SkillSwapRequestFindUniqueOrThrowArgs} args - Arguments to find a SkillSwapRequest
+     * @example
+     * // Get one SkillSwapRequest
+     * const skillSwapRequest = await prisma.skillSwapRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SkillSwapRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, SkillSwapRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillSwapRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapRequestFindFirstArgs} args - Arguments to find a SkillSwapRequest
+     * @example
+     * // Get one SkillSwapRequest
+     * const skillSwapRequest = await prisma.skillSwapRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SkillSwapRequestFindFirstArgs>(args?: SelectSubset<T, SkillSwapRequestFindFirstArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillSwapRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapRequestFindFirstOrThrowArgs} args - Arguments to find a SkillSwapRequest
+     * @example
+     * // Get one SkillSwapRequest
+     * const skillSwapRequest = await prisma.skillSwapRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SkillSwapRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, SkillSwapRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillSwapRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SkillSwapRequests
+     * const skillSwapRequests = await prisma.skillSwapRequest.findMany()
+     * 
+     * // Get first 10 SkillSwapRequests
+     * const skillSwapRequests = await prisma.skillSwapRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const skillSwapRequestWithIdOnly = await prisma.skillSwapRequest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SkillSwapRequestFindManyArgs>(args?: SelectSubset<T, SkillSwapRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SkillSwapRequest.
+     * @param {SkillSwapRequestCreateArgs} args - Arguments to create a SkillSwapRequest.
+     * @example
+     * // Create one SkillSwapRequest
+     * const SkillSwapRequest = await prisma.skillSwapRequest.create({
+     *   data: {
+     *     // ... data to create a SkillSwapRequest
+     *   }
+     * })
+     * 
+     */
+    create<T extends SkillSwapRequestCreateArgs>(args: SelectSubset<T, SkillSwapRequestCreateArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SkillSwapRequests.
+     * @param {SkillSwapRequestCreateManyArgs} args - Arguments to create many SkillSwapRequests.
+     * @example
+     * // Create many SkillSwapRequests
+     * const skillSwapRequest = await prisma.skillSwapRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SkillSwapRequestCreateManyArgs>(args?: SelectSubset<T, SkillSwapRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a SkillSwapRequest.
+     * @param {SkillSwapRequestDeleteArgs} args - Arguments to delete one SkillSwapRequest.
+     * @example
+     * // Delete one SkillSwapRequest
+     * const SkillSwapRequest = await prisma.skillSwapRequest.delete({
+     *   where: {
+     *     // ... filter to delete one SkillSwapRequest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SkillSwapRequestDeleteArgs>(args: SelectSubset<T, SkillSwapRequestDeleteArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SkillSwapRequest.
+     * @param {SkillSwapRequestUpdateArgs} args - Arguments to update one SkillSwapRequest.
+     * @example
+     * // Update one SkillSwapRequest
+     * const skillSwapRequest = await prisma.skillSwapRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SkillSwapRequestUpdateArgs>(args: SelectSubset<T, SkillSwapRequestUpdateArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SkillSwapRequests.
+     * @param {SkillSwapRequestDeleteManyArgs} args - Arguments to filter SkillSwapRequests to delete.
+     * @example
+     * // Delete a few SkillSwapRequests
+     * const { count } = await prisma.skillSwapRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SkillSwapRequestDeleteManyArgs>(args?: SelectSubset<T, SkillSwapRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkillSwapRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SkillSwapRequests
+     * const skillSwapRequest = await prisma.skillSwapRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SkillSwapRequestUpdateManyArgs>(args: SelectSubset<T, SkillSwapRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SkillSwapRequest.
+     * @param {SkillSwapRequestUpsertArgs} args - Arguments to update or create a SkillSwapRequest.
+     * @example
+     * // Update or create a SkillSwapRequest
+     * const skillSwapRequest = await prisma.skillSwapRequest.upsert({
+     *   create: {
+     *     // ... data to create a SkillSwapRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SkillSwapRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SkillSwapRequestUpsertArgs>(args: SelectSubset<T, SkillSwapRequestUpsertArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillSwapRequests that matches the filter.
+     * @param {SkillSwapRequestFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const skillSwapRequest = await prisma.skillSwapRequest.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: SkillSwapRequestFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a SkillSwapRequest.
+     * @param {SkillSwapRequestAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const skillSwapRequest = await prisma.skillSwapRequest.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: SkillSwapRequestAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of SkillSwapRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapRequestCountArgs} args - Arguments to filter SkillSwapRequests to count.
+     * @example
+     * // Count the number of SkillSwapRequests
+     * const count = await prisma.skillSwapRequest.count({
+     *   where: {
+     *     // ... the filter for the SkillSwapRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends SkillSwapRequestCountArgs>(
+      args?: Subset<T, SkillSwapRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SkillSwapRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SkillSwapRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SkillSwapRequestAggregateArgs>(args: Subset<T, SkillSwapRequestAggregateArgs>): Prisma.PrismaPromise<GetSkillSwapRequestAggregateType<T>>
+
+    /**
+     * Group by SkillSwapRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SkillSwapRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SkillSwapRequestGroupByArgs['orderBy'] }
+        : { orderBy?: SkillSwapRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SkillSwapRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSkillSwapRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SkillSwapRequest model
+   */
+  readonly fields: SkillSwapRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SkillSwapRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SkillSwapRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    availability<T extends SkillSwapRequest$availabilityArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapRequest$availabilityArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    requester<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    accepter<T extends SkillSwapRequest$accepterArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapRequest$accepterArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    skillSwapSession<T extends SkillSwapRequest$skillSwapSessionArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapRequest$skillSwapSessionArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SkillSwapRequest model
+   */
+  interface SkillSwapRequestFieldRefs {
+    readonly id: FieldRef<"SkillSwapRequest", 'String'>
+    readonly requesterTimezone: FieldRef<"SkillSwapRequest", 'String'>
+    readonly closed: FieldRef<"SkillSwapRequest", 'Boolean'>
+    readonly closedAt: FieldRef<"SkillSwapRequest", 'DateTime'>
+    readonly requestedSkill: FieldRef<"SkillSwapRequest", 'String'>
+    readonly createdAt: FieldRef<"SkillSwapRequest", 'DateTime'>
+    readonly requesterId: FieldRef<"SkillSwapRequest", 'String'>
+    readonly accepterId: FieldRef<"SkillSwapRequest", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SkillSwapRequest findUnique
+   */
+  export type SkillSwapRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapRequest to fetch.
+     */
+    where: SkillSwapRequestWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapRequest findUniqueOrThrow
+   */
+  export type SkillSwapRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapRequest to fetch.
+     */
+    where: SkillSwapRequestWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapRequest findFirst
+   */
+  export type SkillSwapRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapRequest to fetch.
+     */
+    where?: SkillSwapRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapRequests to fetch.
+     */
+    orderBy?: SkillSwapRequestOrderByWithRelationInput | SkillSwapRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillSwapRequests.
+     */
+    cursor?: SkillSwapRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillSwapRequests.
+     */
+    distinct?: SkillSwapRequestScalarFieldEnum | SkillSwapRequestScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapRequest findFirstOrThrow
+   */
+  export type SkillSwapRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapRequest to fetch.
+     */
+    where?: SkillSwapRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapRequests to fetch.
+     */
+    orderBy?: SkillSwapRequestOrderByWithRelationInput | SkillSwapRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillSwapRequests.
+     */
+    cursor?: SkillSwapRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillSwapRequests.
+     */
+    distinct?: SkillSwapRequestScalarFieldEnum | SkillSwapRequestScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapRequest findMany
+   */
+  export type SkillSwapRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapRequests to fetch.
+     */
+    where?: SkillSwapRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapRequests to fetch.
+     */
+    orderBy?: SkillSwapRequestOrderByWithRelationInput | SkillSwapRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SkillSwapRequests.
+     */
+    cursor?: SkillSwapRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapRequests.
+     */
+    skip?: number
+    distinct?: SkillSwapRequestScalarFieldEnum | SkillSwapRequestScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapRequest create
+   */
+  export type SkillSwapRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SkillSwapRequest.
+     */
+    data: XOR<SkillSwapRequestCreateInput, SkillSwapRequestUncheckedCreateInput>
+  }
+
+  /**
+   * SkillSwapRequest createMany
+   */
+  export type SkillSwapRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SkillSwapRequests.
+     */
+    data: SkillSwapRequestCreateManyInput | SkillSwapRequestCreateManyInput[]
+  }
+
+  /**
+   * SkillSwapRequest update
+   */
+  export type SkillSwapRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SkillSwapRequest.
+     */
+    data: XOR<SkillSwapRequestUpdateInput, SkillSwapRequestUncheckedUpdateInput>
+    /**
+     * Choose, which SkillSwapRequest to update.
+     */
+    where: SkillSwapRequestWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapRequest updateMany
+   */
+  export type SkillSwapRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SkillSwapRequests.
+     */
+    data: XOR<SkillSwapRequestUpdateManyMutationInput, SkillSwapRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which SkillSwapRequests to update
+     */
+    where?: SkillSwapRequestWhereInput
+    /**
+     * Limit how many SkillSwapRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillSwapRequest upsert
+   */
+  export type SkillSwapRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SkillSwapRequest to update in case it exists.
+     */
+    where: SkillSwapRequestWhereUniqueInput
+    /**
+     * In case the SkillSwapRequest found by the `where` argument doesn't exist, create a new SkillSwapRequest with this data.
+     */
+    create: XOR<SkillSwapRequestCreateInput, SkillSwapRequestUncheckedCreateInput>
+    /**
+     * In case the SkillSwapRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SkillSwapRequestUpdateInput, SkillSwapRequestUncheckedUpdateInput>
+  }
+
+  /**
+   * SkillSwapRequest delete
+   */
+  export type SkillSwapRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+    /**
+     * Filter which SkillSwapRequest to delete.
+     */
+    where: SkillSwapRequestWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapRequest deleteMany
+   */
+  export type SkillSwapRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillSwapRequests to delete
+     */
+    where?: SkillSwapRequestWhereInput
+    /**
+     * Limit how many SkillSwapRequests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillSwapRequest findRaw
+   */
+  export type SkillSwapRequestFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * SkillSwapRequest aggregateRaw
+   */
+  export type SkillSwapRequestAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * SkillSwapRequest.availability
+   */
+  export type SkillSwapRequest$availabilityArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    where?: ScheduleWhereInput
+    orderBy?: ScheduleOrderByWithRelationInput | ScheduleOrderByWithRelationInput[]
+    cursor?: ScheduleWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ScheduleScalarFieldEnum | ScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapRequest.accepter
+   */
+  export type SkillSwapRequest$accepterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * SkillSwapRequest.skillSwapSession
+   */
+  export type SkillSwapRequest$skillSwapSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    where?: SkillSwapSessionWhereInput
+  }
+
+  /**
+   * SkillSwapRequest without action
+   */
+  export type SkillSwapRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapRequest
+     */
+    select?: SkillSwapRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapRequest
+     */
+    omit?: SkillSwapRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapRequestInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Schedule
+   */
+
+  export type AggregateSchedule = {
+    _count: ScheduleCountAggregateOutputType | null
+    _min: ScheduleMinAggregateOutputType | null
+    _max: ScheduleMaxAggregateOutputType | null
+  }
+
+  export type ScheduleMinAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    startTime: string | null
+    endTime: string | null
+    skillSwapRequestId: string | null
+  }
+
+  export type ScheduleMaxAggregateOutputType = {
+    id: string | null
+    date: Date | null
+    startTime: string | null
+    endTime: string | null
+    skillSwapRequestId: string | null
+  }
+
+  export type ScheduleCountAggregateOutputType = {
+    id: number
+    date: number
+    startTime: number
+    endTime: number
+    skillSwapRequestId: number
+    _all: number
+  }
+
+
+  export type ScheduleMinAggregateInputType = {
+    id?: true
+    date?: true
+    startTime?: true
+    endTime?: true
+    skillSwapRequestId?: true
+  }
+
+  export type ScheduleMaxAggregateInputType = {
+    id?: true
+    date?: true
+    startTime?: true
+    endTime?: true
+    skillSwapRequestId?: true
+  }
+
+  export type ScheduleCountAggregateInputType = {
+    id?: true
+    date?: true
+    startTime?: true
+    endTime?: true
+    skillSwapRequestId?: true
+    _all?: true
+  }
+
+  export type ScheduleAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Schedule to aggregate.
+     */
+    where?: ScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Schedules to fetch.
+     */
+    orderBy?: ScheduleOrderByWithRelationInput | ScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Schedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Schedules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Schedules
+    **/
+    _count?: true | ScheduleCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScheduleMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScheduleMaxAggregateInputType
+  }
+
+  export type GetScheduleAggregateType<T extends ScheduleAggregateArgs> = {
+        [P in keyof T & keyof AggregateSchedule]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSchedule[P]>
+      : GetScalarType<T[P], AggregateSchedule[P]>
+  }
+
+
+
+
+  export type ScheduleGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScheduleWhereInput
+    orderBy?: ScheduleOrderByWithAggregationInput | ScheduleOrderByWithAggregationInput[]
+    by: ScheduleScalarFieldEnum[] | ScheduleScalarFieldEnum
+    having?: ScheduleScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScheduleCountAggregateInputType | true
+    _min?: ScheduleMinAggregateInputType
+    _max?: ScheduleMaxAggregateInputType
+  }
+
+  export type ScheduleGroupByOutputType = {
+    id: string
+    date: Date
+    startTime: string
+    endTime: string
+    skillSwapRequestId: string
+    _count: ScheduleCountAggregateOutputType | null
+    _min: ScheduleMinAggregateOutputType | null
+    _max: ScheduleMaxAggregateOutputType | null
+  }
+
+  type GetScheduleGroupByPayload<T extends ScheduleGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScheduleGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScheduleGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScheduleGroupByOutputType[P]>
+            : GetScalarType<T[P], ScheduleGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScheduleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    skillSwapRequestId?: boolean
+    skillSwapRequest?: boolean | SkillSwapRequestDefaultArgs<ExtArgs>
+    skillSwapSession?: boolean | Schedule$skillSwapSessionArgs<ExtArgs>
+    _count?: boolean | ScheduleCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["schedule"]>
+
+
+
+  export type ScheduleSelectScalar = {
+    id?: boolean
+    date?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    skillSwapRequestId?: boolean
+  }
+
+  export type ScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "startTime" | "endTime" | "skillSwapRequestId", ExtArgs["result"]["schedule"]>
+  export type ScheduleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    skillSwapRequest?: boolean | SkillSwapRequestDefaultArgs<ExtArgs>
+    skillSwapSession?: boolean | Schedule$skillSwapSessionArgs<ExtArgs>
+    _count?: boolean | ScheduleCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $SchedulePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Schedule"
+    objects: {
+      skillSwapRequest: Prisma.$SkillSwapRequestPayload<ExtArgs>
+      skillSwapSession: Prisma.$SkillSwapSessionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      date: Date
+      startTime: string
+      endTime: string
+      skillSwapRequestId: string
+    }, ExtArgs["result"]["schedule"]>
+    composites: {}
+  }
+
+  type ScheduleGetPayload<S extends boolean | null | undefined | ScheduleDefaultArgs> = $Result.GetResult<Prisma.$SchedulePayload, S>
+
+  type ScheduleCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScheduleFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScheduleCountAggregateInputType | true
+    }
+
+  export interface ScheduleDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Schedule'], meta: { name: 'Schedule' } }
+    /**
+     * Find zero or one Schedule that matches the filter.
+     * @param {ScheduleFindUniqueArgs} args - Arguments to find a Schedule
+     * @example
+     * // Get one Schedule
+     * const schedule = await prisma.schedule.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScheduleFindUniqueArgs>(args: SelectSubset<T, ScheduleFindUniqueArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Schedule that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScheduleFindUniqueOrThrowArgs} args - Arguments to find a Schedule
+     * @example
+     * // Get one Schedule
+     * const schedule = await prisma.schedule.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScheduleFindUniqueOrThrowArgs>(args: SelectSubset<T, ScheduleFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Schedule that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleFindFirstArgs} args - Arguments to find a Schedule
+     * @example
+     * // Get one Schedule
+     * const schedule = await prisma.schedule.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScheduleFindFirstArgs>(args?: SelectSubset<T, ScheduleFindFirstArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Schedule that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleFindFirstOrThrowArgs} args - Arguments to find a Schedule
+     * @example
+     * // Get one Schedule
+     * const schedule = await prisma.schedule.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScheduleFindFirstOrThrowArgs>(args?: SelectSubset<T, ScheduleFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Schedules that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Schedules
+     * const schedules = await prisma.schedule.findMany()
+     * 
+     * // Get first 10 Schedules
+     * const schedules = await prisma.schedule.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scheduleWithIdOnly = await prisma.schedule.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScheduleFindManyArgs>(args?: SelectSubset<T, ScheduleFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Schedule.
+     * @param {ScheduleCreateArgs} args - Arguments to create a Schedule.
+     * @example
+     * // Create one Schedule
+     * const Schedule = await prisma.schedule.create({
+     *   data: {
+     *     // ... data to create a Schedule
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScheduleCreateArgs>(args: SelectSubset<T, ScheduleCreateArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Schedules.
+     * @param {ScheduleCreateManyArgs} args - Arguments to create many Schedules.
+     * @example
+     * // Create many Schedules
+     * const schedule = await prisma.schedule.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScheduleCreateManyArgs>(args?: SelectSubset<T, ScheduleCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Schedule.
+     * @param {ScheduleDeleteArgs} args - Arguments to delete one Schedule.
+     * @example
+     * // Delete one Schedule
+     * const Schedule = await prisma.schedule.delete({
+     *   where: {
+     *     // ... filter to delete one Schedule
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScheduleDeleteArgs>(args: SelectSubset<T, ScheduleDeleteArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Schedule.
+     * @param {ScheduleUpdateArgs} args - Arguments to update one Schedule.
+     * @example
+     * // Update one Schedule
+     * const schedule = await prisma.schedule.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScheduleUpdateArgs>(args: SelectSubset<T, ScheduleUpdateArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Schedules.
+     * @param {ScheduleDeleteManyArgs} args - Arguments to filter Schedules to delete.
+     * @example
+     * // Delete a few Schedules
+     * const { count } = await prisma.schedule.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScheduleDeleteManyArgs>(args?: SelectSubset<T, ScheduleDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Schedules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Schedules
+     * const schedule = await prisma.schedule.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScheduleUpdateManyArgs>(args: SelectSubset<T, ScheduleUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Schedule.
+     * @param {ScheduleUpsertArgs} args - Arguments to update or create a Schedule.
+     * @example
+     * // Update or create a Schedule
+     * const schedule = await prisma.schedule.upsert({
+     *   create: {
+     *     // ... data to create a Schedule
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Schedule we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScheduleUpsertArgs>(args: SelectSubset<T, ScheduleUpsertArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Schedules that matches the filter.
+     * @param {ScheduleFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const schedule = await prisma.schedule.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: ScheduleFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a Schedule.
+     * @param {ScheduleAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const schedule = await prisma.schedule.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: ScheduleAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of Schedules.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleCountArgs} args - Arguments to filter Schedules to count.
+     * @example
+     * // Count the number of Schedules
+     * const count = await prisma.schedule.count({
+     *   where: {
+     *     // ... the filter for the Schedules we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScheduleCountArgs>(
+      args?: Subset<T, ScheduleCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScheduleCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Schedule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScheduleAggregateArgs>(args: Subset<T, ScheduleAggregateArgs>): Prisma.PrismaPromise<GetScheduleAggregateType<T>>
+
+    /**
+     * Group by Schedule.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScheduleGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScheduleGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScheduleGroupByArgs['orderBy'] }
+        : { orderBy?: ScheduleGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScheduleGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScheduleGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Schedule model
+   */
+  readonly fields: ScheduleFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Schedule.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScheduleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    skillSwapRequest<T extends SkillSwapRequestDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapRequestDefaultArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    skillSwapSession<T extends Schedule$skillSwapSessionArgs<ExtArgs> = {}>(args?: Subset<T, Schedule$skillSwapSessionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Schedule model
+   */
+  interface ScheduleFieldRefs {
+    readonly id: FieldRef<"Schedule", 'String'>
+    readonly date: FieldRef<"Schedule", 'DateTime'>
+    readonly startTime: FieldRef<"Schedule", 'String'>
+    readonly endTime: FieldRef<"Schedule", 'String'>
+    readonly skillSwapRequestId: FieldRef<"Schedule", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Schedule findUnique
+   */
+  export type ScheduleFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Schedule to fetch.
+     */
+    where: ScheduleWhereUniqueInput
+  }
+
+  /**
+   * Schedule findUniqueOrThrow
+   */
+  export type ScheduleFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Schedule to fetch.
+     */
+    where: ScheduleWhereUniqueInput
+  }
+
+  /**
+   * Schedule findFirst
+   */
+  export type ScheduleFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Schedule to fetch.
+     */
+    where?: ScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Schedules to fetch.
+     */
+    orderBy?: ScheduleOrderByWithRelationInput | ScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Schedules.
+     */
+    cursor?: ScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Schedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Schedules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Schedules.
+     */
+    distinct?: ScheduleScalarFieldEnum | ScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * Schedule findFirstOrThrow
+   */
+  export type ScheduleFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Schedule to fetch.
+     */
+    where?: ScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Schedules to fetch.
+     */
+    orderBy?: ScheduleOrderByWithRelationInput | ScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Schedules.
+     */
+    cursor?: ScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Schedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Schedules.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Schedules.
+     */
+    distinct?: ScheduleScalarFieldEnum | ScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * Schedule findMany
+   */
+  export type ScheduleFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * Filter, which Schedules to fetch.
+     */
+    where?: ScheduleWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Schedules to fetch.
+     */
+    orderBy?: ScheduleOrderByWithRelationInput | ScheduleOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Schedules.
+     */
+    cursor?: ScheduleWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Schedules from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Schedules.
+     */
+    skip?: number
+    distinct?: ScheduleScalarFieldEnum | ScheduleScalarFieldEnum[]
+  }
+
+  /**
+   * Schedule create
+   */
+  export type ScheduleCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Schedule.
+     */
+    data: XOR<ScheduleCreateInput, ScheduleUncheckedCreateInput>
+  }
+
+  /**
+   * Schedule createMany
+   */
+  export type ScheduleCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Schedules.
+     */
+    data: ScheduleCreateManyInput | ScheduleCreateManyInput[]
+  }
+
+  /**
+   * Schedule update
+   */
+  export type ScheduleUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Schedule.
+     */
+    data: XOR<ScheduleUpdateInput, ScheduleUncheckedUpdateInput>
+    /**
+     * Choose, which Schedule to update.
+     */
+    where: ScheduleWhereUniqueInput
+  }
+
+  /**
+   * Schedule updateMany
+   */
+  export type ScheduleUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Schedules.
+     */
+    data: XOR<ScheduleUpdateManyMutationInput, ScheduleUncheckedUpdateManyInput>
+    /**
+     * Filter which Schedules to update
+     */
+    where?: ScheduleWhereInput
+    /**
+     * Limit how many Schedules to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Schedule upsert
+   */
+  export type ScheduleUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Schedule to update in case it exists.
+     */
+    where: ScheduleWhereUniqueInput
+    /**
+     * In case the Schedule found by the `where` argument doesn't exist, create a new Schedule with this data.
+     */
+    create: XOR<ScheduleCreateInput, ScheduleUncheckedCreateInput>
+    /**
+     * In case the Schedule was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScheduleUpdateInput, ScheduleUncheckedUpdateInput>
+  }
+
+  /**
+   * Schedule delete
+   */
+  export type ScheduleDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+    /**
+     * Filter which Schedule to delete.
+     */
+    where: ScheduleWhereUniqueInput
+  }
+
+  /**
+   * Schedule deleteMany
+   */
+  export type ScheduleDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Schedules to delete
+     */
+    where?: ScheduleWhereInput
+    /**
+     * Limit how many Schedules to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Schedule findRaw
+   */
+  export type ScheduleFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Schedule aggregateRaw
+   */
+  export type ScheduleAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * Schedule.skillSwapSession
+   */
+  export type Schedule$skillSwapSessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    where?: SkillSwapSessionWhereInput
+    orderBy?: SkillSwapSessionOrderByWithRelationInput | SkillSwapSessionOrderByWithRelationInput[]
+    cursor?: SkillSwapSessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkillSwapSessionScalarFieldEnum | SkillSwapSessionScalarFieldEnum[]
+  }
+
+  /**
+   * Schedule without action
+   */
+  export type ScheduleDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Schedule
+     */
+    select?: ScheduleSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Schedule
+     */
+    omit?: ScheduleOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ScheduleInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SkillSwapSession
+   */
+
+  export type AggregateSkillSwapSession = {
+    _count: SkillSwapSessionCountAggregateOutputType | null
+    _min: SkillSwapSessionMinAggregateOutputType | null
+    _max: SkillSwapSessionMaxAggregateOutputType | null
+  }
+
+  export type SkillSwapSessionMinAggregateOutputType = {
+    id: string | null
+    status: $Enums.ScheduleStatus | null
+    offeredSkill: string | null
+    createdAt: Date | null
+    scheduleId: string | null
+    skillSwapRequestId: string | null
+  }
+
+  export type SkillSwapSessionMaxAggregateOutputType = {
+    id: string | null
+    status: $Enums.ScheduleStatus | null
+    offeredSkill: string | null
+    createdAt: Date | null
+    scheduleId: string | null
+    skillSwapRequestId: string | null
+  }
+
+  export type SkillSwapSessionCountAggregateOutputType = {
+    id: number
+    status: number
+    offeredSkill: number
+    createdAt: number
+    scheduleId: number
+    skillSwapRequestId: number
+    _all: number
+  }
+
+
+  export type SkillSwapSessionMinAggregateInputType = {
+    id?: true
+    status?: true
+    offeredSkill?: true
+    createdAt?: true
+    scheduleId?: true
+    skillSwapRequestId?: true
+  }
+
+  export type SkillSwapSessionMaxAggregateInputType = {
+    id?: true
+    status?: true
+    offeredSkill?: true
+    createdAt?: true
+    scheduleId?: true
+    skillSwapRequestId?: true
+  }
+
+  export type SkillSwapSessionCountAggregateInputType = {
+    id?: true
+    status?: true
+    offeredSkill?: true
+    createdAt?: true
+    scheduleId?: true
+    skillSwapRequestId?: true
+    _all?: true
+  }
+
+  export type SkillSwapSessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillSwapSession to aggregate.
+     */
+    where?: SkillSwapSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessions to fetch.
+     */
+    orderBy?: SkillSwapSessionOrderByWithRelationInput | SkillSwapSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SkillSwapSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SkillSwapSessions
+    **/
+    _count?: true | SkillSwapSessionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SkillSwapSessionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SkillSwapSessionMaxAggregateInputType
+  }
+
+  export type GetSkillSwapSessionAggregateType<T extends SkillSwapSessionAggregateArgs> = {
+        [P in keyof T & keyof AggregateSkillSwapSession]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSkillSwapSession[P]>
+      : GetScalarType<T[P], AggregateSkillSwapSession[P]>
+  }
+
+
+
+
+  export type SkillSwapSessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapSessionWhereInput
+    orderBy?: SkillSwapSessionOrderByWithAggregationInput | SkillSwapSessionOrderByWithAggregationInput[]
+    by: SkillSwapSessionScalarFieldEnum[] | SkillSwapSessionScalarFieldEnum
+    having?: SkillSwapSessionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SkillSwapSessionCountAggregateInputType | true
+    _min?: SkillSwapSessionMinAggregateInputType
+    _max?: SkillSwapSessionMaxAggregateInputType
+  }
+
+  export type SkillSwapSessionGroupByOutputType = {
+    id: string
+    status: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt: Date
+    scheduleId: string
+    skillSwapRequestId: string
+    _count: SkillSwapSessionCountAggregateOutputType | null
+    _min: SkillSwapSessionMinAggregateOutputType | null
+    _max: SkillSwapSessionMaxAggregateOutputType | null
+  }
+
+  type GetSkillSwapSessionGroupByPayload<T extends SkillSwapSessionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SkillSwapSessionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SkillSwapSessionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SkillSwapSessionGroupByOutputType[P]>
+            : GetScalarType<T[P], SkillSwapSessionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SkillSwapSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    status?: boolean
+    offeredSkill?: boolean
+    createdAt?: boolean
+    scheduleId?: boolean
+    skillSwapRequestId?: boolean
+    skillSwapRequest?: boolean | SkillSwapRequestDefaultArgs<ExtArgs>
+    schedule?: boolean | ScheduleDefaultArgs<ExtArgs>
+    chatMessages?: boolean | SkillSwapSession$chatMessagesArgs<ExtArgs>
+    _count?: boolean | SkillSwapSessionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skillSwapSession"]>
+
+
+
+  export type SkillSwapSessionSelectScalar = {
+    id?: boolean
+    status?: boolean
+    offeredSkill?: boolean
+    createdAt?: boolean
+    scheduleId?: boolean
+    skillSwapRequestId?: boolean
+  }
+
+  export type SkillSwapSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "offeredSkill" | "createdAt" | "scheduleId" | "skillSwapRequestId", ExtArgs["result"]["skillSwapSession"]>
+  export type SkillSwapSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    skillSwapRequest?: boolean | SkillSwapRequestDefaultArgs<ExtArgs>
+    schedule?: boolean | ScheduleDefaultArgs<ExtArgs>
+    chatMessages?: boolean | SkillSwapSession$chatMessagesArgs<ExtArgs>
+    _count?: boolean | SkillSwapSessionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $SkillSwapSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SkillSwapSession"
+    objects: {
+      skillSwapRequest: Prisma.$SkillSwapRequestPayload<ExtArgs>
+      schedule: Prisma.$SchedulePayload<ExtArgs>
+      chatMessages: Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      status: $Enums.ScheduleStatus
+      offeredSkill: string
+      createdAt: Date
+      scheduleId: string
+      skillSwapRequestId: string
+    }, ExtArgs["result"]["skillSwapSession"]>
+    composites: {}
+  }
+
+  type SkillSwapSessionGetPayload<S extends boolean | null | undefined | SkillSwapSessionDefaultArgs> = $Result.GetResult<Prisma.$SkillSwapSessionPayload, S>
+
+  type SkillSwapSessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SkillSwapSessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SkillSwapSessionCountAggregateInputType | true
+    }
+
+  export interface SkillSwapSessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SkillSwapSession'], meta: { name: 'SkillSwapSession' } }
+    /**
+     * Find zero or one SkillSwapSession that matches the filter.
+     * @param {SkillSwapSessionFindUniqueArgs} args - Arguments to find a SkillSwapSession
+     * @example
+     * // Get one SkillSwapSession
+     * const skillSwapSession = await prisma.skillSwapSession.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SkillSwapSessionFindUniqueArgs>(args: SelectSubset<T, SkillSwapSessionFindUniqueArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SkillSwapSession that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SkillSwapSessionFindUniqueOrThrowArgs} args - Arguments to find a SkillSwapSession
+     * @example
+     * // Get one SkillSwapSession
+     * const skillSwapSession = await prisma.skillSwapSession.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SkillSwapSessionFindUniqueOrThrowArgs>(args: SelectSubset<T, SkillSwapSessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillSwapSession that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionFindFirstArgs} args - Arguments to find a SkillSwapSession
+     * @example
+     * // Get one SkillSwapSession
+     * const skillSwapSession = await prisma.skillSwapSession.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SkillSwapSessionFindFirstArgs>(args?: SelectSubset<T, SkillSwapSessionFindFirstArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillSwapSession that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionFindFirstOrThrowArgs} args - Arguments to find a SkillSwapSession
+     * @example
+     * // Get one SkillSwapSession
+     * const skillSwapSession = await prisma.skillSwapSession.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SkillSwapSessionFindFirstOrThrowArgs>(args?: SelectSubset<T, SkillSwapSessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillSwapSessions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SkillSwapSessions
+     * const skillSwapSessions = await prisma.skillSwapSession.findMany()
+     * 
+     * // Get first 10 SkillSwapSessions
+     * const skillSwapSessions = await prisma.skillSwapSession.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const skillSwapSessionWithIdOnly = await prisma.skillSwapSession.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SkillSwapSessionFindManyArgs>(args?: SelectSubset<T, SkillSwapSessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SkillSwapSession.
+     * @param {SkillSwapSessionCreateArgs} args - Arguments to create a SkillSwapSession.
+     * @example
+     * // Create one SkillSwapSession
+     * const SkillSwapSession = await prisma.skillSwapSession.create({
+     *   data: {
+     *     // ... data to create a SkillSwapSession
+     *   }
+     * })
+     * 
+     */
+    create<T extends SkillSwapSessionCreateArgs>(args: SelectSubset<T, SkillSwapSessionCreateArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SkillSwapSessions.
+     * @param {SkillSwapSessionCreateManyArgs} args - Arguments to create many SkillSwapSessions.
+     * @example
+     * // Create many SkillSwapSessions
+     * const skillSwapSession = await prisma.skillSwapSession.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SkillSwapSessionCreateManyArgs>(args?: SelectSubset<T, SkillSwapSessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a SkillSwapSession.
+     * @param {SkillSwapSessionDeleteArgs} args - Arguments to delete one SkillSwapSession.
+     * @example
+     * // Delete one SkillSwapSession
+     * const SkillSwapSession = await prisma.skillSwapSession.delete({
+     *   where: {
+     *     // ... filter to delete one SkillSwapSession
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SkillSwapSessionDeleteArgs>(args: SelectSubset<T, SkillSwapSessionDeleteArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SkillSwapSession.
+     * @param {SkillSwapSessionUpdateArgs} args - Arguments to update one SkillSwapSession.
+     * @example
+     * // Update one SkillSwapSession
+     * const skillSwapSession = await prisma.skillSwapSession.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SkillSwapSessionUpdateArgs>(args: SelectSubset<T, SkillSwapSessionUpdateArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SkillSwapSessions.
+     * @param {SkillSwapSessionDeleteManyArgs} args - Arguments to filter SkillSwapSessions to delete.
+     * @example
+     * // Delete a few SkillSwapSessions
+     * const { count } = await prisma.skillSwapSession.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SkillSwapSessionDeleteManyArgs>(args?: SelectSubset<T, SkillSwapSessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkillSwapSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SkillSwapSessions
+     * const skillSwapSession = await prisma.skillSwapSession.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SkillSwapSessionUpdateManyArgs>(args: SelectSubset<T, SkillSwapSessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SkillSwapSession.
+     * @param {SkillSwapSessionUpsertArgs} args - Arguments to update or create a SkillSwapSession.
+     * @example
+     * // Update or create a SkillSwapSession
+     * const skillSwapSession = await prisma.skillSwapSession.upsert({
+     *   create: {
+     *     // ... data to create a SkillSwapSession
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SkillSwapSession we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SkillSwapSessionUpsertArgs>(args: SelectSubset<T, SkillSwapSessionUpsertArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillSwapSessions that matches the filter.
+     * @param {SkillSwapSessionFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const skillSwapSession = await prisma.skillSwapSession.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: SkillSwapSessionFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a SkillSwapSession.
+     * @param {SkillSwapSessionAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const skillSwapSession = await prisma.skillSwapSession.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: SkillSwapSessionAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of SkillSwapSessions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionCountArgs} args - Arguments to filter SkillSwapSessions to count.
+     * @example
+     * // Count the number of SkillSwapSessions
+     * const count = await prisma.skillSwapSession.count({
+     *   where: {
+     *     // ... the filter for the SkillSwapSessions we want to count
+     *   }
+     * })
+    **/
+    count<T extends SkillSwapSessionCountArgs>(
+      args?: Subset<T, SkillSwapSessionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SkillSwapSessionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SkillSwapSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SkillSwapSessionAggregateArgs>(args: Subset<T, SkillSwapSessionAggregateArgs>): Prisma.PrismaPromise<GetSkillSwapSessionAggregateType<T>>
+
+    /**
+     * Group by SkillSwapSession.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SkillSwapSessionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SkillSwapSessionGroupByArgs['orderBy'] }
+        : { orderBy?: SkillSwapSessionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SkillSwapSessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSkillSwapSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SkillSwapSession model
+   */
+  readonly fields: SkillSwapSessionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SkillSwapSession.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SkillSwapSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    skillSwapRequest<T extends SkillSwapRequestDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapRequestDefaultArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    schedule<T extends ScheduleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ScheduleDefaultArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    chatMessages<T extends SkillSwapSession$chatMessagesArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapSession$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SkillSwapSession model
+   */
+  interface SkillSwapSessionFieldRefs {
+    readonly id: FieldRef<"SkillSwapSession", 'String'>
+    readonly status: FieldRef<"SkillSwapSession", 'ScheduleStatus'>
+    readonly offeredSkill: FieldRef<"SkillSwapSession", 'String'>
+    readonly createdAt: FieldRef<"SkillSwapSession", 'DateTime'>
+    readonly scheduleId: FieldRef<"SkillSwapSession", 'String'>
+    readonly skillSwapRequestId: FieldRef<"SkillSwapSession", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SkillSwapSession findUnique
+   */
+  export type SkillSwapSessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSession to fetch.
+     */
+    where: SkillSwapSessionWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSession findUniqueOrThrow
+   */
+  export type SkillSwapSessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSession to fetch.
+     */
+    where: SkillSwapSessionWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSession findFirst
+   */
+  export type SkillSwapSessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSession to fetch.
+     */
+    where?: SkillSwapSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessions to fetch.
+     */
+    orderBy?: SkillSwapSessionOrderByWithRelationInput | SkillSwapSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillSwapSessions.
+     */
+    cursor?: SkillSwapSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillSwapSessions.
+     */
+    distinct?: SkillSwapSessionScalarFieldEnum | SkillSwapSessionScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapSession findFirstOrThrow
+   */
+  export type SkillSwapSessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSession to fetch.
+     */
+    where?: SkillSwapSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessions to fetch.
+     */
+    orderBy?: SkillSwapSessionOrderByWithRelationInput | SkillSwapSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillSwapSessions.
+     */
+    cursor?: SkillSwapSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillSwapSessions.
+     */
+    distinct?: SkillSwapSessionScalarFieldEnum | SkillSwapSessionScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapSession findMany
+   */
+  export type SkillSwapSessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSessions to fetch.
+     */
+    where?: SkillSwapSessionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessions to fetch.
+     */
+    orderBy?: SkillSwapSessionOrderByWithRelationInput | SkillSwapSessionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SkillSwapSessions.
+     */
+    cursor?: SkillSwapSessionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessions.
+     */
+    skip?: number
+    distinct?: SkillSwapSessionScalarFieldEnum | SkillSwapSessionScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapSession create
+   */
+  export type SkillSwapSessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SkillSwapSession.
+     */
+    data: XOR<SkillSwapSessionCreateInput, SkillSwapSessionUncheckedCreateInput>
+  }
+
+  /**
+   * SkillSwapSession createMany
+   */
+  export type SkillSwapSessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SkillSwapSessions.
+     */
+    data: SkillSwapSessionCreateManyInput | SkillSwapSessionCreateManyInput[]
+  }
+
+  /**
+   * SkillSwapSession update
+   */
+  export type SkillSwapSessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SkillSwapSession.
+     */
+    data: XOR<SkillSwapSessionUpdateInput, SkillSwapSessionUncheckedUpdateInput>
+    /**
+     * Choose, which SkillSwapSession to update.
+     */
+    where: SkillSwapSessionWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSession updateMany
+   */
+  export type SkillSwapSessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SkillSwapSessions.
+     */
+    data: XOR<SkillSwapSessionUpdateManyMutationInput, SkillSwapSessionUncheckedUpdateManyInput>
+    /**
+     * Filter which SkillSwapSessions to update
+     */
+    where?: SkillSwapSessionWhereInput
+    /**
+     * Limit how many SkillSwapSessions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillSwapSession upsert
+   */
+  export type SkillSwapSessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SkillSwapSession to update in case it exists.
+     */
+    where: SkillSwapSessionWhereUniqueInput
+    /**
+     * In case the SkillSwapSession found by the `where` argument doesn't exist, create a new SkillSwapSession with this data.
+     */
+    create: XOR<SkillSwapSessionCreateInput, SkillSwapSessionUncheckedCreateInput>
+    /**
+     * In case the SkillSwapSession was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SkillSwapSessionUpdateInput, SkillSwapSessionUncheckedUpdateInput>
+  }
+
+  /**
+   * SkillSwapSession delete
+   */
+  export type SkillSwapSessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+    /**
+     * Filter which SkillSwapSession to delete.
+     */
+    where: SkillSwapSessionWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSession deleteMany
+   */
+  export type SkillSwapSessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillSwapSessions to delete
+     */
+    where?: SkillSwapSessionWhereInput
+    /**
+     * Limit how many SkillSwapSessions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillSwapSession findRaw
+   */
+  export type SkillSwapSessionFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * SkillSwapSession aggregateRaw
+   */
+  export type SkillSwapSessionAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * SkillSwapSession.chatMessages
+   */
+  export type SkillSwapSession$chatMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    where?: SkillSwapSessionChatMessageWhereInput
+    orderBy?: SkillSwapSessionChatMessageOrderByWithRelationInput | SkillSwapSessionChatMessageOrderByWithRelationInput[]
+    cursor?: SkillSwapSessionChatMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkillSwapSessionChatMessageScalarFieldEnum | SkillSwapSessionChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapSession without action
+   */
+  export type SkillSwapSessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSession
+     */
+    select?: SkillSwapSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSession
+     */
+    omit?: SkillSwapSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SkillSwapSessionChatMessage
+   */
+
+  export type AggregateSkillSwapSessionChatMessage = {
+    _count: SkillSwapSessionChatMessageCountAggregateOutputType | null
+    _min: SkillSwapSessionChatMessageMinAggregateOutputType | null
+    _max: SkillSwapSessionChatMessageMaxAggregateOutputType | null
+  }
+
+  export type SkillSwapSessionChatMessageMinAggregateOutputType = {
+    id: string | null
+    content: string | null
+    createdAt: Date | null
+    senderId: string | null
+    skillSwapSessionId: string | null
+  }
+
+  export type SkillSwapSessionChatMessageMaxAggregateOutputType = {
+    id: string | null
+    content: string | null
+    createdAt: Date | null
+    senderId: string | null
+    skillSwapSessionId: string | null
+  }
+
+  export type SkillSwapSessionChatMessageCountAggregateOutputType = {
+    id: number
+    content: number
+    createdAt: number
+    senderId: number
+    skillSwapSessionId: number
+    _all: number
+  }
+
+
+  export type SkillSwapSessionChatMessageMinAggregateInputType = {
+    id?: true
+    content?: true
+    createdAt?: true
+    senderId?: true
+    skillSwapSessionId?: true
+  }
+
+  export type SkillSwapSessionChatMessageMaxAggregateInputType = {
+    id?: true
+    content?: true
+    createdAt?: true
+    senderId?: true
+    skillSwapSessionId?: true
+  }
+
+  export type SkillSwapSessionChatMessageCountAggregateInputType = {
+    id?: true
+    content?: true
+    createdAt?: true
+    senderId?: true
+    skillSwapSessionId?: true
+    _all?: true
+  }
+
+  export type SkillSwapSessionChatMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillSwapSessionChatMessage to aggregate.
+     */
+    where?: SkillSwapSessionChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessionChatMessages to fetch.
+     */
+    orderBy?: SkillSwapSessionChatMessageOrderByWithRelationInput | SkillSwapSessionChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SkillSwapSessionChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessionChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessionChatMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SkillSwapSessionChatMessages
+    **/
+    _count?: true | SkillSwapSessionChatMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SkillSwapSessionChatMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SkillSwapSessionChatMessageMaxAggregateInputType
+  }
+
+  export type GetSkillSwapSessionChatMessageAggregateType<T extends SkillSwapSessionChatMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateSkillSwapSessionChatMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSkillSwapSessionChatMessage[P]>
+      : GetScalarType<T[P], AggregateSkillSwapSessionChatMessage[P]>
+  }
+
+
+
+
+  export type SkillSwapSessionChatMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillSwapSessionChatMessageWhereInput
+    orderBy?: SkillSwapSessionChatMessageOrderByWithAggregationInput | SkillSwapSessionChatMessageOrderByWithAggregationInput[]
+    by: SkillSwapSessionChatMessageScalarFieldEnum[] | SkillSwapSessionChatMessageScalarFieldEnum
+    having?: SkillSwapSessionChatMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SkillSwapSessionChatMessageCountAggregateInputType | true
+    _min?: SkillSwapSessionChatMessageMinAggregateInputType
+    _max?: SkillSwapSessionChatMessageMaxAggregateInputType
+  }
+
+  export type SkillSwapSessionChatMessageGroupByOutputType = {
+    id: string
+    content: string
+    createdAt: Date
+    senderId: string
+    skillSwapSessionId: string
+    _count: SkillSwapSessionChatMessageCountAggregateOutputType | null
+    _min: SkillSwapSessionChatMessageMinAggregateOutputType | null
+    _max: SkillSwapSessionChatMessageMaxAggregateOutputType | null
+  }
+
+  type GetSkillSwapSessionChatMessageGroupByPayload<T extends SkillSwapSessionChatMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SkillSwapSessionChatMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SkillSwapSessionChatMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SkillSwapSessionChatMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], SkillSwapSessionChatMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SkillSwapSessionChatMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    content?: boolean
+    createdAt?: boolean
+    senderId?: boolean
+    skillSwapSessionId?: boolean
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    skillSwapSession?: boolean | SkillSwapSessionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skillSwapSessionChatMessage"]>
+
+
+
+  export type SkillSwapSessionChatMessageSelectScalar = {
+    id?: boolean
+    content?: boolean
+    createdAt?: boolean
+    senderId?: boolean
+    skillSwapSessionId?: boolean
+  }
+
+  export type SkillSwapSessionChatMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "content" | "createdAt" | "senderId" | "skillSwapSessionId", ExtArgs["result"]["skillSwapSessionChatMessage"]>
+  export type SkillSwapSessionChatMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sender?: boolean | UserDefaultArgs<ExtArgs>
+    skillSwapSession?: boolean | SkillSwapSessionDefaultArgs<ExtArgs>
+  }
+
+  export type $SkillSwapSessionChatMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SkillSwapSessionChatMessage"
+    objects: {
+      sender: Prisma.$UserPayload<ExtArgs>
+      skillSwapSession: Prisma.$SkillSwapSessionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      content: string
+      createdAt: Date
+      senderId: string
+      skillSwapSessionId: string
+    }, ExtArgs["result"]["skillSwapSessionChatMessage"]>
+    composites: {}
+  }
+
+  type SkillSwapSessionChatMessageGetPayload<S extends boolean | null | undefined | SkillSwapSessionChatMessageDefaultArgs> = $Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload, S>
+
+  type SkillSwapSessionChatMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SkillSwapSessionChatMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SkillSwapSessionChatMessageCountAggregateInputType | true
+    }
+
+  export interface SkillSwapSessionChatMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SkillSwapSessionChatMessage'], meta: { name: 'SkillSwapSessionChatMessage' } }
+    /**
+     * Find zero or one SkillSwapSessionChatMessage that matches the filter.
+     * @param {SkillSwapSessionChatMessageFindUniqueArgs} args - Arguments to find a SkillSwapSessionChatMessage
+     * @example
+     * // Get one SkillSwapSessionChatMessage
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SkillSwapSessionChatMessageFindUniqueArgs>(args: SelectSubset<T, SkillSwapSessionChatMessageFindUniqueArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SkillSwapSessionChatMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SkillSwapSessionChatMessageFindUniqueOrThrowArgs} args - Arguments to find a SkillSwapSessionChatMessage
+     * @example
+     * // Get one SkillSwapSessionChatMessage
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SkillSwapSessionChatMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, SkillSwapSessionChatMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillSwapSessionChatMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionChatMessageFindFirstArgs} args - Arguments to find a SkillSwapSessionChatMessage
+     * @example
+     * // Get one SkillSwapSessionChatMessage
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SkillSwapSessionChatMessageFindFirstArgs>(args?: SelectSubset<T, SkillSwapSessionChatMessageFindFirstArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillSwapSessionChatMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionChatMessageFindFirstOrThrowArgs} args - Arguments to find a SkillSwapSessionChatMessage
+     * @example
+     * // Get one SkillSwapSessionChatMessage
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SkillSwapSessionChatMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, SkillSwapSessionChatMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillSwapSessionChatMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionChatMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SkillSwapSessionChatMessages
+     * const skillSwapSessionChatMessages = await prisma.skillSwapSessionChatMessage.findMany()
+     * 
+     * // Get first 10 SkillSwapSessionChatMessages
+     * const skillSwapSessionChatMessages = await prisma.skillSwapSessionChatMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const skillSwapSessionChatMessageWithIdOnly = await prisma.skillSwapSessionChatMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SkillSwapSessionChatMessageFindManyArgs>(args?: SelectSubset<T, SkillSwapSessionChatMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SkillSwapSessionChatMessage.
+     * @param {SkillSwapSessionChatMessageCreateArgs} args - Arguments to create a SkillSwapSessionChatMessage.
+     * @example
+     * // Create one SkillSwapSessionChatMessage
+     * const SkillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.create({
+     *   data: {
+     *     // ... data to create a SkillSwapSessionChatMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends SkillSwapSessionChatMessageCreateArgs>(args: SelectSubset<T, SkillSwapSessionChatMessageCreateArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SkillSwapSessionChatMessages.
+     * @param {SkillSwapSessionChatMessageCreateManyArgs} args - Arguments to create many SkillSwapSessionChatMessages.
+     * @example
+     * // Create many SkillSwapSessionChatMessages
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SkillSwapSessionChatMessageCreateManyArgs>(args?: SelectSubset<T, SkillSwapSessionChatMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a SkillSwapSessionChatMessage.
+     * @param {SkillSwapSessionChatMessageDeleteArgs} args - Arguments to delete one SkillSwapSessionChatMessage.
+     * @example
+     * // Delete one SkillSwapSessionChatMessage
+     * const SkillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.delete({
+     *   where: {
+     *     // ... filter to delete one SkillSwapSessionChatMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SkillSwapSessionChatMessageDeleteArgs>(args: SelectSubset<T, SkillSwapSessionChatMessageDeleteArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SkillSwapSessionChatMessage.
+     * @param {SkillSwapSessionChatMessageUpdateArgs} args - Arguments to update one SkillSwapSessionChatMessage.
+     * @example
+     * // Update one SkillSwapSessionChatMessage
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SkillSwapSessionChatMessageUpdateArgs>(args: SelectSubset<T, SkillSwapSessionChatMessageUpdateArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SkillSwapSessionChatMessages.
+     * @param {SkillSwapSessionChatMessageDeleteManyArgs} args - Arguments to filter SkillSwapSessionChatMessages to delete.
+     * @example
+     * // Delete a few SkillSwapSessionChatMessages
+     * const { count } = await prisma.skillSwapSessionChatMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SkillSwapSessionChatMessageDeleteManyArgs>(args?: SelectSubset<T, SkillSwapSessionChatMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkillSwapSessionChatMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionChatMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SkillSwapSessionChatMessages
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SkillSwapSessionChatMessageUpdateManyArgs>(args: SelectSubset<T, SkillSwapSessionChatMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one SkillSwapSessionChatMessage.
+     * @param {SkillSwapSessionChatMessageUpsertArgs} args - Arguments to update or create a SkillSwapSessionChatMessage.
+     * @example
+     * // Update or create a SkillSwapSessionChatMessage
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.upsert({
+     *   create: {
+     *     // ... data to create a SkillSwapSessionChatMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SkillSwapSessionChatMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SkillSwapSessionChatMessageUpsertArgs>(args: SelectSubset<T, SkillSwapSessionChatMessageUpsertArgs<ExtArgs>>): Prisma__SkillSwapSessionChatMessageClient<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillSwapSessionChatMessages that matches the filter.
+     * @param {SkillSwapSessionChatMessageFindRawArgs} args - Select which filters you would like to apply.
+     * @example
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.findRaw({
+     *   filter: { age: { $gt: 25 } }
+     * })
+     */
+    findRaw(args?: SkillSwapSessionChatMessageFindRawArgs): Prisma.PrismaPromise<JsonObject>
+
+    /**
+     * Perform aggregation operations on a SkillSwapSessionChatMessage.
+     * @param {SkillSwapSessionChatMessageAggregateRawArgs} args - Select which aggregations you would like to apply.
+     * @example
+     * const skillSwapSessionChatMessage = await prisma.skillSwapSessionChatMessage.aggregateRaw({
+     *   pipeline: [
+     *     { $match: { status: "registered" } },
+     *     { $group: { _id: "$country", total: { $sum: 1 } } }
+     *   ]
+     * })
+     */
+    aggregateRaw(args?: SkillSwapSessionChatMessageAggregateRawArgs): Prisma.PrismaPromise<JsonObject>
+
+
+    /**
+     * Count the number of SkillSwapSessionChatMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionChatMessageCountArgs} args - Arguments to filter SkillSwapSessionChatMessages to count.
+     * @example
+     * // Count the number of SkillSwapSessionChatMessages
+     * const count = await prisma.skillSwapSessionChatMessage.count({
+     *   where: {
+     *     // ... the filter for the SkillSwapSessionChatMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends SkillSwapSessionChatMessageCountArgs>(
+      args?: Subset<T, SkillSwapSessionChatMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SkillSwapSessionChatMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SkillSwapSessionChatMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionChatMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SkillSwapSessionChatMessageAggregateArgs>(args: Subset<T, SkillSwapSessionChatMessageAggregateArgs>): Prisma.PrismaPromise<GetSkillSwapSessionChatMessageAggregateType<T>>
+
+    /**
+     * Group by SkillSwapSessionChatMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillSwapSessionChatMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SkillSwapSessionChatMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SkillSwapSessionChatMessageGroupByArgs['orderBy'] }
+        : { orderBy?: SkillSwapSessionChatMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SkillSwapSessionChatMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSkillSwapSessionChatMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SkillSwapSessionChatMessage model
+   */
+  readonly fields: SkillSwapSessionChatMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SkillSwapSessionChatMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SkillSwapSessionChatMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sender<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    skillSwapSession<T extends SkillSwapSessionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapSessionDefaultArgs<ExtArgs>>): Prisma__SkillSwapSessionClient<$Result.GetResult<Prisma.$SkillSwapSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SkillSwapSessionChatMessage model
+   */
+  interface SkillSwapSessionChatMessageFieldRefs {
+    readonly id: FieldRef<"SkillSwapSessionChatMessage", 'String'>
+    readonly content: FieldRef<"SkillSwapSessionChatMessage", 'String'>
+    readonly createdAt: FieldRef<"SkillSwapSessionChatMessage", 'DateTime'>
+    readonly senderId: FieldRef<"SkillSwapSessionChatMessage", 'String'>
+    readonly skillSwapSessionId: FieldRef<"SkillSwapSessionChatMessage", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SkillSwapSessionChatMessage findUnique
+   */
+  export type SkillSwapSessionChatMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSessionChatMessage to fetch.
+     */
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSessionChatMessage findUniqueOrThrow
+   */
+  export type SkillSwapSessionChatMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSessionChatMessage to fetch.
+     */
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSessionChatMessage findFirst
+   */
+  export type SkillSwapSessionChatMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSessionChatMessage to fetch.
+     */
+    where?: SkillSwapSessionChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessionChatMessages to fetch.
+     */
+    orderBy?: SkillSwapSessionChatMessageOrderByWithRelationInput | SkillSwapSessionChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillSwapSessionChatMessages.
+     */
+    cursor?: SkillSwapSessionChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessionChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessionChatMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillSwapSessionChatMessages.
+     */
+    distinct?: SkillSwapSessionChatMessageScalarFieldEnum | SkillSwapSessionChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapSessionChatMessage findFirstOrThrow
+   */
+  export type SkillSwapSessionChatMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSessionChatMessage to fetch.
+     */
+    where?: SkillSwapSessionChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessionChatMessages to fetch.
+     */
+    orderBy?: SkillSwapSessionChatMessageOrderByWithRelationInput | SkillSwapSessionChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillSwapSessionChatMessages.
+     */
+    cursor?: SkillSwapSessionChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessionChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessionChatMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillSwapSessionChatMessages.
+     */
+    distinct?: SkillSwapSessionChatMessageScalarFieldEnum | SkillSwapSessionChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapSessionChatMessage findMany
+   */
+  export type SkillSwapSessionChatMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillSwapSessionChatMessages to fetch.
+     */
+    where?: SkillSwapSessionChatMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillSwapSessionChatMessages to fetch.
+     */
+    orderBy?: SkillSwapSessionChatMessageOrderByWithRelationInput | SkillSwapSessionChatMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SkillSwapSessionChatMessages.
+     */
+    cursor?: SkillSwapSessionChatMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillSwapSessionChatMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillSwapSessionChatMessages.
+     */
+    skip?: number
+    distinct?: SkillSwapSessionChatMessageScalarFieldEnum | SkillSwapSessionChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * SkillSwapSessionChatMessage create
+   */
+  export type SkillSwapSessionChatMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SkillSwapSessionChatMessage.
+     */
+    data: XOR<SkillSwapSessionChatMessageCreateInput, SkillSwapSessionChatMessageUncheckedCreateInput>
+  }
+
+  /**
+   * SkillSwapSessionChatMessage createMany
+   */
+  export type SkillSwapSessionChatMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SkillSwapSessionChatMessages.
+     */
+    data: SkillSwapSessionChatMessageCreateManyInput | SkillSwapSessionChatMessageCreateManyInput[]
+  }
+
+  /**
+   * SkillSwapSessionChatMessage update
+   */
+  export type SkillSwapSessionChatMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SkillSwapSessionChatMessage.
+     */
+    data: XOR<SkillSwapSessionChatMessageUpdateInput, SkillSwapSessionChatMessageUncheckedUpdateInput>
+    /**
+     * Choose, which SkillSwapSessionChatMessage to update.
+     */
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSessionChatMessage updateMany
+   */
+  export type SkillSwapSessionChatMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SkillSwapSessionChatMessages.
+     */
+    data: XOR<SkillSwapSessionChatMessageUpdateManyMutationInput, SkillSwapSessionChatMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which SkillSwapSessionChatMessages to update
+     */
+    where?: SkillSwapSessionChatMessageWhereInput
+    /**
+     * Limit how many SkillSwapSessionChatMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillSwapSessionChatMessage upsert
+   */
+  export type SkillSwapSessionChatMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SkillSwapSessionChatMessage to update in case it exists.
+     */
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+    /**
+     * In case the SkillSwapSessionChatMessage found by the `where` argument doesn't exist, create a new SkillSwapSessionChatMessage with this data.
+     */
+    create: XOR<SkillSwapSessionChatMessageCreateInput, SkillSwapSessionChatMessageUncheckedCreateInput>
+    /**
+     * In case the SkillSwapSessionChatMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SkillSwapSessionChatMessageUpdateInput, SkillSwapSessionChatMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * SkillSwapSessionChatMessage delete
+   */
+  export type SkillSwapSessionChatMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
+    /**
+     * Filter which SkillSwapSessionChatMessage to delete.
+     */
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+  }
+
+  /**
+   * SkillSwapSessionChatMessage deleteMany
+   */
+  export type SkillSwapSessionChatMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillSwapSessionChatMessages to delete
+     */
+    where?: SkillSwapSessionChatMessageWhereInput
+    /**
+     * Limit how many SkillSwapSessionChatMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillSwapSessionChatMessage findRaw
+   */
+  export type SkillSwapSessionChatMessageFindRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The query predicate filter. If unspecified, then all documents in the collection will match the predicate. ${@link https://docs.mongodb.com/manual/reference/operator/query MongoDB Docs}.
+     */
+    filter?: InputJsonValue
+    /**
+     * Additional options to pass to the `find` command ${@link https://docs.mongodb.com/manual/reference/command/find/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * SkillSwapSessionChatMessage aggregateRaw
+   */
+  export type SkillSwapSessionChatMessageAggregateRawArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * An array of aggregation stages to process and transform the document stream via the aggregation pipeline. ${@link https://docs.mongodb.com/manual/reference/operator/aggregation-pipeline MongoDB Docs}.
+     */
+    pipeline?: InputJsonValue[]
+    /**
+     * Additional options to pass to the `aggregate` command ${@link https://docs.mongodb.com/manual/reference/command/aggregate/#command-fields MongoDB Docs}.
+     */
+    options?: InputJsonValue
+  }
+
+  /**
+   * SkillSwapSessionChatMessage without action
+   */
+  export type SkillSwapSessionChatMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillSwapSessionChatMessage
+     */
+    select?: SkillSwapSessionChatMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillSwapSessionChatMessage
+     */
+    omit?: SkillSwapSessionChatMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillSwapSessionChatMessageInclude<ExtArgs> | null
   }
 
 
@@ -2889,10 +7652,63 @@ export namespace Prisma {
     name: 'name',
     email: 'email',
     password: 'password',
+    picture: 'picture',
+    country: 'country',
+    timezone: 'timezone',
+    offeredSkills: 'offeredSkills',
+    requestedSkills: 'requestedSkills',
     createdAt: 'createdAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const SkillSwapRequestScalarFieldEnum: {
+    id: 'id',
+    requesterTimezone: 'requesterTimezone',
+    closed: 'closed',
+    closedAt: 'closedAt',
+    requestedSkill: 'requestedSkill',
+    createdAt: 'createdAt',
+    requesterId: 'requesterId',
+    accepterId: 'accepterId'
+  };
+
+  export type SkillSwapRequestScalarFieldEnum = (typeof SkillSwapRequestScalarFieldEnum)[keyof typeof SkillSwapRequestScalarFieldEnum]
+
+
+  export const ScheduleScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    startTime: 'startTime',
+    endTime: 'endTime',
+    skillSwapRequestId: 'skillSwapRequestId'
+  };
+
+  export type ScheduleScalarFieldEnum = (typeof ScheduleScalarFieldEnum)[keyof typeof ScheduleScalarFieldEnum]
+
+
+  export const SkillSwapSessionScalarFieldEnum: {
+    id: 'id',
+    status: 'status',
+    offeredSkill: 'offeredSkill',
+    createdAt: 'createdAt',
+    scheduleId: 'scheduleId',
+    skillSwapRequestId: 'skillSwapRequestId'
+  };
+
+  export type SkillSwapSessionScalarFieldEnum = (typeof SkillSwapSessionScalarFieldEnum)[keyof typeof SkillSwapSessionScalarFieldEnum]
+
+
+  export const SkillSwapSessionChatMessageScalarFieldEnum: {
+    id: 'id',
+    content: 'content',
+    createdAt: 'createdAt',
+    senderId: 'senderId',
+    skillSwapSessionId: 'skillSwapSessionId'
+  };
+
+  export type SkillSwapSessionChatMessageScalarFieldEnum = (typeof SkillSwapSessionChatMessageScalarFieldEnum)[keyof typeof SkillSwapSessionChatMessageScalarFieldEnum]
 
 
   export const UserSessionScalarFieldEnum: {
@@ -2955,6 +7771,27 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'ScheduleStatus'
+   */
+  export type EnumScheduleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScheduleStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ScheduleStatus[]'
+   */
+  export type ListEnumScheduleStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScheduleStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -2979,8 +7816,16 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    picture?: StringNullableFilter<"User"> | string | null
+    country?: StringNullableFilter<"User"> | string | null
+    timezone?: StringNullableFilter<"User"> | string | null
+    offeredSkills?: StringNullableListFilter<"User">
+    requestedSkills?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     userSessions?: XOR<UserSessionNullableScalarRelationFilter, UserSessionWhereInput> | null
+    skillSwapRequestsCreated?: SkillSwapRequestListRelationFilter
+    skillSwapRequestsAccepted?: SkillSwapRequestListRelationFilter
+    chatMessages?: SkillSwapSessionChatMessageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -2988,8 +7833,16 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    picture?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    offeredSkills?: SortOrder
+    requestedSkills?: SortOrder
     createdAt?: SortOrder
     userSessions?: UserSessionOrderByWithRelationInput
+    skillSwapRequestsCreated?: SkillSwapRequestOrderByRelationAggregateInput
+    skillSwapRequestsAccepted?: SkillSwapRequestOrderByRelationAggregateInput
+    chatMessages?: SkillSwapSessionChatMessageOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3000,8 +7853,16 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    picture?: StringNullableFilter<"User"> | string | null
+    country?: StringNullableFilter<"User"> | string | null
+    timezone?: StringNullableFilter<"User"> | string | null
+    offeredSkills?: StringNullableListFilter<"User">
+    requestedSkills?: StringNullableListFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     userSessions?: XOR<UserSessionNullableScalarRelationFilter, UserSessionWhereInput> | null
+    skillSwapRequestsCreated?: SkillSwapRequestListRelationFilter
+    skillSwapRequestsAccepted?: SkillSwapRequestListRelationFilter
+    chatMessages?: SkillSwapSessionChatMessageListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3009,6 +7870,11 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    picture?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    offeredSkills?: SortOrder
+    requestedSkills?: SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -3023,7 +7889,273 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    picture?: StringNullableWithAggregatesFilter<"User"> | string | null
+    country?: StringNullableWithAggregatesFilter<"User"> | string | null
+    timezone?: StringNullableWithAggregatesFilter<"User"> | string | null
+    offeredSkills?: StringNullableListFilter<"User">
+    requestedSkills?: StringNullableListFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type SkillSwapRequestWhereInput = {
+    AND?: SkillSwapRequestWhereInput | SkillSwapRequestWhereInput[]
+    OR?: SkillSwapRequestWhereInput[]
+    NOT?: SkillSwapRequestWhereInput | SkillSwapRequestWhereInput[]
+    id?: StringFilter<"SkillSwapRequest"> | string
+    requesterTimezone?: StringFilter<"SkillSwapRequest"> | string
+    closed?: BoolFilter<"SkillSwapRequest"> | boolean
+    closedAt?: DateTimeNullableFilter<"SkillSwapRequest"> | Date | string | null
+    requestedSkill?: StringFilter<"SkillSwapRequest"> | string
+    createdAt?: DateTimeFilter<"SkillSwapRequest"> | Date | string
+    requesterId?: StringFilter<"SkillSwapRequest"> | string
+    accepterId?: StringNullableFilter<"SkillSwapRequest"> | string | null
+    availability?: ScheduleListRelationFilter
+    requester?: XOR<UserScalarRelationFilter, UserWhereInput>
+    accepter?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    skillSwapSession?: XOR<SkillSwapSessionNullableScalarRelationFilter, SkillSwapSessionWhereInput> | null
+  }
+
+  export type SkillSwapRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    requesterTimezone?: SortOrder
+    closed?: SortOrder
+    closedAt?: SortOrder
+    requestedSkill?: SortOrder
+    createdAt?: SortOrder
+    requesterId?: SortOrder
+    accepterId?: SortOrder
+    availability?: ScheduleOrderByRelationAggregateInput
+    requester?: UserOrderByWithRelationInput
+    accepter?: UserOrderByWithRelationInput
+    skillSwapSession?: SkillSwapSessionOrderByWithRelationInput
+  }
+
+  export type SkillSwapRequestWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SkillSwapRequestWhereInput | SkillSwapRequestWhereInput[]
+    OR?: SkillSwapRequestWhereInput[]
+    NOT?: SkillSwapRequestWhereInput | SkillSwapRequestWhereInput[]
+    requesterTimezone?: StringFilter<"SkillSwapRequest"> | string
+    closed?: BoolFilter<"SkillSwapRequest"> | boolean
+    closedAt?: DateTimeNullableFilter<"SkillSwapRequest"> | Date | string | null
+    requestedSkill?: StringFilter<"SkillSwapRequest"> | string
+    createdAt?: DateTimeFilter<"SkillSwapRequest"> | Date | string
+    requesterId?: StringFilter<"SkillSwapRequest"> | string
+    accepterId?: StringNullableFilter<"SkillSwapRequest"> | string | null
+    availability?: ScheduleListRelationFilter
+    requester?: XOR<UserScalarRelationFilter, UserWhereInput>
+    accepter?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    skillSwapSession?: XOR<SkillSwapSessionNullableScalarRelationFilter, SkillSwapSessionWhereInput> | null
+  }, "id">
+
+  export type SkillSwapRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    requesterTimezone?: SortOrder
+    closed?: SortOrder
+    closedAt?: SortOrder
+    requestedSkill?: SortOrder
+    createdAt?: SortOrder
+    requesterId?: SortOrder
+    accepterId?: SortOrder
+    _count?: SkillSwapRequestCountOrderByAggregateInput
+    _max?: SkillSwapRequestMaxOrderByAggregateInput
+    _min?: SkillSwapRequestMinOrderByAggregateInput
+  }
+
+  export type SkillSwapRequestScalarWhereWithAggregatesInput = {
+    AND?: SkillSwapRequestScalarWhereWithAggregatesInput | SkillSwapRequestScalarWhereWithAggregatesInput[]
+    OR?: SkillSwapRequestScalarWhereWithAggregatesInput[]
+    NOT?: SkillSwapRequestScalarWhereWithAggregatesInput | SkillSwapRequestScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SkillSwapRequest"> | string
+    requesterTimezone?: StringWithAggregatesFilter<"SkillSwapRequest"> | string
+    closed?: BoolWithAggregatesFilter<"SkillSwapRequest"> | boolean
+    closedAt?: DateTimeNullableWithAggregatesFilter<"SkillSwapRequest"> | Date | string | null
+    requestedSkill?: StringWithAggregatesFilter<"SkillSwapRequest"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"SkillSwapRequest"> | Date | string
+    requesterId?: StringWithAggregatesFilter<"SkillSwapRequest"> | string
+    accepterId?: StringNullableWithAggregatesFilter<"SkillSwapRequest"> | string | null
+  }
+
+  export type ScheduleWhereInput = {
+    AND?: ScheduleWhereInput | ScheduleWhereInput[]
+    OR?: ScheduleWhereInput[]
+    NOT?: ScheduleWhereInput | ScheduleWhereInput[]
+    id?: StringFilter<"Schedule"> | string
+    date?: DateTimeFilter<"Schedule"> | Date | string
+    startTime?: StringFilter<"Schedule"> | string
+    endTime?: StringFilter<"Schedule"> | string
+    skillSwapRequestId?: StringFilter<"Schedule"> | string
+    skillSwapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
+    skillSwapSession?: SkillSwapSessionListRelationFilter
+  }
+
+  export type ScheduleOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    skillSwapRequestId?: SortOrder
+    skillSwapRequest?: SkillSwapRequestOrderByWithRelationInput
+    skillSwapSession?: SkillSwapSessionOrderByRelationAggregateInput
+  }
+
+  export type ScheduleWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ScheduleWhereInput | ScheduleWhereInput[]
+    OR?: ScheduleWhereInput[]
+    NOT?: ScheduleWhereInput | ScheduleWhereInput[]
+    date?: DateTimeFilter<"Schedule"> | Date | string
+    startTime?: StringFilter<"Schedule"> | string
+    endTime?: StringFilter<"Schedule"> | string
+    skillSwapRequestId?: StringFilter<"Schedule"> | string
+    skillSwapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
+    skillSwapSession?: SkillSwapSessionListRelationFilter
+  }, "id">
+
+  export type ScheduleOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    skillSwapRequestId?: SortOrder
+    _count?: ScheduleCountOrderByAggregateInput
+    _max?: ScheduleMaxOrderByAggregateInput
+    _min?: ScheduleMinOrderByAggregateInput
+  }
+
+  export type ScheduleScalarWhereWithAggregatesInput = {
+    AND?: ScheduleScalarWhereWithAggregatesInput | ScheduleScalarWhereWithAggregatesInput[]
+    OR?: ScheduleScalarWhereWithAggregatesInput[]
+    NOT?: ScheduleScalarWhereWithAggregatesInput | ScheduleScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Schedule"> | string
+    date?: DateTimeWithAggregatesFilter<"Schedule"> | Date | string
+    startTime?: StringWithAggregatesFilter<"Schedule"> | string
+    endTime?: StringWithAggregatesFilter<"Schedule"> | string
+    skillSwapRequestId?: StringWithAggregatesFilter<"Schedule"> | string
+  }
+
+  export type SkillSwapSessionWhereInput = {
+    AND?: SkillSwapSessionWhereInput | SkillSwapSessionWhereInput[]
+    OR?: SkillSwapSessionWhereInput[]
+    NOT?: SkillSwapSessionWhereInput | SkillSwapSessionWhereInput[]
+    id?: StringFilter<"SkillSwapSession"> | string
+    status?: EnumScheduleStatusFilter<"SkillSwapSession"> | $Enums.ScheduleStatus
+    offeredSkill?: StringFilter<"SkillSwapSession"> | string
+    createdAt?: DateTimeFilter<"SkillSwapSession"> | Date | string
+    scheduleId?: StringFilter<"SkillSwapSession"> | string
+    skillSwapRequestId?: StringFilter<"SkillSwapSession"> | string
+    skillSwapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
+    schedule?: XOR<ScheduleScalarRelationFilter, ScheduleWhereInput>
+    chatMessages?: SkillSwapSessionChatMessageListRelationFilter
+  }
+
+  export type SkillSwapSessionOrderByWithRelationInput = {
+    id?: SortOrder
+    status?: SortOrder
+    offeredSkill?: SortOrder
+    createdAt?: SortOrder
+    scheduleId?: SortOrder
+    skillSwapRequestId?: SortOrder
+    skillSwapRequest?: SkillSwapRequestOrderByWithRelationInput
+    schedule?: ScheduleOrderByWithRelationInput
+    chatMessages?: SkillSwapSessionChatMessageOrderByRelationAggregateInput
+  }
+
+  export type SkillSwapSessionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    skillSwapRequestId?: string
+    AND?: SkillSwapSessionWhereInput | SkillSwapSessionWhereInput[]
+    OR?: SkillSwapSessionWhereInput[]
+    NOT?: SkillSwapSessionWhereInput | SkillSwapSessionWhereInput[]
+    status?: EnumScheduleStatusFilter<"SkillSwapSession"> | $Enums.ScheduleStatus
+    offeredSkill?: StringFilter<"SkillSwapSession"> | string
+    createdAt?: DateTimeFilter<"SkillSwapSession"> | Date | string
+    scheduleId?: StringFilter<"SkillSwapSession"> | string
+    skillSwapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
+    schedule?: XOR<ScheduleScalarRelationFilter, ScheduleWhereInput>
+    chatMessages?: SkillSwapSessionChatMessageListRelationFilter
+  }, "id" | "skillSwapRequestId">
+
+  export type SkillSwapSessionOrderByWithAggregationInput = {
+    id?: SortOrder
+    status?: SortOrder
+    offeredSkill?: SortOrder
+    createdAt?: SortOrder
+    scheduleId?: SortOrder
+    skillSwapRequestId?: SortOrder
+    _count?: SkillSwapSessionCountOrderByAggregateInput
+    _max?: SkillSwapSessionMaxOrderByAggregateInput
+    _min?: SkillSwapSessionMinOrderByAggregateInput
+  }
+
+  export type SkillSwapSessionScalarWhereWithAggregatesInput = {
+    AND?: SkillSwapSessionScalarWhereWithAggregatesInput | SkillSwapSessionScalarWhereWithAggregatesInput[]
+    OR?: SkillSwapSessionScalarWhereWithAggregatesInput[]
+    NOT?: SkillSwapSessionScalarWhereWithAggregatesInput | SkillSwapSessionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SkillSwapSession"> | string
+    status?: EnumScheduleStatusWithAggregatesFilter<"SkillSwapSession"> | $Enums.ScheduleStatus
+    offeredSkill?: StringWithAggregatesFilter<"SkillSwapSession"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"SkillSwapSession"> | Date | string
+    scheduleId?: StringWithAggregatesFilter<"SkillSwapSession"> | string
+    skillSwapRequestId?: StringWithAggregatesFilter<"SkillSwapSession"> | string
+  }
+
+  export type SkillSwapSessionChatMessageWhereInput = {
+    AND?: SkillSwapSessionChatMessageWhereInput | SkillSwapSessionChatMessageWhereInput[]
+    OR?: SkillSwapSessionChatMessageWhereInput[]
+    NOT?: SkillSwapSessionChatMessageWhereInput | SkillSwapSessionChatMessageWhereInput[]
+    id?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    content?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    createdAt?: DateTimeFilter<"SkillSwapSessionChatMessage"> | Date | string
+    senderId?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    skillSwapSessionId?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    skillSwapSession?: XOR<SkillSwapSessionScalarRelationFilter, SkillSwapSessionWhereInput>
+  }
+
+  export type SkillSwapSessionChatMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    senderId?: SortOrder
+    skillSwapSessionId?: SortOrder
+    sender?: UserOrderByWithRelationInput
+    skillSwapSession?: SkillSwapSessionOrderByWithRelationInput
+  }
+
+  export type SkillSwapSessionChatMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SkillSwapSessionChatMessageWhereInput | SkillSwapSessionChatMessageWhereInput[]
+    OR?: SkillSwapSessionChatMessageWhereInput[]
+    NOT?: SkillSwapSessionChatMessageWhereInput | SkillSwapSessionChatMessageWhereInput[]
+    content?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    createdAt?: DateTimeFilter<"SkillSwapSessionChatMessage"> | Date | string
+    senderId?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    skillSwapSessionId?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    sender?: XOR<UserScalarRelationFilter, UserWhereInput>
+    skillSwapSession?: XOR<SkillSwapSessionScalarRelationFilter, SkillSwapSessionWhereInput>
+  }, "id">
+
+  export type SkillSwapSessionChatMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    senderId?: SortOrder
+    skillSwapSessionId?: SortOrder
+    _count?: SkillSwapSessionChatMessageCountOrderByAggregateInput
+    _max?: SkillSwapSessionChatMessageMaxOrderByAggregateInput
+    _min?: SkillSwapSessionChatMessageMinOrderByAggregateInput
+  }
+
+  export type SkillSwapSessionChatMessageScalarWhereWithAggregatesInput = {
+    AND?: SkillSwapSessionChatMessageScalarWhereWithAggregatesInput | SkillSwapSessionChatMessageScalarWhereWithAggregatesInput[]
+    OR?: SkillSwapSessionChatMessageScalarWhereWithAggregatesInput[]
+    NOT?: SkillSwapSessionChatMessageScalarWhereWithAggregatesInput | SkillSwapSessionChatMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SkillSwapSessionChatMessage"> | string
+    content?: StringWithAggregatesFilter<"SkillSwapSessionChatMessage"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"SkillSwapSessionChatMessage"> | Date | string
+    senderId?: StringWithAggregatesFilter<"SkillSwapSessionChatMessage"> | string
+    skillSwapSessionId?: StringWithAggregatesFilter<"SkillSwapSessionChatMessage"> | string
   }
 
   export type UserSessionWhereInput = {
@@ -3081,8 +8213,16 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
     createdAt?: Date | string
     userSessions?: UserSessionCreateNestedOneWithoutUserInput
+    skillSwapRequestsCreated?: SkillSwapRequestCreateNestedManyWithoutRequesterInput
+    skillSwapRequestsAccepted?: SkillSwapRequestCreateNestedManyWithoutAccepterInput
+    chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3090,24 +8230,48 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
     createdAt?: Date | string
     userSessions?: UserSessionUncheckedCreateNestedOneWithoutUserInput
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedCreateNestedManyWithoutRequesterInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedCreateNestedManyWithoutAccepterInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSessions?: UserSessionUpdateOneWithoutUserNestedInput
+    skillSwapRequestsCreated?: SkillSwapRequestUpdateManyWithoutRequesterNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUpdateManyWithoutAccepterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userSessions?: UserSessionUncheckedUpdateOneWithoutUserNestedInput
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedUpdateManyWithoutAccepterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSenderNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3115,6 +8279,11 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
     createdAt?: Date | string
   }
 
@@ -3122,6 +8291,11 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3129,7 +8303,260 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillSwapRequestCreateInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+    availability?: ScheduleCreateNestedManyWithoutSkillSwapRequestInput
+    requester: UserCreateNestedOneWithoutSkillSwapRequestsCreatedInput
+    accepter?: UserCreateNestedOneWithoutSkillSwapRequestsAcceptedInput
+    skillSwapSession?: SkillSwapSessionCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestUncheckedCreateInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    requesterId: string
+    accepterId?: string | null
+    availability?: ScheduleUncheckedCreateNestedManyWithoutSkillSwapRequestInput
+    skillSwapSession?: SkillSwapSessionUncheckedCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestUpdateInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUpdateManyWithoutSkillSwapRequestNestedInput
+    requester?: UserUpdateOneRequiredWithoutSkillSwapRequestsCreatedNestedInput
+    accepter?: UserUpdateOneWithoutSkillSwapRequestsAcceptedNestedInput
+    skillSwapSession?: SkillSwapSessionUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapRequestUncheckedUpdateInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUncheckedUpdateManyWithoutSkillSwapRequestNestedInput
+    skillSwapSession?: SkillSwapSessionUncheckedUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapRequestCreateManyInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    requesterId: string
+    accepterId?: string | null
+  }
+
+  export type SkillSwapRequestUpdateManyMutationInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SkillSwapRequestUncheckedUpdateManyInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ScheduleCreateInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+    skillSwapRequest: SkillSwapRequestCreateNestedOneWithoutAvailabilityInput
+    skillSwapSession?: SkillSwapSessionCreateNestedManyWithoutScheduleInput
+  }
+
+  export type ScheduleUncheckedCreateInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+    skillSwapRequestId: string
+    skillSwapSession?: SkillSwapSessionUncheckedCreateNestedManyWithoutScheduleInput
+  }
+
+  export type ScheduleUpdateInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    skillSwapRequest?: SkillSwapRequestUpdateOneRequiredWithoutAvailabilityNestedInput
+    skillSwapSession?: SkillSwapSessionUpdateManyWithoutScheduleNestedInput
+  }
+
+  export type ScheduleUncheckedUpdateInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+    skillSwapSession?: SkillSwapSessionUncheckedUpdateManyWithoutScheduleNestedInput
+  }
+
+  export type ScheduleCreateManyInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+    skillSwapRequestId: string
+  }
+
+  export type ScheduleUpdateManyMutationInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ScheduleUncheckedUpdateManyInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionCreateInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    skillSwapRequest: SkillSwapRequestCreateNestedOneWithoutSkillSwapSessionInput
+    schedule: ScheduleCreateNestedOneWithoutSkillSwapSessionInput
+    chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSkillSwapSessionInput
+  }
+
+  export type SkillSwapSessionUncheckedCreateInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    scheduleId: string
+    skillSwapRequestId: string
+    chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillSwapSessionInput
+  }
+
+  export type SkillSwapSessionUpdateInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapRequest?: SkillSwapRequestUpdateOneRequiredWithoutSkillSwapSessionNestedInput
+    schedule?: ScheduleUpdateOneRequiredWithoutSkillSwapSessionNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSkillSwapSessionNestedInput
+  }
+
+  export type SkillSwapSessionUncheckedUpdateInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    scheduleId?: StringFieldUpdateOperationsInput | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+    chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillSwapSessionNestedInput
+  }
+
+  export type SkillSwapSessionCreateManyInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    scheduleId: string
+    skillSwapRequestId: string
+  }
+
+  export type SkillSwapSessionUpdateManyMutationInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillSwapSessionUncheckedUpdateManyInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    scheduleId?: StringFieldUpdateOperationsInput | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionChatMessageCreateInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    sender: UserCreateNestedOneWithoutChatMessagesInput
+    skillSwapSession: SkillSwapSessionCreateNestedOneWithoutChatMessagesInput
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedCreateInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    senderId: string
+    skillSwapSessionId: string
+  }
+
+  export type SkillSwapSessionChatMessageUpdateInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutChatMessagesNestedInput
+    skillSwapSession?: SkillSwapSessionUpdateOneRequiredWithoutChatMessagesNestedInput
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    skillSwapSessionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionChatMessageCreateManyInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    senderId: string
+    skillSwapSessionId: string
+  }
+
+  export type SkillSwapSessionChatMessageUpdateManyMutationInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateManyInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    senderId?: StringFieldUpdateOperationsInput | string
+    skillSwapSessionId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserSessionCreateInput = {
@@ -3191,6 +8618,30 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    isSet?: boolean
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -3207,11 +8658,36 @@ export namespace Prisma {
     isNot?: UserSessionWhereInput | null
   }
 
+  export type SkillSwapRequestListRelationFilter = {
+    every?: SkillSwapRequestWhereInput
+    some?: SkillSwapRequestWhereInput
+    none?: SkillSwapRequestWhereInput
+  }
+
+  export type SkillSwapSessionChatMessageListRelationFilter = {
+    every?: SkillSwapSessionChatMessageWhereInput
+    some?: SkillSwapSessionChatMessageWhereInput
+    none?: SkillSwapSessionChatMessageWhereInput
+  }
+
+  export type SkillSwapRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SkillSwapSessionChatMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    picture?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
+    offeredSkills?: SortOrder
+    requestedSkills?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -3220,6 +8696,9 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    picture?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -3228,6 +8707,9 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    picture?: SortOrder
+    country?: SortOrder
+    timezone?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -3249,6 +8731,25 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -3263,9 +8764,219 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    isSet?: boolean
+  }
+
+  export type ScheduleListRelationFilter = {
+    every?: ScheduleWhereInput
+    some?: ScheduleWhereInput
+    none?: ScheduleWhereInput
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type SkillSwapSessionNullableScalarRelationFilter = {
+    is?: SkillSwapSessionWhereInput | null
+    isNot?: SkillSwapSessionWhereInput | null
+  }
+
+  export type ScheduleOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SkillSwapRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    requesterTimezone?: SortOrder
+    closed?: SortOrder
+    closedAt?: SortOrder
+    requestedSkill?: SortOrder
+    createdAt?: SortOrder
+    requesterId?: SortOrder
+    accepterId?: SortOrder
+  }
+
+  export type SkillSwapRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    requesterTimezone?: SortOrder
+    closed?: SortOrder
+    closedAt?: SortOrder
+    requestedSkill?: SortOrder
+    createdAt?: SortOrder
+    requesterId?: SortOrder
+    accepterId?: SortOrder
+  }
+
+  export type SkillSwapRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    requesterTimezone?: SortOrder
+    closed?: SortOrder
+    closedAt?: SortOrder
+    requestedSkill?: SortOrder
+    createdAt?: SortOrder
+    requesterId?: SortOrder
+    accepterId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type SkillSwapRequestScalarRelationFilter = {
+    is?: SkillSwapRequestWhereInput
+    isNot?: SkillSwapRequestWhereInput
+  }
+
+  export type SkillSwapSessionListRelationFilter = {
+    every?: SkillSwapSessionWhereInput
+    some?: SkillSwapSessionWhereInput
+    none?: SkillSwapSessionWhereInput
+  }
+
+  export type SkillSwapSessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ScheduleCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    skillSwapRequestId?: SortOrder
+  }
+
+  export type ScheduleMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    skillSwapRequestId?: SortOrder
+  }
+
+  export type ScheduleMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    skillSwapRequestId?: SortOrder
+  }
+
+  export type EnumScheduleStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ScheduleStatus | EnumScheduleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumScheduleStatusFilter<$PrismaModel> | $Enums.ScheduleStatus
+  }
+
+  export type ScheduleScalarRelationFilter = {
+    is?: ScheduleWhereInput
+    isNot?: ScheduleWhereInput
+  }
+
+  export type SkillSwapSessionCountOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    offeredSkill?: SortOrder
+    createdAt?: SortOrder
+    scheduleId?: SortOrder
+    skillSwapRequestId?: SortOrder
+  }
+
+  export type SkillSwapSessionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    offeredSkill?: SortOrder
+    createdAt?: SortOrder
+    scheduleId?: SortOrder
+    skillSwapRequestId?: SortOrder
+  }
+
+  export type SkillSwapSessionMinOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    offeredSkill?: SortOrder
+    createdAt?: SortOrder
+    scheduleId?: SortOrder
+    skillSwapRequestId?: SortOrder
+  }
+
+  export type EnumScheduleStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ScheduleStatus | EnumScheduleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumScheduleStatusWithAggregatesFilter<$PrismaModel> | $Enums.ScheduleStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumScheduleStatusFilter<$PrismaModel>
+    _max?: NestedEnumScheduleStatusFilter<$PrismaModel>
+  }
+
+  export type SkillSwapSessionScalarRelationFilter = {
+    is?: SkillSwapSessionWhereInput
+    isNot?: SkillSwapSessionWhereInput
+  }
+
+  export type SkillSwapSessionChatMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    senderId?: SortOrder
+    skillSwapSessionId?: SortOrder
+  }
+
+  export type SkillSwapSessionChatMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    senderId?: SortOrder
+    skillSwapSessionId?: SortOrder
+  }
+
+  export type SkillSwapSessionChatMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    content?: SortOrder
+    createdAt?: SortOrder
+    senderId?: SortOrder
+    skillSwapSessionId?: SortOrder
   }
 
   export type UserSessionCountOrderByAggregateInput = {
@@ -3289,10 +9000,39 @@ export namespace Prisma {
     expiresAt?: SortOrder
   }
 
+  export type UserCreateofferedSkillsInput = {
+    set: string[]
+  }
+
+  export type UserCreaterequestedSkillsInput = {
+    set: string[]
+  }
+
   export type UserSessionCreateNestedOneWithoutUserInput = {
     create?: XOR<UserSessionCreateWithoutUserInput, UserSessionUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserSessionCreateOrConnectWithoutUserInput
     connect?: UserSessionWhereUniqueInput
+  }
+
+  export type SkillSwapRequestCreateNestedManyWithoutRequesterInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutRequesterInput, SkillSwapRequestUncheckedCreateWithoutRequesterInput> | SkillSwapRequestCreateWithoutRequesterInput[] | SkillSwapRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutRequesterInput | SkillSwapRequestCreateOrConnectWithoutRequesterInput[]
+    createMany?: SkillSwapRequestCreateManyRequesterInputEnvelope
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+  }
+
+  export type SkillSwapRequestCreateNestedManyWithoutAccepterInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutAccepterInput, SkillSwapRequestUncheckedCreateWithoutAccepterInput> | SkillSwapRequestCreateWithoutAccepterInput[] | SkillSwapRequestUncheckedCreateWithoutAccepterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutAccepterInput | SkillSwapRequestCreateOrConnectWithoutAccepterInput[]
+    createMany?: SkillSwapRequestCreateManyAccepterInputEnvelope
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+  }
+
+  export type SkillSwapSessionChatMessageCreateNestedManyWithoutSenderInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput> | SkillSwapSessionChatMessageCreateWithoutSenderInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySenderInputEnvelope
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
   }
 
   export type UserSessionUncheckedCreateNestedOneWithoutUserInput = {
@@ -3301,8 +9041,44 @@ export namespace Prisma {
     connect?: UserSessionWhereUniqueInput
   }
 
+  export type SkillSwapRequestUncheckedCreateNestedManyWithoutRequesterInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutRequesterInput, SkillSwapRequestUncheckedCreateWithoutRequesterInput> | SkillSwapRequestCreateWithoutRequesterInput[] | SkillSwapRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutRequesterInput | SkillSwapRequestCreateOrConnectWithoutRequesterInput[]
+    createMany?: SkillSwapRequestCreateManyRequesterInputEnvelope
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+  }
+
+  export type SkillSwapRequestUncheckedCreateNestedManyWithoutAccepterInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutAccepterInput, SkillSwapRequestUncheckedCreateWithoutAccepterInput> | SkillSwapRequestCreateWithoutAccepterInput[] | SkillSwapRequestUncheckedCreateWithoutAccepterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutAccepterInput | SkillSwapRequestCreateOrConnectWithoutAccepterInput[]
+    createMany?: SkillSwapRequestCreateManyAccepterInputEnvelope
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSenderInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput> | SkillSwapSessionChatMessageCreateWithoutSenderInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySenderInputEnvelope
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+    unset?: boolean
+  }
+
+  export type UserUpdateofferedSkillsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type UserUpdaterequestedSkillsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -3319,6 +9095,48 @@ export namespace Prisma {
     update?: XOR<XOR<UserSessionUpdateToOneWithWhereWithoutUserInput, UserSessionUpdateWithoutUserInput>, UserSessionUncheckedUpdateWithoutUserInput>
   }
 
+  export type SkillSwapRequestUpdateManyWithoutRequesterNestedInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutRequesterInput, SkillSwapRequestUncheckedCreateWithoutRequesterInput> | SkillSwapRequestCreateWithoutRequesterInput[] | SkillSwapRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutRequesterInput | SkillSwapRequestCreateOrConnectWithoutRequesterInput[]
+    upsert?: SkillSwapRequestUpsertWithWhereUniqueWithoutRequesterInput | SkillSwapRequestUpsertWithWhereUniqueWithoutRequesterInput[]
+    createMany?: SkillSwapRequestCreateManyRequesterInputEnvelope
+    set?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    disconnect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    delete?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    update?: SkillSwapRequestUpdateWithWhereUniqueWithoutRequesterInput | SkillSwapRequestUpdateWithWhereUniqueWithoutRequesterInput[]
+    updateMany?: SkillSwapRequestUpdateManyWithWhereWithoutRequesterInput | SkillSwapRequestUpdateManyWithWhereWithoutRequesterInput[]
+    deleteMany?: SkillSwapRequestScalarWhereInput | SkillSwapRequestScalarWhereInput[]
+  }
+
+  export type SkillSwapRequestUpdateManyWithoutAccepterNestedInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutAccepterInput, SkillSwapRequestUncheckedCreateWithoutAccepterInput> | SkillSwapRequestCreateWithoutAccepterInput[] | SkillSwapRequestUncheckedCreateWithoutAccepterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutAccepterInput | SkillSwapRequestCreateOrConnectWithoutAccepterInput[]
+    upsert?: SkillSwapRequestUpsertWithWhereUniqueWithoutAccepterInput | SkillSwapRequestUpsertWithWhereUniqueWithoutAccepterInput[]
+    createMany?: SkillSwapRequestCreateManyAccepterInputEnvelope
+    set?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    disconnect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    delete?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    update?: SkillSwapRequestUpdateWithWhereUniqueWithoutAccepterInput | SkillSwapRequestUpdateWithWhereUniqueWithoutAccepterInput[]
+    updateMany?: SkillSwapRequestUpdateManyWithWhereWithoutAccepterInput | SkillSwapRequestUpdateManyWithWhereWithoutAccepterInput[]
+    deleteMany?: SkillSwapRequestScalarWhereInput | SkillSwapRequestScalarWhereInput[]
+  }
+
+  export type SkillSwapSessionChatMessageUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput> | SkillSwapSessionChatMessageCreateWithoutSenderInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput[]
+    upsert?: SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSenderInput | SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySenderInputEnvelope
+    set?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    disconnect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    delete?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    update?: SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSenderInput | SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSenderInput | SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
+  }
+
   export type UserSessionUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<UserSessionCreateWithoutUserInput, UserSessionUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserSessionCreateOrConnectWithoutUserInput
@@ -3327,6 +9145,319 @@ export namespace Prisma {
     delete?: UserSessionWhereInput | boolean
     connect?: UserSessionWhereUniqueInput
     update?: XOR<XOR<UserSessionUpdateToOneWithWhereWithoutUserInput, UserSessionUpdateWithoutUserInput>, UserSessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SkillSwapRequestUncheckedUpdateManyWithoutRequesterNestedInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutRequesterInput, SkillSwapRequestUncheckedCreateWithoutRequesterInput> | SkillSwapRequestCreateWithoutRequesterInput[] | SkillSwapRequestUncheckedCreateWithoutRequesterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutRequesterInput | SkillSwapRequestCreateOrConnectWithoutRequesterInput[]
+    upsert?: SkillSwapRequestUpsertWithWhereUniqueWithoutRequesterInput | SkillSwapRequestUpsertWithWhereUniqueWithoutRequesterInput[]
+    createMany?: SkillSwapRequestCreateManyRequesterInputEnvelope
+    set?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    disconnect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    delete?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    update?: SkillSwapRequestUpdateWithWhereUniqueWithoutRequesterInput | SkillSwapRequestUpdateWithWhereUniqueWithoutRequesterInput[]
+    updateMany?: SkillSwapRequestUpdateManyWithWhereWithoutRequesterInput | SkillSwapRequestUpdateManyWithWhereWithoutRequesterInput[]
+    deleteMany?: SkillSwapRequestScalarWhereInput | SkillSwapRequestScalarWhereInput[]
+  }
+
+  export type SkillSwapRequestUncheckedUpdateManyWithoutAccepterNestedInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutAccepterInput, SkillSwapRequestUncheckedCreateWithoutAccepterInput> | SkillSwapRequestCreateWithoutAccepterInput[] | SkillSwapRequestUncheckedCreateWithoutAccepterInput[]
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutAccepterInput | SkillSwapRequestCreateOrConnectWithoutAccepterInput[]
+    upsert?: SkillSwapRequestUpsertWithWhereUniqueWithoutAccepterInput | SkillSwapRequestUpsertWithWhereUniqueWithoutAccepterInput[]
+    createMany?: SkillSwapRequestCreateManyAccepterInputEnvelope
+    set?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    disconnect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    delete?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    connect?: SkillSwapRequestWhereUniqueInput | SkillSwapRequestWhereUniqueInput[]
+    update?: SkillSwapRequestUpdateWithWhereUniqueWithoutAccepterInput | SkillSwapRequestUpdateWithWhereUniqueWithoutAccepterInput[]
+    updateMany?: SkillSwapRequestUpdateManyWithWhereWithoutAccepterInput | SkillSwapRequestUpdateManyWithWhereWithoutAccepterInput[]
+    deleteMany?: SkillSwapRequestScalarWhereInput | SkillSwapRequestScalarWhereInput[]
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSenderNestedInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput> | SkillSwapSessionChatMessageCreateWithoutSenderInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput[]
+    upsert?: SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSenderInput | SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSenderInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySenderInputEnvelope
+    set?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    disconnect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    delete?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    update?: SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSenderInput | SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSenderInput[]
+    updateMany?: SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSenderInput | SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSenderInput[]
+    deleteMany?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
+  }
+
+  export type ScheduleCreateNestedManyWithoutSkillSwapRequestInput = {
+    create?: XOR<ScheduleCreateWithoutSkillSwapRequestInput, ScheduleUncheckedCreateWithoutSkillSwapRequestInput> | ScheduleCreateWithoutSkillSwapRequestInput[] | ScheduleUncheckedCreateWithoutSkillSwapRequestInput[]
+    connectOrCreate?: ScheduleCreateOrConnectWithoutSkillSwapRequestInput | ScheduleCreateOrConnectWithoutSkillSwapRequestInput[]
+    createMany?: ScheduleCreateManySkillSwapRequestInputEnvelope
+    connect?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutSkillSwapRequestsCreatedInput = {
+    create?: XOR<UserCreateWithoutSkillSwapRequestsCreatedInput, UserUncheckedCreateWithoutSkillSwapRequestsCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSkillSwapRequestsCreatedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSkillSwapRequestsAcceptedInput = {
+    create?: XOR<UserCreateWithoutSkillSwapRequestsAcceptedInput, UserUncheckedCreateWithoutSkillSwapRequestsAcceptedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSkillSwapRequestsAcceptedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SkillSwapSessionCreateNestedOneWithoutSkillSwapRequestInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedCreateWithoutSkillSwapRequestInput>
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutSkillSwapRequestInput
+    connect?: SkillSwapSessionWhereUniqueInput
+  }
+
+  export type ScheduleUncheckedCreateNestedManyWithoutSkillSwapRequestInput = {
+    create?: XOR<ScheduleCreateWithoutSkillSwapRequestInput, ScheduleUncheckedCreateWithoutSkillSwapRequestInput> | ScheduleCreateWithoutSkillSwapRequestInput[] | ScheduleUncheckedCreateWithoutSkillSwapRequestInput[]
+    connectOrCreate?: ScheduleCreateOrConnectWithoutSkillSwapRequestInput | ScheduleCreateOrConnectWithoutSkillSwapRequestInput[]
+    createMany?: ScheduleCreateManySkillSwapRequestInputEnvelope
+    connect?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+  }
+
+  export type SkillSwapSessionUncheckedCreateNestedOneWithoutSkillSwapRequestInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedCreateWithoutSkillSwapRequestInput>
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutSkillSwapRequestInput
+    connect?: SkillSwapSessionWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+    unset?: boolean
+  }
+
+  export type ScheduleUpdateManyWithoutSkillSwapRequestNestedInput = {
+    create?: XOR<ScheduleCreateWithoutSkillSwapRequestInput, ScheduleUncheckedCreateWithoutSkillSwapRequestInput> | ScheduleCreateWithoutSkillSwapRequestInput[] | ScheduleUncheckedCreateWithoutSkillSwapRequestInput[]
+    connectOrCreate?: ScheduleCreateOrConnectWithoutSkillSwapRequestInput | ScheduleCreateOrConnectWithoutSkillSwapRequestInput[]
+    upsert?: ScheduleUpsertWithWhereUniqueWithoutSkillSwapRequestInput | ScheduleUpsertWithWhereUniqueWithoutSkillSwapRequestInput[]
+    createMany?: ScheduleCreateManySkillSwapRequestInputEnvelope
+    set?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    disconnect?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    delete?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    connect?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    update?: ScheduleUpdateWithWhereUniqueWithoutSkillSwapRequestInput | ScheduleUpdateWithWhereUniqueWithoutSkillSwapRequestInput[]
+    updateMany?: ScheduleUpdateManyWithWhereWithoutSkillSwapRequestInput | ScheduleUpdateManyWithWhereWithoutSkillSwapRequestInput[]
+    deleteMany?: ScheduleScalarWhereInput | ScheduleScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutSkillSwapRequestsCreatedNestedInput = {
+    create?: XOR<UserCreateWithoutSkillSwapRequestsCreatedInput, UserUncheckedCreateWithoutSkillSwapRequestsCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSkillSwapRequestsCreatedInput
+    upsert?: UserUpsertWithoutSkillSwapRequestsCreatedInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSkillSwapRequestsCreatedInput, UserUpdateWithoutSkillSwapRequestsCreatedInput>, UserUncheckedUpdateWithoutSkillSwapRequestsCreatedInput>
+  }
+
+  export type UserUpdateOneWithoutSkillSwapRequestsAcceptedNestedInput = {
+    create?: XOR<UserCreateWithoutSkillSwapRequestsAcceptedInput, UserUncheckedCreateWithoutSkillSwapRequestsAcceptedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSkillSwapRequestsAcceptedInput
+    upsert?: UserUpsertWithoutSkillSwapRequestsAcceptedInput
+    disconnect?: boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSkillSwapRequestsAcceptedInput, UserUpdateWithoutSkillSwapRequestsAcceptedInput>, UserUncheckedUpdateWithoutSkillSwapRequestsAcceptedInput>
+  }
+
+  export type SkillSwapSessionUpdateOneWithoutSkillSwapRequestNestedInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedCreateWithoutSkillSwapRequestInput>
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutSkillSwapRequestInput
+    upsert?: SkillSwapSessionUpsertWithoutSkillSwapRequestInput
+    disconnect?: SkillSwapSessionWhereInput | boolean
+    delete?: SkillSwapSessionWhereInput | boolean
+    connect?: SkillSwapSessionWhereUniqueInput
+    update?: XOR<XOR<SkillSwapSessionUpdateToOneWithWhereWithoutSkillSwapRequestInput, SkillSwapSessionUpdateWithoutSkillSwapRequestInput>, SkillSwapSessionUncheckedUpdateWithoutSkillSwapRequestInput>
+  }
+
+  export type ScheduleUncheckedUpdateManyWithoutSkillSwapRequestNestedInput = {
+    create?: XOR<ScheduleCreateWithoutSkillSwapRequestInput, ScheduleUncheckedCreateWithoutSkillSwapRequestInput> | ScheduleCreateWithoutSkillSwapRequestInput[] | ScheduleUncheckedCreateWithoutSkillSwapRequestInput[]
+    connectOrCreate?: ScheduleCreateOrConnectWithoutSkillSwapRequestInput | ScheduleCreateOrConnectWithoutSkillSwapRequestInput[]
+    upsert?: ScheduleUpsertWithWhereUniqueWithoutSkillSwapRequestInput | ScheduleUpsertWithWhereUniqueWithoutSkillSwapRequestInput[]
+    createMany?: ScheduleCreateManySkillSwapRequestInputEnvelope
+    set?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    disconnect?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    delete?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    connect?: ScheduleWhereUniqueInput | ScheduleWhereUniqueInput[]
+    update?: ScheduleUpdateWithWhereUniqueWithoutSkillSwapRequestInput | ScheduleUpdateWithWhereUniqueWithoutSkillSwapRequestInput[]
+    updateMany?: ScheduleUpdateManyWithWhereWithoutSkillSwapRequestInput | ScheduleUpdateManyWithWhereWithoutSkillSwapRequestInput[]
+    deleteMany?: ScheduleScalarWhereInput | ScheduleScalarWhereInput[]
+  }
+
+  export type SkillSwapSessionUncheckedUpdateOneWithoutSkillSwapRequestNestedInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedCreateWithoutSkillSwapRequestInput>
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutSkillSwapRequestInput
+    upsert?: SkillSwapSessionUpsertWithoutSkillSwapRequestInput
+    disconnect?: SkillSwapSessionWhereInput | boolean
+    delete?: SkillSwapSessionWhereInput | boolean
+    connect?: SkillSwapSessionWhereUniqueInput
+    update?: XOR<XOR<SkillSwapSessionUpdateToOneWithWhereWithoutSkillSwapRequestInput, SkillSwapSessionUpdateWithoutSkillSwapRequestInput>, SkillSwapSessionUncheckedUpdateWithoutSkillSwapRequestInput>
+  }
+
+  export type SkillSwapRequestCreateNestedOneWithoutAvailabilityInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutAvailabilityInput, SkillSwapRequestUncheckedCreateWithoutAvailabilityInput>
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutAvailabilityInput
+    connect?: SkillSwapRequestWhereUniqueInput
+  }
+
+  export type SkillSwapSessionCreateNestedManyWithoutScheduleInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutScheduleInput, SkillSwapSessionUncheckedCreateWithoutScheduleInput> | SkillSwapSessionCreateWithoutScheduleInput[] | SkillSwapSessionUncheckedCreateWithoutScheduleInput[]
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutScheduleInput | SkillSwapSessionCreateOrConnectWithoutScheduleInput[]
+    createMany?: SkillSwapSessionCreateManyScheduleInputEnvelope
+    connect?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+  }
+
+  export type SkillSwapSessionUncheckedCreateNestedManyWithoutScheduleInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutScheduleInput, SkillSwapSessionUncheckedCreateWithoutScheduleInput> | SkillSwapSessionCreateWithoutScheduleInput[] | SkillSwapSessionUncheckedCreateWithoutScheduleInput[]
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutScheduleInput | SkillSwapSessionCreateOrConnectWithoutScheduleInput[]
+    createMany?: SkillSwapSessionCreateManyScheduleInputEnvelope
+    connect?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+  }
+
+  export type SkillSwapRequestUpdateOneRequiredWithoutAvailabilityNestedInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutAvailabilityInput, SkillSwapRequestUncheckedCreateWithoutAvailabilityInput>
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutAvailabilityInput
+    upsert?: SkillSwapRequestUpsertWithoutAvailabilityInput
+    connect?: SkillSwapRequestWhereUniqueInput
+    update?: XOR<XOR<SkillSwapRequestUpdateToOneWithWhereWithoutAvailabilityInput, SkillSwapRequestUpdateWithoutAvailabilityInput>, SkillSwapRequestUncheckedUpdateWithoutAvailabilityInput>
+  }
+
+  export type SkillSwapSessionUpdateManyWithoutScheduleNestedInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutScheduleInput, SkillSwapSessionUncheckedCreateWithoutScheduleInput> | SkillSwapSessionCreateWithoutScheduleInput[] | SkillSwapSessionUncheckedCreateWithoutScheduleInput[]
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutScheduleInput | SkillSwapSessionCreateOrConnectWithoutScheduleInput[]
+    upsert?: SkillSwapSessionUpsertWithWhereUniqueWithoutScheduleInput | SkillSwapSessionUpsertWithWhereUniqueWithoutScheduleInput[]
+    createMany?: SkillSwapSessionCreateManyScheduleInputEnvelope
+    set?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    disconnect?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    delete?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    connect?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    update?: SkillSwapSessionUpdateWithWhereUniqueWithoutScheduleInput | SkillSwapSessionUpdateWithWhereUniqueWithoutScheduleInput[]
+    updateMany?: SkillSwapSessionUpdateManyWithWhereWithoutScheduleInput | SkillSwapSessionUpdateManyWithWhereWithoutScheduleInput[]
+    deleteMany?: SkillSwapSessionScalarWhereInput | SkillSwapSessionScalarWhereInput[]
+  }
+
+  export type SkillSwapSessionUncheckedUpdateManyWithoutScheduleNestedInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutScheduleInput, SkillSwapSessionUncheckedCreateWithoutScheduleInput> | SkillSwapSessionCreateWithoutScheduleInput[] | SkillSwapSessionUncheckedCreateWithoutScheduleInput[]
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutScheduleInput | SkillSwapSessionCreateOrConnectWithoutScheduleInput[]
+    upsert?: SkillSwapSessionUpsertWithWhereUniqueWithoutScheduleInput | SkillSwapSessionUpsertWithWhereUniqueWithoutScheduleInput[]
+    createMany?: SkillSwapSessionCreateManyScheduleInputEnvelope
+    set?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    disconnect?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    delete?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    connect?: SkillSwapSessionWhereUniqueInput | SkillSwapSessionWhereUniqueInput[]
+    update?: SkillSwapSessionUpdateWithWhereUniqueWithoutScheduleInput | SkillSwapSessionUpdateWithWhereUniqueWithoutScheduleInput[]
+    updateMany?: SkillSwapSessionUpdateManyWithWhereWithoutScheduleInput | SkillSwapSessionUpdateManyWithWhereWithoutScheduleInput[]
+    deleteMany?: SkillSwapSessionScalarWhereInput | SkillSwapSessionScalarWhereInput[]
+  }
+
+  export type SkillSwapRequestCreateNestedOneWithoutSkillSwapSessionInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutSkillSwapSessionInput, SkillSwapRequestUncheckedCreateWithoutSkillSwapSessionInput>
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutSkillSwapSessionInput
+    connect?: SkillSwapRequestWhereUniqueInput
+  }
+
+  export type ScheduleCreateNestedOneWithoutSkillSwapSessionInput = {
+    create?: XOR<ScheduleCreateWithoutSkillSwapSessionInput, ScheduleUncheckedCreateWithoutSkillSwapSessionInput>
+    connectOrCreate?: ScheduleCreateOrConnectWithoutSkillSwapSessionInput
+    connect?: ScheduleWhereUniqueInput
+  }
+
+  export type SkillSwapSessionChatMessageCreateNestedManyWithoutSkillSwapSessionInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput> | SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySkillSwapSessionInputEnvelope
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillSwapSessionInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput> | SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySkillSwapSessionInputEnvelope
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+  }
+
+  export type EnumScheduleStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ScheduleStatus
+  }
+
+  export type SkillSwapRequestUpdateOneRequiredWithoutSkillSwapSessionNestedInput = {
+    create?: XOR<SkillSwapRequestCreateWithoutSkillSwapSessionInput, SkillSwapRequestUncheckedCreateWithoutSkillSwapSessionInput>
+    connectOrCreate?: SkillSwapRequestCreateOrConnectWithoutSkillSwapSessionInput
+    upsert?: SkillSwapRequestUpsertWithoutSkillSwapSessionInput
+    connect?: SkillSwapRequestWhereUniqueInput
+    update?: XOR<XOR<SkillSwapRequestUpdateToOneWithWhereWithoutSkillSwapSessionInput, SkillSwapRequestUpdateWithoutSkillSwapSessionInput>, SkillSwapRequestUncheckedUpdateWithoutSkillSwapSessionInput>
+  }
+
+  export type ScheduleUpdateOneRequiredWithoutSkillSwapSessionNestedInput = {
+    create?: XOR<ScheduleCreateWithoutSkillSwapSessionInput, ScheduleUncheckedCreateWithoutSkillSwapSessionInput>
+    connectOrCreate?: ScheduleCreateOrConnectWithoutSkillSwapSessionInput
+    upsert?: ScheduleUpsertWithoutSkillSwapSessionInput
+    connect?: ScheduleWhereUniqueInput
+    update?: XOR<XOR<ScheduleUpdateToOneWithWhereWithoutSkillSwapSessionInput, ScheduleUpdateWithoutSkillSwapSessionInput>, ScheduleUncheckedUpdateWithoutSkillSwapSessionInput>
+  }
+
+  export type SkillSwapSessionChatMessageUpdateManyWithoutSkillSwapSessionNestedInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput> | SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput[]
+    upsert?: SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSkillSwapSessionInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySkillSwapSessionInputEnvelope
+    set?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    disconnect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    delete?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    update?: SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSkillSwapSessionInput[]
+    updateMany?: SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSkillSwapSessionInput[]
+    deleteMany?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillSwapSessionNestedInput = {
+    create?: XOR<SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput> | SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput[] | SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput[]
+    connectOrCreate?: SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput[]
+    upsert?: SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSkillSwapSessionInput[]
+    createMany?: SkillSwapSessionChatMessageCreateManySkillSwapSessionInputEnvelope
+    set?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    disconnect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    delete?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
+    update?: SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSkillSwapSessionInput[]
+    updateMany?: SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSkillSwapSessionInput | SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSkillSwapSessionInput[]
+    deleteMany?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutChatMessagesInput = {
+    create?: XOR<UserCreateWithoutChatMessagesInput, UserUncheckedCreateWithoutChatMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChatMessagesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type SkillSwapSessionCreateNestedOneWithoutChatMessagesInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutChatMessagesInput, SkillSwapSessionUncheckedCreateWithoutChatMessagesInput>
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutChatMessagesInput
+    connect?: SkillSwapSessionWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutChatMessagesNestedInput = {
+    create?: XOR<UserCreateWithoutChatMessagesInput, UserUncheckedCreateWithoutChatMessagesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutChatMessagesInput
+    upsert?: UserUpsertWithoutChatMessagesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChatMessagesInput, UserUpdateWithoutChatMessagesInput>, UserUncheckedUpdateWithoutChatMessagesInput>
+  }
+
+  export type SkillSwapSessionUpdateOneRequiredWithoutChatMessagesNestedInput = {
+    create?: XOR<SkillSwapSessionCreateWithoutChatMessagesInput, SkillSwapSessionUncheckedCreateWithoutChatMessagesInput>
+    connectOrCreate?: SkillSwapSessionCreateOrConnectWithoutChatMessagesInput
+    upsert?: SkillSwapSessionUpsertWithoutChatMessagesInput
+    connect?: SkillSwapSessionWhereUniqueInput
+    update?: XOR<XOR<SkillSwapSessionUpdateToOneWithWhereWithoutChatMessagesInput, SkillSwapSessionUpdateWithoutChatMessagesInput>, SkillSwapSessionUncheckedUpdateWithoutChatMessagesInput>
   }
 
   export type UserCreateNestedOneWithoutUserSessionsInput = {
@@ -3355,6 +9486,21 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    isSet?: boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -3396,6 +9542,36 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    isSet?: boolean
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -3408,6 +9584,63 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    isSet?: boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    isSet?: boolean
+  }
+
+  export type NestedEnumScheduleStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ScheduleStatus | EnumScheduleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumScheduleStatusFilter<$PrismaModel> | $Enums.ScheduleStatus
+  }
+
+  export type NestedEnumScheduleStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ScheduleStatus | EnumScheduleStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ScheduleStatus[] | ListEnumScheduleStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumScheduleStatusWithAggregatesFilter<$PrismaModel> | $Enums.ScheduleStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumScheduleStatusFilter<$PrismaModel>
+    _max?: NestedEnumScheduleStatusFilter<$PrismaModel>
   }
 
   export type UserSessionCreateWithoutUserInput = {
@@ -3425,6 +9658,97 @@ export namespace Prisma {
   export type UserSessionCreateOrConnectWithoutUserInput = {
     where: UserSessionWhereUniqueInput
     create: XOR<UserSessionCreateWithoutUserInput, UserSessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SkillSwapRequestCreateWithoutRequesterInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+    availability?: ScheduleCreateNestedManyWithoutSkillSwapRequestInput
+    accepter?: UserCreateNestedOneWithoutSkillSwapRequestsAcceptedInput
+    skillSwapSession?: SkillSwapSessionCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestUncheckedCreateWithoutRequesterInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+    availability?: ScheduleUncheckedCreateNestedManyWithoutSkillSwapRequestInput
+    skillSwapSession?: SkillSwapSessionUncheckedCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestCreateOrConnectWithoutRequesterInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    create: XOR<SkillSwapRequestCreateWithoutRequesterInput, SkillSwapRequestUncheckedCreateWithoutRequesterInput>
+  }
+
+  export type SkillSwapRequestCreateManyRequesterInputEnvelope = {
+    data: SkillSwapRequestCreateManyRequesterInput | SkillSwapRequestCreateManyRequesterInput[]
+  }
+
+  export type SkillSwapRequestCreateWithoutAccepterInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+    availability?: ScheduleCreateNestedManyWithoutSkillSwapRequestInput
+    requester: UserCreateNestedOneWithoutSkillSwapRequestsCreatedInput
+    skillSwapSession?: SkillSwapSessionCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestUncheckedCreateWithoutAccepterInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+    availability?: ScheduleUncheckedCreateNestedManyWithoutSkillSwapRequestInput
+    skillSwapSession?: SkillSwapSessionUncheckedCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestCreateOrConnectWithoutAccepterInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    create: XOR<SkillSwapRequestCreateWithoutAccepterInput, SkillSwapRequestUncheckedCreateWithoutAccepterInput>
+  }
+
+  export type SkillSwapRequestCreateManyAccepterInputEnvelope = {
+    data: SkillSwapRequestCreateManyAccepterInput | SkillSwapRequestCreateManyAccepterInput[]
+  }
+
+  export type SkillSwapSessionChatMessageCreateWithoutSenderInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    skillSwapSession: SkillSwapSessionCreateNestedOneWithoutChatMessagesInput
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    skillSwapSessionId: string
+  }
+
+  export type SkillSwapSessionChatMessageCreateOrConnectWithoutSenderInput = {
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+    create: XOR<SkillSwapSessionChatMessageCreateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type SkillSwapSessionChatMessageCreateManySenderInputEnvelope = {
+    data: SkillSwapSessionChatMessageCreateManySenderInput | SkillSwapSessionChatMessageCreateManySenderInput[]
   }
 
   export type UserSessionUpsertWithoutUserInput = {
@@ -3448,12 +9772,747 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SkillSwapRequestUpsertWithWhereUniqueWithoutRequesterInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    update: XOR<SkillSwapRequestUpdateWithoutRequesterInput, SkillSwapRequestUncheckedUpdateWithoutRequesterInput>
+    create: XOR<SkillSwapRequestCreateWithoutRequesterInput, SkillSwapRequestUncheckedCreateWithoutRequesterInput>
+  }
+
+  export type SkillSwapRequestUpdateWithWhereUniqueWithoutRequesterInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    data: XOR<SkillSwapRequestUpdateWithoutRequesterInput, SkillSwapRequestUncheckedUpdateWithoutRequesterInput>
+  }
+
+  export type SkillSwapRequestUpdateManyWithWhereWithoutRequesterInput = {
+    where: SkillSwapRequestScalarWhereInput
+    data: XOR<SkillSwapRequestUpdateManyMutationInput, SkillSwapRequestUncheckedUpdateManyWithoutRequesterInput>
+  }
+
+  export type SkillSwapRequestScalarWhereInput = {
+    AND?: SkillSwapRequestScalarWhereInput | SkillSwapRequestScalarWhereInput[]
+    OR?: SkillSwapRequestScalarWhereInput[]
+    NOT?: SkillSwapRequestScalarWhereInput | SkillSwapRequestScalarWhereInput[]
+    id?: StringFilter<"SkillSwapRequest"> | string
+    requesterTimezone?: StringFilter<"SkillSwapRequest"> | string
+    closed?: BoolFilter<"SkillSwapRequest"> | boolean
+    closedAt?: DateTimeNullableFilter<"SkillSwapRequest"> | Date | string | null
+    requestedSkill?: StringFilter<"SkillSwapRequest"> | string
+    createdAt?: DateTimeFilter<"SkillSwapRequest"> | Date | string
+    requesterId?: StringFilter<"SkillSwapRequest"> | string
+    accepterId?: StringNullableFilter<"SkillSwapRequest"> | string | null
+  }
+
+  export type SkillSwapRequestUpsertWithWhereUniqueWithoutAccepterInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    update: XOR<SkillSwapRequestUpdateWithoutAccepterInput, SkillSwapRequestUncheckedUpdateWithoutAccepterInput>
+    create: XOR<SkillSwapRequestCreateWithoutAccepterInput, SkillSwapRequestUncheckedCreateWithoutAccepterInput>
+  }
+
+  export type SkillSwapRequestUpdateWithWhereUniqueWithoutAccepterInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    data: XOR<SkillSwapRequestUpdateWithoutAccepterInput, SkillSwapRequestUncheckedUpdateWithoutAccepterInput>
+  }
+
+  export type SkillSwapRequestUpdateManyWithWhereWithoutAccepterInput = {
+    where: SkillSwapRequestScalarWhereInput
+    data: XOR<SkillSwapRequestUpdateManyMutationInput, SkillSwapRequestUncheckedUpdateManyWithoutAccepterInput>
+  }
+
+  export type SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSenderInput = {
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+    update: XOR<SkillSwapSessionChatMessageUpdateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedUpdateWithoutSenderInput>
+    create: XOR<SkillSwapSessionChatMessageCreateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSenderInput>
+  }
+
+  export type SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSenderInput = {
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+    data: XOR<SkillSwapSessionChatMessageUpdateWithoutSenderInput, SkillSwapSessionChatMessageUncheckedUpdateWithoutSenderInput>
+  }
+
+  export type SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSenderInput = {
+    where: SkillSwapSessionChatMessageScalarWhereInput
+    data: XOR<SkillSwapSessionChatMessageUpdateManyMutationInput, SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSenderInput>
+  }
+
+  export type SkillSwapSessionChatMessageScalarWhereInput = {
+    AND?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
+    OR?: SkillSwapSessionChatMessageScalarWhereInput[]
+    NOT?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
+    id?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    content?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    createdAt?: DateTimeFilter<"SkillSwapSessionChatMessage"> | Date | string
+    senderId?: StringFilter<"SkillSwapSessionChatMessage"> | string
+    skillSwapSessionId?: StringFilter<"SkillSwapSessionChatMessage"> | string
+  }
+
+  export type ScheduleCreateWithoutSkillSwapRequestInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+    skillSwapSession?: SkillSwapSessionCreateNestedManyWithoutScheduleInput
+  }
+
+  export type ScheduleUncheckedCreateWithoutSkillSwapRequestInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+    skillSwapSession?: SkillSwapSessionUncheckedCreateNestedManyWithoutScheduleInput
+  }
+
+  export type ScheduleCreateOrConnectWithoutSkillSwapRequestInput = {
+    where: ScheduleWhereUniqueInput
+    create: XOR<ScheduleCreateWithoutSkillSwapRequestInput, ScheduleUncheckedCreateWithoutSkillSwapRequestInput>
+  }
+
+  export type ScheduleCreateManySkillSwapRequestInputEnvelope = {
+    data: ScheduleCreateManySkillSwapRequestInput | ScheduleCreateManySkillSwapRequestInput[]
+  }
+
+  export type UserCreateWithoutSkillSwapRequestsCreatedInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
+    createdAt?: Date | string
+    userSessions?: UserSessionCreateNestedOneWithoutUserInput
+    skillSwapRequestsAccepted?: SkillSwapRequestCreateNestedManyWithoutAccepterInput
+    chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserUncheckedCreateWithoutSkillSwapRequestsCreatedInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
+    createdAt?: Date | string
+    userSessions?: UserSessionUncheckedCreateNestedOneWithoutUserInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedCreateNestedManyWithoutAccepterInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserCreateOrConnectWithoutSkillSwapRequestsCreatedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSkillSwapRequestsCreatedInput, UserUncheckedCreateWithoutSkillSwapRequestsCreatedInput>
+  }
+
+  export type UserCreateWithoutSkillSwapRequestsAcceptedInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
+    createdAt?: Date | string
+    userSessions?: UserSessionCreateNestedOneWithoutUserInput
+    skillSwapRequestsCreated?: SkillSwapRequestCreateNestedManyWithoutRequesterInput
+    chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserUncheckedCreateWithoutSkillSwapRequestsAcceptedInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
+    createdAt?: Date | string
+    userSessions?: UserSessionUncheckedCreateNestedOneWithoutUserInput
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedCreateNestedManyWithoutRequesterInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserCreateOrConnectWithoutSkillSwapRequestsAcceptedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSkillSwapRequestsAcceptedInput, UserUncheckedCreateWithoutSkillSwapRequestsAcceptedInput>
+  }
+
+  export type SkillSwapSessionCreateWithoutSkillSwapRequestInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    schedule: ScheduleCreateNestedOneWithoutSkillSwapSessionInput
+    chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSkillSwapSessionInput
+  }
+
+  export type SkillSwapSessionUncheckedCreateWithoutSkillSwapRequestInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    scheduleId: string
+    chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillSwapSessionInput
+  }
+
+  export type SkillSwapSessionCreateOrConnectWithoutSkillSwapRequestInput = {
+    where: SkillSwapSessionWhereUniqueInput
+    create: XOR<SkillSwapSessionCreateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedCreateWithoutSkillSwapRequestInput>
+  }
+
+  export type ScheduleUpsertWithWhereUniqueWithoutSkillSwapRequestInput = {
+    where: ScheduleWhereUniqueInput
+    update: XOR<ScheduleUpdateWithoutSkillSwapRequestInput, ScheduleUncheckedUpdateWithoutSkillSwapRequestInput>
+    create: XOR<ScheduleCreateWithoutSkillSwapRequestInput, ScheduleUncheckedCreateWithoutSkillSwapRequestInput>
+  }
+
+  export type ScheduleUpdateWithWhereUniqueWithoutSkillSwapRequestInput = {
+    where: ScheduleWhereUniqueInput
+    data: XOR<ScheduleUpdateWithoutSkillSwapRequestInput, ScheduleUncheckedUpdateWithoutSkillSwapRequestInput>
+  }
+
+  export type ScheduleUpdateManyWithWhereWithoutSkillSwapRequestInput = {
+    where: ScheduleScalarWhereInput
+    data: XOR<ScheduleUpdateManyMutationInput, ScheduleUncheckedUpdateManyWithoutSkillSwapRequestInput>
+  }
+
+  export type ScheduleScalarWhereInput = {
+    AND?: ScheduleScalarWhereInput | ScheduleScalarWhereInput[]
+    OR?: ScheduleScalarWhereInput[]
+    NOT?: ScheduleScalarWhereInput | ScheduleScalarWhereInput[]
+    id?: StringFilter<"Schedule"> | string
+    date?: DateTimeFilter<"Schedule"> | Date | string
+    startTime?: StringFilter<"Schedule"> | string
+    endTime?: StringFilter<"Schedule"> | string
+    skillSwapRequestId?: StringFilter<"Schedule"> | string
+  }
+
+  export type UserUpsertWithoutSkillSwapRequestsCreatedInput = {
+    update: XOR<UserUpdateWithoutSkillSwapRequestsCreatedInput, UserUncheckedUpdateWithoutSkillSwapRequestsCreatedInput>
+    create: XOR<UserCreateWithoutSkillSwapRequestsCreatedInput, UserUncheckedCreateWithoutSkillSwapRequestsCreatedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSkillSwapRequestsCreatedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSkillSwapRequestsCreatedInput, UserUncheckedUpdateWithoutSkillSwapRequestsCreatedInput>
+  }
+
+  export type UserUpdateWithoutSkillSwapRequestsCreatedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userSessions?: UserSessionUpdateOneWithoutUserNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUpdateManyWithoutAccepterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSkillSwapRequestsCreatedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userSessions?: UserSessionUncheckedUpdateOneWithoutUserNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedUpdateManyWithoutAccepterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUpsertWithoutSkillSwapRequestsAcceptedInput = {
+    update: XOR<UserUpdateWithoutSkillSwapRequestsAcceptedInput, UserUncheckedUpdateWithoutSkillSwapRequestsAcceptedInput>
+    create: XOR<UserCreateWithoutSkillSwapRequestsAcceptedInput, UserUncheckedCreateWithoutSkillSwapRequestsAcceptedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSkillSwapRequestsAcceptedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSkillSwapRequestsAcceptedInput, UserUncheckedUpdateWithoutSkillSwapRequestsAcceptedInput>
+  }
+
+  export type UserUpdateWithoutSkillSwapRequestsAcceptedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userSessions?: UserSessionUpdateOneWithoutUserNestedInput
+    skillSwapRequestsCreated?: SkillSwapRequestUpdateManyWithoutRequesterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSkillSwapRequestsAcceptedInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userSessions?: UserSessionUncheckedUpdateOneWithoutUserNestedInput
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type SkillSwapSessionUpsertWithoutSkillSwapRequestInput = {
+    update: XOR<SkillSwapSessionUpdateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedUpdateWithoutSkillSwapRequestInput>
+    create: XOR<SkillSwapSessionCreateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedCreateWithoutSkillSwapRequestInput>
+    where?: SkillSwapSessionWhereInput
+  }
+
+  export type SkillSwapSessionUpdateToOneWithWhereWithoutSkillSwapRequestInput = {
+    where?: SkillSwapSessionWhereInput
+    data: XOR<SkillSwapSessionUpdateWithoutSkillSwapRequestInput, SkillSwapSessionUncheckedUpdateWithoutSkillSwapRequestInput>
+  }
+
+  export type SkillSwapSessionUpdateWithoutSkillSwapRequestInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    schedule?: ScheduleUpdateOneRequiredWithoutSkillSwapSessionNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSkillSwapSessionNestedInput
+  }
+
+  export type SkillSwapSessionUncheckedUpdateWithoutSkillSwapRequestInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    scheduleId?: StringFieldUpdateOperationsInput | string
+    chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillSwapSessionNestedInput
+  }
+
+  export type SkillSwapRequestCreateWithoutAvailabilityInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+    requester: UserCreateNestedOneWithoutSkillSwapRequestsCreatedInput
+    accepter?: UserCreateNestedOneWithoutSkillSwapRequestsAcceptedInput
+    skillSwapSession?: SkillSwapSessionCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestUncheckedCreateWithoutAvailabilityInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    requesterId: string
+    accepterId?: string | null
+    skillSwapSession?: SkillSwapSessionUncheckedCreateNestedOneWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestCreateOrConnectWithoutAvailabilityInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    create: XOR<SkillSwapRequestCreateWithoutAvailabilityInput, SkillSwapRequestUncheckedCreateWithoutAvailabilityInput>
+  }
+
+  export type SkillSwapSessionCreateWithoutScheduleInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    skillSwapRequest: SkillSwapRequestCreateNestedOneWithoutSkillSwapSessionInput
+    chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSkillSwapSessionInput
+  }
+
+  export type SkillSwapSessionUncheckedCreateWithoutScheduleInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    skillSwapRequestId: string
+    chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillSwapSessionInput
+  }
+
+  export type SkillSwapSessionCreateOrConnectWithoutScheduleInput = {
+    where: SkillSwapSessionWhereUniqueInput
+    create: XOR<SkillSwapSessionCreateWithoutScheduleInput, SkillSwapSessionUncheckedCreateWithoutScheduleInput>
+  }
+
+  export type SkillSwapSessionCreateManyScheduleInputEnvelope = {
+    data: SkillSwapSessionCreateManyScheduleInput | SkillSwapSessionCreateManyScheduleInput[]
+  }
+
+  export type SkillSwapRequestUpsertWithoutAvailabilityInput = {
+    update: XOR<SkillSwapRequestUpdateWithoutAvailabilityInput, SkillSwapRequestUncheckedUpdateWithoutAvailabilityInput>
+    create: XOR<SkillSwapRequestCreateWithoutAvailabilityInput, SkillSwapRequestUncheckedCreateWithoutAvailabilityInput>
+    where?: SkillSwapRequestWhereInput
+  }
+
+  export type SkillSwapRequestUpdateToOneWithWhereWithoutAvailabilityInput = {
+    where?: SkillSwapRequestWhereInput
+    data: XOR<SkillSwapRequestUpdateWithoutAvailabilityInput, SkillSwapRequestUncheckedUpdateWithoutAvailabilityInput>
+  }
+
+  export type SkillSwapRequestUpdateWithoutAvailabilityInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    requester?: UserUpdateOneRequiredWithoutSkillSwapRequestsCreatedNestedInput
+    accepter?: UserUpdateOneWithoutSkillSwapRequestsAcceptedNestedInput
+    skillSwapSession?: SkillSwapSessionUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapRequestUncheckedUpdateWithoutAvailabilityInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    skillSwapSession?: SkillSwapSessionUncheckedUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapSessionUpsertWithWhereUniqueWithoutScheduleInput = {
+    where: SkillSwapSessionWhereUniqueInput
+    update: XOR<SkillSwapSessionUpdateWithoutScheduleInput, SkillSwapSessionUncheckedUpdateWithoutScheduleInput>
+    create: XOR<SkillSwapSessionCreateWithoutScheduleInput, SkillSwapSessionUncheckedCreateWithoutScheduleInput>
+  }
+
+  export type SkillSwapSessionUpdateWithWhereUniqueWithoutScheduleInput = {
+    where: SkillSwapSessionWhereUniqueInput
+    data: XOR<SkillSwapSessionUpdateWithoutScheduleInput, SkillSwapSessionUncheckedUpdateWithoutScheduleInput>
+  }
+
+  export type SkillSwapSessionUpdateManyWithWhereWithoutScheduleInput = {
+    where: SkillSwapSessionScalarWhereInput
+    data: XOR<SkillSwapSessionUpdateManyMutationInput, SkillSwapSessionUncheckedUpdateManyWithoutScheduleInput>
+  }
+
+  export type SkillSwapSessionScalarWhereInput = {
+    AND?: SkillSwapSessionScalarWhereInput | SkillSwapSessionScalarWhereInput[]
+    OR?: SkillSwapSessionScalarWhereInput[]
+    NOT?: SkillSwapSessionScalarWhereInput | SkillSwapSessionScalarWhereInput[]
+    id?: StringFilter<"SkillSwapSession"> | string
+    status?: EnumScheduleStatusFilter<"SkillSwapSession"> | $Enums.ScheduleStatus
+    offeredSkill?: StringFilter<"SkillSwapSession"> | string
+    createdAt?: DateTimeFilter<"SkillSwapSession"> | Date | string
+    scheduleId?: StringFilter<"SkillSwapSession"> | string
+    skillSwapRequestId?: StringFilter<"SkillSwapSession"> | string
+  }
+
+  export type SkillSwapRequestCreateWithoutSkillSwapSessionInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+    availability?: ScheduleCreateNestedManyWithoutSkillSwapRequestInput
+    requester: UserCreateNestedOneWithoutSkillSwapRequestsCreatedInput
+    accepter?: UserCreateNestedOneWithoutSkillSwapRequestsAcceptedInput
+  }
+
+  export type SkillSwapRequestUncheckedCreateWithoutSkillSwapSessionInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    requesterId: string
+    accepterId?: string | null
+    availability?: ScheduleUncheckedCreateNestedManyWithoutSkillSwapRequestInput
+  }
+
+  export type SkillSwapRequestCreateOrConnectWithoutSkillSwapSessionInput = {
+    where: SkillSwapRequestWhereUniqueInput
+    create: XOR<SkillSwapRequestCreateWithoutSkillSwapSessionInput, SkillSwapRequestUncheckedCreateWithoutSkillSwapSessionInput>
+  }
+
+  export type ScheduleCreateWithoutSkillSwapSessionInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+    skillSwapRequest: SkillSwapRequestCreateNestedOneWithoutAvailabilityInput
+  }
+
+  export type ScheduleUncheckedCreateWithoutSkillSwapSessionInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+    skillSwapRequestId: string
+  }
+
+  export type ScheduleCreateOrConnectWithoutSkillSwapSessionInput = {
+    where: ScheduleWhereUniqueInput
+    create: XOR<ScheduleCreateWithoutSkillSwapSessionInput, ScheduleUncheckedCreateWithoutSkillSwapSessionInput>
+  }
+
+  export type SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    sender: UserCreateNestedOneWithoutChatMessagesInput
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    senderId: string
+  }
+
+  export type SkillSwapSessionChatMessageCreateOrConnectWithoutSkillSwapSessionInput = {
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+    create: XOR<SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput>
+  }
+
+  export type SkillSwapSessionChatMessageCreateManySkillSwapSessionInputEnvelope = {
+    data: SkillSwapSessionChatMessageCreateManySkillSwapSessionInput | SkillSwapSessionChatMessageCreateManySkillSwapSessionInput[]
+  }
+
+  export type SkillSwapRequestUpsertWithoutSkillSwapSessionInput = {
+    update: XOR<SkillSwapRequestUpdateWithoutSkillSwapSessionInput, SkillSwapRequestUncheckedUpdateWithoutSkillSwapSessionInput>
+    create: XOR<SkillSwapRequestCreateWithoutSkillSwapSessionInput, SkillSwapRequestUncheckedCreateWithoutSkillSwapSessionInput>
+    where?: SkillSwapRequestWhereInput
+  }
+
+  export type SkillSwapRequestUpdateToOneWithWhereWithoutSkillSwapSessionInput = {
+    where?: SkillSwapRequestWhereInput
+    data: XOR<SkillSwapRequestUpdateWithoutSkillSwapSessionInput, SkillSwapRequestUncheckedUpdateWithoutSkillSwapSessionInput>
+  }
+
+  export type SkillSwapRequestUpdateWithoutSkillSwapSessionInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUpdateManyWithoutSkillSwapRequestNestedInput
+    requester?: UserUpdateOneRequiredWithoutSkillSwapRequestsCreatedNestedInput
+    accepter?: UserUpdateOneWithoutSkillSwapRequestsAcceptedNestedInput
+  }
+
+  export type SkillSwapRequestUncheckedUpdateWithoutSkillSwapSessionInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    requesterId?: StringFieldUpdateOperationsInput | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUncheckedUpdateManyWithoutSkillSwapRequestNestedInput
+  }
+
+  export type ScheduleUpsertWithoutSkillSwapSessionInput = {
+    update: XOR<ScheduleUpdateWithoutSkillSwapSessionInput, ScheduleUncheckedUpdateWithoutSkillSwapSessionInput>
+    create: XOR<ScheduleCreateWithoutSkillSwapSessionInput, ScheduleUncheckedCreateWithoutSkillSwapSessionInput>
+    where?: ScheduleWhereInput
+  }
+
+  export type ScheduleUpdateToOneWithWhereWithoutSkillSwapSessionInput = {
+    where?: ScheduleWhereInput
+    data: XOR<ScheduleUpdateWithoutSkillSwapSessionInput, ScheduleUncheckedUpdateWithoutSkillSwapSessionInput>
+  }
+
+  export type ScheduleUpdateWithoutSkillSwapSessionInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    skillSwapRequest?: SkillSwapRequestUpdateOneRequiredWithoutAvailabilityNestedInput
+  }
+
+  export type ScheduleUncheckedUpdateWithoutSkillSwapSessionInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionChatMessageUpsertWithWhereUniqueWithoutSkillSwapSessionInput = {
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+    update: XOR<SkillSwapSessionChatMessageUpdateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedUpdateWithoutSkillSwapSessionInput>
+    create: XOR<SkillSwapSessionChatMessageCreateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedCreateWithoutSkillSwapSessionInput>
+  }
+
+  export type SkillSwapSessionChatMessageUpdateWithWhereUniqueWithoutSkillSwapSessionInput = {
+    where: SkillSwapSessionChatMessageWhereUniqueInput
+    data: XOR<SkillSwapSessionChatMessageUpdateWithoutSkillSwapSessionInput, SkillSwapSessionChatMessageUncheckedUpdateWithoutSkillSwapSessionInput>
+  }
+
+  export type SkillSwapSessionChatMessageUpdateManyWithWhereWithoutSkillSwapSessionInput = {
+    where: SkillSwapSessionChatMessageScalarWhereInput
+    data: XOR<SkillSwapSessionChatMessageUpdateManyMutationInput, SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillSwapSessionInput>
+  }
+
+  export type UserCreateWithoutChatMessagesInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
+    createdAt?: Date | string
+    userSessions?: UserSessionCreateNestedOneWithoutUserInput
+    skillSwapRequestsCreated?: SkillSwapRequestCreateNestedManyWithoutRequesterInput
+    skillSwapRequestsAccepted?: SkillSwapRequestCreateNestedManyWithoutAccepterInput
+  }
+
+  export type UserUncheckedCreateWithoutChatMessagesInput = {
+    id?: string
+    name: string
+    email: string
+    password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
+    createdAt?: Date | string
+    userSessions?: UserSessionUncheckedCreateNestedOneWithoutUserInput
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedCreateNestedManyWithoutRequesterInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedCreateNestedManyWithoutAccepterInput
+  }
+
+  export type UserCreateOrConnectWithoutChatMessagesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutChatMessagesInput, UserUncheckedCreateWithoutChatMessagesInput>
+  }
+
+  export type SkillSwapSessionCreateWithoutChatMessagesInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    skillSwapRequest: SkillSwapRequestCreateNestedOneWithoutSkillSwapSessionInput
+    schedule: ScheduleCreateNestedOneWithoutSkillSwapSessionInput
+  }
+
+  export type SkillSwapSessionUncheckedCreateWithoutChatMessagesInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    scheduleId: string
+    skillSwapRequestId: string
+  }
+
+  export type SkillSwapSessionCreateOrConnectWithoutChatMessagesInput = {
+    where: SkillSwapSessionWhereUniqueInput
+    create: XOR<SkillSwapSessionCreateWithoutChatMessagesInput, SkillSwapSessionUncheckedCreateWithoutChatMessagesInput>
+  }
+
+  export type UserUpsertWithoutChatMessagesInput = {
+    update: XOR<UserUpdateWithoutChatMessagesInput, UserUncheckedUpdateWithoutChatMessagesInput>
+    create: XOR<UserCreateWithoutChatMessagesInput, UserUncheckedCreateWithoutChatMessagesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutChatMessagesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutChatMessagesInput, UserUncheckedUpdateWithoutChatMessagesInput>
+  }
+
+  export type UserUpdateWithoutChatMessagesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userSessions?: UserSessionUpdateOneWithoutUserNestedInput
+    skillSwapRequestsCreated?: SkillSwapRequestUpdateManyWithoutRequesterNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUpdateManyWithoutAccepterNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutChatMessagesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userSessions?: UserSessionUncheckedUpdateOneWithoutUserNestedInput
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedUpdateManyWithoutAccepterNestedInput
+  }
+
+  export type SkillSwapSessionUpsertWithoutChatMessagesInput = {
+    update: XOR<SkillSwapSessionUpdateWithoutChatMessagesInput, SkillSwapSessionUncheckedUpdateWithoutChatMessagesInput>
+    create: XOR<SkillSwapSessionCreateWithoutChatMessagesInput, SkillSwapSessionUncheckedCreateWithoutChatMessagesInput>
+    where?: SkillSwapSessionWhereInput
+  }
+
+  export type SkillSwapSessionUpdateToOneWithWhereWithoutChatMessagesInput = {
+    where?: SkillSwapSessionWhereInput
+    data: XOR<SkillSwapSessionUpdateWithoutChatMessagesInput, SkillSwapSessionUncheckedUpdateWithoutChatMessagesInput>
+  }
+
+  export type SkillSwapSessionUpdateWithoutChatMessagesInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapRequest?: SkillSwapRequestUpdateOneRequiredWithoutSkillSwapSessionNestedInput
+    schedule?: ScheduleUpdateOneRequiredWithoutSkillSwapSessionNestedInput
+  }
+
+  export type SkillSwapSessionUncheckedUpdateWithoutChatMessagesInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    scheduleId?: StringFieldUpdateOperationsInput | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UserCreateWithoutUserSessionsInput = {
     id?: string
     name: string
     email: string
     password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
     createdAt?: Date | string
+    skillSwapRequestsCreated?: SkillSwapRequestCreateNestedManyWithoutRequesterInput
+    skillSwapRequestsAccepted?: SkillSwapRequestCreateNestedManyWithoutAccepterInput
+    chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSenderInput
   }
 
   export type UserUncheckedCreateWithoutUserSessionsInput = {
@@ -3461,7 +10520,15 @@ export namespace Prisma {
     name: string
     email: string
     password: string
+    picture?: string | null
+    country?: string | null
+    timezone?: string | null
+    offeredSkills?: UserCreateofferedSkillsInput | string[]
+    requestedSkills?: UserCreaterequestedSkillsInput | string[]
     createdAt?: Date | string
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedCreateNestedManyWithoutRequesterInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedCreateNestedManyWithoutAccepterInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSenderInput
   }
 
   export type UserCreateOrConnectWithoutUserSessionsInput = {
@@ -3484,14 +10551,222 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapRequestsCreated?: SkillSwapRequestUpdateManyWithoutRequesterNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUpdateManyWithoutAccepterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSenderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserSessionsInput = {
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    picture?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    timezone?: NullableStringFieldUpdateOperationsInput | string | null
+    offeredSkills?: UserUpdateofferedSkillsInput | string[]
+    requestedSkills?: UserUpdaterequestedSkillsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapRequestsCreated?: SkillSwapRequestUncheckedUpdateManyWithoutRequesterNestedInput
+    skillSwapRequestsAccepted?: SkillSwapRequestUncheckedUpdateManyWithoutAccepterNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type SkillSwapRequestCreateManyRequesterInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+  }
+
+  export type SkillSwapRequestCreateManyAccepterInput = {
+    id?: string
+    requesterTimezone: string
+    closed?: boolean
+    closedAt?: Date | string | null
+    requestedSkill: string
+    createdAt?: Date | string
+    accepterId?: string | null
+  }
+
+  export type SkillSwapSessionChatMessageCreateManySenderInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    skillSwapSessionId: string
+  }
+
+  export type SkillSwapRequestUpdateWithoutRequesterInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUpdateManyWithoutSkillSwapRequestNestedInput
+    accepter?: UserUpdateOneWithoutSkillSwapRequestsAcceptedNestedInput
+    skillSwapSession?: SkillSwapSessionUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapRequestUncheckedUpdateWithoutRequesterInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUncheckedUpdateManyWithoutSkillSwapRequestNestedInput
+    skillSwapSession?: SkillSwapSessionUncheckedUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapRequestUncheckedUpdateManyWithoutRequesterInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SkillSwapRequestUpdateWithoutAccepterInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUpdateManyWithoutSkillSwapRequestNestedInput
+    requester?: UserUpdateOneRequiredWithoutSkillSwapRequestsCreatedNestedInput
+    skillSwapSession?: SkillSwapSessionUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapRequestUncheckedUpdateWithoutAccepterInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    availability?: ScheduleUncheckedUpdateManyWithoutSkillSwapRequestNestedInput
+    skillSwapSession?: SkillSwapSessionUncheckedUpdateOneWithoutSkillSwapRequestNestedInput
+  }
+
+  export type SkillSwapRequestUncheckedUpdateManyWithoutAccepterInput = {
+    requesterTimezone?: StringFieldUpdateOperationsInput | string
+    closed?: BoolFieldUpdateOperationsInput | boolean
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestedSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SkillSwapSessionChatMessageUpdateWithoutSenderInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapSession?: SkillSwapSessionUpdateOneRequiredWithoutChatMessagesNestedInput
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateWithoutSenderInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapSessionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSenderInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapSessionId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ScheduleCreateManySkillSwapRequestInput = {
+    id?: string
+    date: Date | string
+    startTime: string
+    endTime: string
+  }
+
+  export type ScheduleUpdateWithoutSkillSwapRequestInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    skillSwapSession?: SkillSwapSessionUpdateManyWithoutScheduleNestedInput
+  }
+
+  export type ScheduleUncheckedUpdateWithoutSkillSwapRequestInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+    skillSwapSession?: SkillSwapSessionUncheckedUpdateManyWithoutScheduleNestedInput
+  }
+
+  export type ScheduleUncheckedUpdateManyWithoutSkillSwapRequestInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: StringFieldUpdateOperationsInput | string
+    endTime?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionCreateManyScheduleInput = {
+    id?: string
+    status?: $Enums.ScheduleStatus
+    offeredSkill: string
+    createdAt?: Date | string
+    skillSwapRequestId: string
+  }
+
+  export type SkillSwapSessionUpdateWithoutScheduleInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapRequest?: SkillSwapRequestUpdateOneRequiredWithoutSkillSwapSessionNestedInput
+    chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSkillSwapSessionNestedInput
+  }
+
+  export type SkillSwapSessionUncheckedUpdateWithoutScheduleInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+    chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillSwapSessionNestedInput
+  }
+
+  export type SkillSwapSessionUncheckedUpdateManyWithoutScheduleInput = {
+    status?: EnumScheduleStatusFieldUpdateOperationsInput | $Enums.ScheduleStatus
+    offeredSkill?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillSwapRequestId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionChatMessageCreateManySkillSwapSessionInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+    senderId: string
+  }
+
+  export type SkillSwapSessionChatMessageUpdateWithoutSkillSwapSessionInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sender?: UserUpdateOneRequiredWithoutChatMessagesNestedInput
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateWithoutSkillSwapSessionInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    senderId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillSwapSessionInput = {
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    senderId?: StringFieldUpdateOperationsInput | string
   }
 
 

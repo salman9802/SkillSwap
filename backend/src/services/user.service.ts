@@ -4,7 +4,7 @@ import { ENV } from "../constants/env";
 import prisma from "../db/client";
 import { User, UserSession } from "../generated/prisma";
 import { comparePassword } from "../lib/bcrypt";
-import { ExistingUser, NewUser } from "../lib/schemas";
+import { ExistingUser, NewRequest, NewUser, UpdateUser } from "../lib/schemas";
 import {
   AccessTokenJwtPayload,
   RefreshTokenJwtPayload,
@@ -213,6 +213,29 @@ export const deleteUserSession = async (userId: string | undefined) => {
   await prisma.userSession.deleteMany({
     where: {
       userId: userId,
+    },
+  });
+};
+
+export const updateUserDetails = async (
+  userId: string | undefined,
+  userData: UpdateUser
+) => {
+  return await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: userData,
+  });
+};
+
+export const newRequest = async (user: SafeUser, request: NewRequest) => {
+  return await prisma.skillSwapRequest.create({
+    data: {
+      requesterTimezone: user.timezone!,
+      requesterId: user.id,
+      requestedSkill: request.requestedSkill,
+      availability: { create: request.availability },
     },
   });
 };

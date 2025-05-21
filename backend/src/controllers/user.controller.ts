@@ -1,6 +1,12 @@
 import express from "express";
 
-import { existingUserSchema, newUserSchema } from "../lib/schemas";
+import {
+  existingUserSchema,
+  marketplaceFilterSchema,
+  newRequestSchema,
+  newUserSchema,
+  updateUserSchema,
+} from "../lib/schemas";
 import { STATUS_CODES } from "../constants/http";
 import * as UserService from "../services/user.service";
 import { appAssert } from "../lib/error";
@@ -9,6 +15,7 @@ import { setAuthCookies } from "../lib/cookie";
 import { ENV } from "../constants/env";
 import { AppErrorCodes } from "../constants/error";
 import { SafeUser } from "../types/express/auth";
+import prisma from "../db/client";
 
 export const createUserAccount = async (
   req: express.Request,
@@ -118,4 +125,165 @@ export const deleteUserSession = async (
   await UserService.deleteUserSession(user?.id);
 
   res.status(STATUS_CODES.OK).end();
+};
+
+export const updateUser = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const userData = req.body;
+
+  const parsedData = updateUserSchema.parse(userData);
+
+  const user = await UserService.updateUserDetails(req.user?.id, parsedData);
+
+  res.status(STATUS_CODES.OK).json({
+    msg: "Update successful",
+    user: UserService.sanitizeUser(user),
+  });
+};
+
+export const updateUserPicture = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  appAssert(req.file, STATUS_CODES.BAD_REQUEST, "No file format");
+
+  // update user
+  await UserService.updateUserDetails(req.user?.id, {
+    picture: `/uploads/${req.file?.filename}`,
+  });
+
+  res.status(STATUS_CODES.OK).json({
+    msg: "File upload success",
+    file: {
+      filename: req.file?.filename,
+      path: `/uploads/${req.file?.filename}`,
+    },
+  });
+};
+
+export const createNewRequest = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const newRequest = req.body;
+
+  // check for user's timezone
+  appAssert(
+    req.user?.timezone,
+    STATUS_CODES.BAD_REQUEST,
+    "You do not have a timezone. Cannot create request"
+  );
+
+  //  validate input data
+  const parsedRequest = newRequestSchema.parse({
+    ...newRequest,
+    timezone: req.user?.timezone,
+  });
+
+  // create new request
+  const request = await UserService.newRequest(req.user!, parsedRequest);
+
+  res.status(STATUS_CODES.OK).json({
+    msg: "Request created successfully",
+    request,
+  });
+};
+
+export const marketplace = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  // const limit = isNaN(parseInt((req.query.limit as string | undefined) || ""))
+  //   ? parseInt(req.query.limit as string)
+  //   : 10; // Default limit
+
+  // const limit = req.query.limit ? parseInt(req.query.limit as string) : 0; // Default offset
+  // const offset = req.query.offset ? parseInt(req.query.offset as string) : 0; // Default offset
+
+  // const limit = req.query.limit ? Number(req.query.limit) : 10;
+  // const offset = Number(req.query.limit ?? 0);
+  // console.log(typeof req.query.limit);
+  // console.log(req.query.limit);
+  // console.log(!!req.query.limit);
+  // console.log(limit, offset);
+
+  // validate filter options
+  const filters = req.body;
+  const parsed = marketplaceFilterSchema.parse({
+    ...filters,
+    limit: req.query.limit,
+    offset: req.query.offset,
+  });
+
+  const where = {
+    availability: parsed.availability
+      ? {
+          some: parsed.availability,
+        }
+      : undefined,
+    requestedSkill: parsed.offeredSkill
+      ? {
+          in: parsed.offeredSkill, // w.r.t. current user
+        }
+      : undefined,
+    requester: parsed.requestedSkill.length
+      ? {
+          offeredSkills: {
+            hasSome: parsed.requestedSkill, // w.r.t. current user
+          },
+        }
+      : undefined,
+  };
+
+  // fetch from db
+  const [requests, totalCount] = await Promise.all([
+    prisma.skillSwapRequest.findMany({
+      skip: parsed.offset,
+      take: parsed.limit,
+      where,
+    }),
+    prisma.skillSwapRequest.count({ where }),
+  ]);
+
+  res.status(STATUS_CODES.OK).json({
+    requests,
+    totalCount,
+  });
+};
+
+export const request = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { id } = req.params;
+  appAssert(id, STATUS_CODES.NOT_FOUND);
+
+  const request = await prisma.skillSwapRequest.findFirst({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      requestedSkill: true,
+      createdAt: true,
+      availability: true,
+      requester: {
+        select: {
+          name: true,
+          offeredSkills: true,
+        },
+      },
+    },
+  });
+
+  res.status(STATUS_CODES.OK).json({
+    request,
+  });
 };

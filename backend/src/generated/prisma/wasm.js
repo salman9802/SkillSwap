@@ -118,7 +118,48 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password: 'password',
+  picture: 'picture',
+  country: 'country',
+  timezone: 'timezone',
+  offeredSkills: 'offeredSkills',
+  requestedSkills: 'requestedSkills',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.SkillSwapRequestScalarFieldEnum = {
+  id: 'id',
+  requesterTimezone: 'requesterTimezone',
+  closed: 'closed',
+  closedAt: 'closedAt',
+  requestedSkill: 'requestedSkill',
+  createdAt: 'createdAt',
+  requesterId: 'requesterId',
+  accepterId: 'accepterId'
+};
+
+exports.Prisma.ScheduleScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  skillSwapRequestId: 'skillSwapRequestId'
+};
+
+exports.Prisma.SkillSwapSessionScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  offeredSkill: 'offeredSkill',
+  createdAt: 'createdAt',
+  scheduleId: 'scheduleId',
+  skillSwapRequestId: 'skillSwapRequestId'
+};
+
+exports.Prisma.SkillSwapSessionChatMessageScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  senderId: 'senderId',
+  skillSwapSessionId: 'skillSwapSessionId'
 };
 
 exports.Prisma.UserSessionScalarFieldEnum = {
@@ -137,10 +178,21 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
-
+exports.ScheduleStatus = exports.$Enums.ScheduleStatus = {
+  OPEN: 'OPEN',
+  ACCEPTED: 'ACCEPTED',
+  SCHEDULED: 'SCHEDULED',
+  FINISHED: 'FINISHED',
+  CLOSED: 'CLOSED',
+  CANCELLED: 'CANCELLED'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
+  SkillSwapRequest: 'SkillSwapRequest',
+  Schedule: 'Schedule',
+  SkillSwapSession: 'SkillSwapSession',
+  SkillSwapSessionChatMessage: 'SkillSwapSessionChatMessage',
   UserSession: 'UserSession'
 };
 

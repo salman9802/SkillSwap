@@ -11,6 +11,8 @@ import { errorMiddleware } from "./middlewares/error.middleware";
 
 const server = express();
 
+server.use("/uploads", express.static("uploads")); // Serve static files
+
 // middlewares
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));

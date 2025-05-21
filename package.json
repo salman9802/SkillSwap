@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev:userfrontend": "npm run dev --prefix frontend/user",
-    "dev:backend": "npm run dev --prefix backend"
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:user": "concurrently --raw --kill-others-on-fail --names \"frontend,backend\" --prefix-colors \"bgBlue.bold,bgGreen.bold\"  \"npm run dev:userfrontend\" \"npm run dev:backend\""
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

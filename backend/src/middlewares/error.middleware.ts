@@ -4,7 +4,7 @@ import { STATUS_CODES } from "../constants/http";
 import { ENV } from "../constants/env";
 import { AppErrorCodes } from "../constants/error";
 import z from "zod";
-import { AppError } from "../lib/error";
+import { AppError, prettifyError } from "../lib/error";
 import { Prisma } from "../generated/prisma";
 
 export const errorMiddleware = (
@@ -29,23 +29,27 @@ export const errorMiddleware = (
         return res.status(409).json({
           message: "A record with this value already exists.",
           field: (error.meta?.target as string[])?.[0],
+          stack: prettifyError(error.message),
         });
 
       case "P2025": // Record not found
         return res.status(404).json({
           message: "Record not found.",
+          stack: prettifyError(error.message),
         });
 
       case "P2003": // Foreign key constraint failed
         return res.status(400).json({
           message:
             "Invalid reference to another resource (foreign key constraint).",
+          stack: prettifyError(error.message),
         });
 
       default:
         return res.status(500).json({
           message: "A database error occurred.",
           code: error.code,
+          stack: prettifyError(error.message),
         });
     }
   }
@@ -53,6 +57,7 @@ export const errorMiddleware = (
   if (error instanceof Prisma.PrismaClientValidationError) {
     // Invalid data passed to Prisma
     return res.status(400).json({
+      stack: prettifyError(error.message),
       message: "Validation error — invalid input for database operation.",
       details: error.message,
     });
@@ -60,12 +65,14 @@ export const errorMiddleware = (
 
   if (error instanceof Prisma.PrismaClientInitializationError) {
     return res.status(500).json({
+      stack: prettifyError(error.message),
       message: "Could not connect to the database.",
     });
   }
 
   if (error instanceof Prisma.PrismaClientRustPanicError) {
     return res.status(500).json({
+      stack: prettifyError(error.message),
       message: "Unexpected database panic. Check the logs.",
     });
   }
