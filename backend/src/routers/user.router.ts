@@ -49,4 +49,22 @@ userRouter.get(
   errorCatch(UserController.request)
 );
 
+userRouter.post(
+  "/ss-session",
+  errorCatch(userHasAccess),
+  errorCatch(UserController.newSkillSwapSession)
+);
+
+userRouter.get(
+  "/ss-session",
+  errorCatch(userHasAccess),
+  errorCatch(UserController.skillSwapSessions)
+);
+
+userRouter.get(
+  "/ss-session/:id",
+  errorCatch(userHasAccess),
+  errorCatch(UserController.skillSwapSession)
+);
+
 export default userRouter;

@@ -2,9 +2,15 @@ import jwt from "jsonwebtoken";
 
 import { ENV } from "../constants/env";
 import prisma from "../db/client";
-import { User, UserSession } from "../generated/prisma";
+import { SkillSwapRequest, User, UserSession } from "../generated/prisma";
 import { comparePassword } from "../lib/bcrypt";
-import { ExistingUser, NewRequest, NewUser, UpdateUser } from "../lib/schemas";
+import {
+  ExistingUser,
+  NewRequest,
+  NewSkillSwapSession,
+  NewUser,
+  UpdateUser,
+} from "../lib/schemas";
 import {
   AccessTokenJwtPayload,
   RefreshTokenJwtPayload,
@@ -236,6 +242,41 @@ export const newRequest = async (user: SafeUser, request: NewRequest) => {
       requesterId: user.id,
       requestedSkill: request.requestedSkill,
       availability: { create: request.availability },
+    },
+  });
+};
+
+export const acceptAndCloseRequest = async (
+  accepterId: string,
+  requestId: string
+) => {
+  const request = await prisma.skillSwapRequest.findFirst({
+    where: {
+      id: requestId,
+    },
+  });
+  if (request?.closed) return false;
+
+  return await prisma.skillSwapRequest.update({
+    data: {
+      closed: true,
+      closedAt: new Date(),
+      accepterId,
+    },
+    where: {
+      id: requestId,
+    },
+  });
+};
+
+export const createSkillSwapSession = async (
+  newSkillSwapSession: NewSkillSwapSession
+) => {
+  return await prisma.skillSwapSession.create({
+    data: {
+      offeredSkill: newSkillSwapSession.offeredSkill,
+      scheduleId: newSkillSwapSession.scheduleId,
+      skillSwapRequestId: newSkillSwapSession.requestId,
     },
   });
 };

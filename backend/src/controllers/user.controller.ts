@@ -4,7 +4,9 @@ import {
   existingUserSchema,
   marketplaceFilterSchema,
   newRequestSchema,
+  newSkillSwapSessionSchema,
   newUserSchema,
+  paginationSchema,
   updateUserSchema,
 } from "../lib/schemas";
 import { STATUS_CODES } from "../constants/http";
@@ -285,5 +287,94 @@ export const request = async (
 
   res.status(STATUS_CODES.OK).json({
     request,
+  });
+};
+
+export const newSkillSwapSession = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const accepter = req.user!;
+
+  const parsed = newSkillSwapSessionSchema.parse({ ...req.body });
+
+  // close request
+  const result = await UserService.acceptAndCloseRequest(
+    accepter.id,
+    parsed.requestId
+  );
+  appAssert(
+    result,
+    STATUS_CODES.CONFLICT,
+    "Request closed. Session already present"
+  );
+
+  // new entry in db
+  const session = await UserService.createSkillSwapSession(parsed);
+
+  res.status(STATUS_CODES.OK).json({
+    session,
+  });
+};
+
+export const skillSwapSessions = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const parsed = paginationSchema.parse({ ...req.body });
+
+  const [sessions, totalCount] = await Promise.all([
+    prisma.skillSwapSession.findMany({
+      skip: parsed.offset,
+      take: parsed.limit,
+    }),
+    prisma.skillSwapSession.count(),
+  ]);
+
+  res.status(STATUS_CODES.OK).json({
+    sessions,
+    totalCount,
+  });
+};
+
+export const skillSwapSession = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { id } = req.params;
+
+  const session = await prisma.skillSwapSession.findFirst({
+    where: {
+      id,
+    },
+    select: {
+      status: true,
+      schedule: true,
+      offeredSkill: true,
+      skillSwapRequest: {
+        select: {
+          requestedSkill: true,
+          requester: {
+            select: {
+              name: true,
+              picture: true,
+            },
+          },
+          accepter: {
+            select: {
+              name: true,
+              picture: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  res.status(STATUS_CODES.OK).json({
+    session,
   });
 };
