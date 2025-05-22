@@ -15,23 +15,118 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
-  name         String
-  email        String        @unique
-  password     String
-  createdAt    DateTime      @default(now())
-  userSessions UserSession[]
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String   @unique
+  password        String
+  picture         String?
+  country         String?
+  timezone        String?
+  offeredSkills   String[]
+  requestedSkills String[]
+  createdAt       DateTime @default(now())
+
+  userSessions              UserSession?
+  skillSwapRequestsCreated  SkillSwapRequest[]            @relation("RequesterRelation")
+  skillSwapRequestsAccepted SkillSwapRequest[]            @relation("AccepterRelation")
+  chatMessages              SkillSwapSessionChatMessage[]
+  asReviewer                Review[]                      @relation("ReviewerRelation")
+  asReviewee                Review[]                      @relation("RevieweeRelation")
 
   @@map("users")
 }
 
+model Review {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  rating  Int
+  comment String?
+
+  reviewerId         String @db.ObjectId
+  revieweeId         String @db.ObjectId
+  skillSwapSessionId String @unique @db.ObjectId
+
+  reviewer         User             @relation("ReviewerRelation", fields: [reviewerId], references: [id])
+  reviewee         User             @relation("RevieweeRelation", fields: [revieweeId], references: [id])
+  skillSwapSession SkillSwapSession @relation(fields: [skillSwapSessionId], references: [id])
+
+  @@map("reviews")
+}
+
+model SkillSwapRequest {
+  id                String     @id @default(auto()) @map("_id") @db.ObjectId
+  requesterTimezone String
+  closed            Boolean    @default(false)
+  closedAt          DateTime?
+  requestedSkill    String
+  createdAt         DateTime   @default(now())
+  availability      Schedule[]
+
+  requesterId      String            @db.ObjectId
+  accepterId       String?           @db.ObjectId
+  requester        User              @relation("RequesterRelation", fields: [requesterId], references: [id])
+  accepter         User?             @relation("AccepterRelation", fields: [requesterId], references: [id])
+  skillSwapSession SkillSwapSession?
+
+  @@map("skillswap_requests")
+}
+
+model Schedule {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  date      DateTime
+  startTime String
+  endTime   String
+
+  skillSwapRequestId String             @db.ObjectId
+  skillSwapRequest   SkillSwapRequest   @relation(fields: [skillSwapRequestId], references: [id])
+  skillSwapSession   SkillSwapSession[]
+
+  @@map("schedules")
+}
+
+model SkillSwapSession {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  status       ScheduleStatus @default(OPEN)
+  offeredSkill String
+  createdAt    DateTime       @default(now())
+
+  scheduleId         String                        @db.ObjectId
+  skillSwapRequestId String                        @unique @db.ObjectId
+  skillSwapRequest   SkillSwapRequest              @relation(fields: [skillSwapRequestId], references: [id])
+  schedule           Schedule                      @relation(fields: [scheduleId], references: [id])
+  chatMessages       SkillSwapSessionChatMessage[]
+  review             Review?
+
+  @@map("skillswap_sessions")
+}
+
+model SkillSwapSessionChatMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
+
+  senderId           String           @db.ObjectId
+  skillSwapSessionId String           @db.ObjectId
+  sender             User             @relation(fields: [senderId], references: [id])
+  skillSwapSession   SkillSwapSession @relation(fields: [skillSwapSessionId], references: [id])
+
+  @@map("skillswap_session_chat_messages")
+}
+
 model UserSession {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  user            User     @relation(fields: [userId], references: [id])
-  userId          String   @db.ObjectId
-  createdAt       DateTime @default(now())
-  lastRefreshedAt DateTime @default(now())
-  expiredAt       DateTime
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique @db.ObjectId
+  createdAt DateTime @default(now())
+  expiresAt DateTime
 
   @@map("user_sessions")
+}
+
+enum ScheduleStatus {
+  OPEN
+  ACCEPTED
+  SCHEDULED
+  FINISHED
+  CLOSED
+  CANCELLED
 }

@@ -280,13 +280,29 @@ export const request = async (
         select: {
           name: true,
           offeredSkills: true,
+          asReviewee: {
+            select: {
+              rating: true,
+            },
+          },
         },
       },
     },
   });
 
+  appAssert(request !== null, STATUS_CODES.NOT_FOUND);
+
+  const reviewScore = request?.requester.asReviewee.reduce(
+    (previousValue, review) => previousValue + review.rating,
+    0
+  );
+
   res.status(STATUS_CODES.OK).json({
     request,
+    reviewScore:
+      reviewScore !== 0
+        ? reviewScore! / request!.requester.asReviewee.length
+        : undefined,
   });
 };
 
@@ -375,6 +391,31 @@ export const skillSwapSession = async (
   });
 
   res.status(STATUS_CODES.OK).json({
+    session,
+  });
+};
+
+export const updateSkillSwapSession = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const { id } = req.params;
+
+  const session = await UserService.updateSkillSwapSessionStatus({
+    sessionId: id,
+    userId: req.user!.id,
+  });
+
+  appAssert(
+    session,
+    STATUS_CODES.CONFLICT,
+    "Session is closed",
+    AppErrorCodes.SESSION_CLOSED
+  );
+
+  res.status(STATUS_CODES.OK).json({
+    msg: "Session updated successfully",
     session,
   });
 };

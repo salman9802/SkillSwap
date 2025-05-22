@@ -126,6 +126,15 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  comment: 'comment',
+  reviewerId: 'reviewerId',
+  revieweeId: 'revieweeId',
+  skillSwapSessionId: 'skillSwapSessionId'
+};
+
 exports.Prisma.SkillSwapRequestScalarFieldEnum = {
   id: 'id',
   requesterTimezone: 'requesterTimezone',
@@ -189,6 +198,7 @@ exports.ScheduleStatus = exports.$Enums.ScheduleStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Review: 'Review',
   SkillSwapRequest: 'SkillSwapRequest',
   Schedule: 'Schedule',
   SkillSwapSession: 'SkillSwapSession',

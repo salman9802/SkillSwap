@@ -16,6 +16,8 @@ export const AppErrorCodes = {
   SERVER_ERROR: "ServerError",
   REFRESH_TOKEN_EXPIRED: "RefreshTokenExpired",
   ACCESS_TOKEN_EXPIRED: "AccessTokenExpired",
+  SESSION_CLOSED: "SessionClosed",
+  SESSION_REJECTED: "SessionRejected",
 } as const;
 
 export type AppErrorCodeType =

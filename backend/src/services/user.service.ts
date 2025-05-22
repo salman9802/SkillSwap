@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import moment from "moment-timezone";
 
 import { ENV } from "../constants/env";
 import prisma from "../db/client";
@@ -279,4 +280,135 @@ export const createSkillSwapSession = async (
       skillSwapRequestId: newSkillSwapSession.requestId,
     },
   });
+};
+
+export const updateSkillSwapSessionStatus = async ({
+  sessionId,
+  userId,
+}: {
+  sessionId: string;
+  userId: string;
+}) => {
+  // TODO
+  const session = await prisma.skillSwapSession.findFirst({
+    where: {
+      id: sessionId,
+    },
+    select: {
+      status: true,
+      schedule: true,
+      review: true,
+      skillSwapRequest: {
+        select: {
+          requesterId: true,
+          accepterId: true,
+          requesterTimezone: true,
+        },
+      },
+    },
+  });
+  appAssert(session !== null, STATUS_CODES.BAD_REQUEST, "Session not found");
+  appAssert(
+    session?.status !== "CANCELLED",
+    STATUS_CODES.FORBIDDEN,
+    "Sesssion was rejected",
+    AppErrorCodes.SESSION_REJECTED
+  );
+  // appAssert(
+  //   session?.status !== "CLOSED",
+  //   STATUS_CODES.FORBIDDEN,
+  //   "Sesssion already closed",
+  //   AppErrorCodes.SESSION_CLOSED
+  // );
+
+  switch (session?.status) {
+    case "OPEN":
+      // OPEN -> ACCEPTED
+      appAssert(
+        userId === session.skillSwapRequest.accepterId,
+        STATUS_CODES.FORBIDDEN,
+        "Accepter hasn't confirmed the session."
+      );
+
+      return await prisma.skillSwapSession.update({
+        data: {
+          status: "ACCEPTED",
+        },
+        where: {
+          id: sessionId,
+        },
+      });
+
+    case "ACCEPTED":
+      // ACCEPTED -> SCHEDULED
+      appAssert(
+        userId === session.skillSwapRequest.requesterId,
+        STATUS_CODES.FORBIDDEN,
+        "Requester hasn't confirmed the session."
+      );
+
+      return await prisma.skillSwapSession.update({
+        data: {
+          status: "SCHEDULED",
+        },
+        where: {
+          id: sessionId,
+        },
+      });
+
+    case "SCHEDULED":
+      // SCHEDULED -> FINISHED
+      appAssert(
+        userId === session.skillSwapRequest.accepterId ||
+          userId === session.skillSwapRequest.requesterId,
+        STATUS_CODES.FORBIDDEN
+      );
+
+      const date = moment.tz(
+        `${session.schedule.date} ${session.schedule.endTime}`,
+        session.skillSwapRequest.requesterTimezone
+      );
+
+      // const [hour, minute] = session.schedule.endTime.split(":").map(Number);
+      // session.schedule.date.setHours(hour, minute)
+      if (date.valueOf() < Date.now()) {
+        // schedule has passed
+        return await prisma.skillSwapSession.update({
+          data: {
+            status: "FINISHED",
+          },
+          where: {
+            id: sessionId,
+          },
+        });
+      } else {
+        appAssert(
+          false,
+          STATUS_CODES.CONFLICT,
+          "Session has yet to take place"
+        );
+      }
+
+      break;
+
+    case "FINISHED":
+      // TODO: If both have reviewed then FINISHED -> CLOSED
+      appAssert(
+        session.review !== null,
+        STATUS_CODES.CONFLICT,
+        "Session can only be closed after both users have rated each other."
+      );
+
+      return await prisma.skillSwapSession.update({
+        data: {
+          status: "CLOSED",
+        },
+        where: {
+          id: sessionId,
+        },
+      });
+
+    default:
+      return false;
+  }
 };

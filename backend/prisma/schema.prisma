@@ -30,8 +30,26 @@ model User {
   skillSwapRequestsCreated  SkillSwapRequest[]            @relation("RequesterRelation")
   skillSwapRequestsAccepted SkillSwapRequest[]            @relation("AccepterRelation")
   chatMessages              SkillSwapSessionChatMessage[]
+  asReviewer                Review[]                      @relation("ReviewerRelation")
+  asReviewee                Review[]                      @relation("RevieweeRelation")
 
   @@map("users")
+}
+
+model Review {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  rating  Int
+  comment String?
+
+  reviewerId         String @db.ObjectId
+  revieweeId         String @db.ObjectId
+  skillSwapSessionId String @unique @db.ObjectId
+
+  reviewer         User             @relation("ReviewerRelation", fields: [reviewerId], references: [id])
+  reviewee         User             @relation("RevieweeRelation", fields: [revieweeId], references: [id])
+  skillSwapSession SkillSwapSession @relation(fields: [skillSwapSessionId], references: [id])
+
+  @@map("reviews")
 }
 
 model SkillSwapRequest {
@@ -76,6 +94,7 @@ model SkillSwapSession {
   skillSwapRequest   SkillSwapRequest              @relation(fields: [skillSwapRequestId], references: [id])
   schedule           Schedule                      @relation(fields: [scheduleId], references: [id])
   chatMessages       SkillSwapSessionChatMessage[]
+  review             Review?
 
   @@map("skillswap_sessions")
 }
