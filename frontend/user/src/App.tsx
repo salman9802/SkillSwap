@@ -12,14 +12,13 @@ import NewRequestPage from "./pages/user/NewRequestPage";
 import ProfilePage from "./pages/user/ProfilePage";
 import ManageSessionsPage from "./pages/user/ManageSessionsPage";
 import SessionPage from "./pages/user/SessionPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
   return (
     <Routes>
       <Route index element={<HomePage />} />
-
       {/* // TODO: user auth context */}
-
       {/* // TODO: check user authentication */}
       <Route element={<AuthLayout />}>
         <Route path="marketplace" element={<MarketplacePage />} />
@@ -42,7 +41,7 @@ const App = () => {
           <Route path="account/sessions/:sessionId" element={<SessionPage />} />
         </Route>
       </Route>
-      {/* // TODO: NotFoundPage (404) */}
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
