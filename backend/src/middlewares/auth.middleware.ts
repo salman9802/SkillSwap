@@ -4,9 +4,10 @@ import { appAssert } from "../lib/error";
 import { STATUS_CODES } from "../constants/http";
 import * as UserService from "../services/user.service";
 import prisma from "../db/client";
-import { AccessTokenJwtPayload, SafeUser } from "../types/express/auth";
+import { AccessTokenJwtPayload } from "../types/express/auth";
 import { AppErrorCodes } from "../constants/error";
 import { User, UserSession } from "../generated/prisma";
+import { sanitizeUser } from "../lib/sanitize";
 
 export const userHasAccess = async (
   req: express.Request,
@@ -48,6 +49,6 @@ export const userHasAccess = async (
   });
   appAssert(user, STATUS_CODES.UNAUTHORIZED, "Unauthorized access");
 
-  req.user = UserService.sanitizeUser(user as User);
+  req.user = sanitizeUser(user as User);
   next();
 };

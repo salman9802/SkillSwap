@@ -16,8 +16,8 @@ import { User, UserSession } from "../generated/prisma";
 import { setAuthCookies } from "../lib/cookie";
 import { ENV } from "../constants/env";
 import { AppErrorCodes } from "../constants/error";
-import { SafeUser } from "../types/express/auth";
 import prisma from "../db/client";
+import { SafeUser, sanitizeUser } from "../lib/sanitize";
 
 export const createUserAccount = async (
   req: express.Request,
@@ -68,7 +68,6 @@ export const newUserSession = async (
     UserService.createAccessAndRefreshTokens(userSession);
 
   setAuthCookies({ res, refreshToken }).status(STATUS_CODES.OK).json({
-    msg: "Valid user",
     user: existingUser,
     session: userSession,
     accessToken,
@@ -142,7 +141,7 @@ export const updateUser = async (
 
   res.status(STATUS_CODES.OK).json({
     msg: "Update successful",
-    user: UserService.sanitizeUser(user),
+    user: sanitizeUser(user),
   });
 };
 

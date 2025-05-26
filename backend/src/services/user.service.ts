@@ -15,11 +15,11 @@ import {
 import {
   AccessTokenJwtPayload,
   RefreshTokenJwtPayload,
-  SafeUser,
 } from "../types/express/auth";
 import { appAssert } from "../lib/error";
 import { STATUS_CODES } from "../constants/http";
 import { AppErrorCodes } from "../constants/error";
+import { SafeUser, sanitizeUser } from "../lib/sanitize";
 
 export const createUser = async (newUser: NewUser) => {
   const user = await prisma.user.create({
@@ -210,10 +210,10 @@ export const validateAccessToken = (accessToken: any) => {
 };
 
 /** Converts `User` into `SafeUser` by removing sensitive info */
-export const sanitizeUser = (user: User): SafeUser => {
-  const { password, ...safeUser } = user;
-  return safeUser;
-};
+// export const sanitizeUser = (user: User): SafeUser => {
+//   const { password, ...safeUser } = user;
+//   return safeUser;
+// };
 
 export const deleteUserSession = async (userId: string | undefined) => {
   if (userId === undefined) return;

@@ -9,7 +9,7 @@ const userRouter = express.Router();
 
 // Prefix: /api/user
 userRouter.post("/session", errorCatch(UserController.newUserSession)); // Creates new refresh & access token (login)
-userRouter.post("/session/access", errorCatch(UserController.newAccessToken)); // Creates new access token (refresh)
+userRouter.get("/session/access", errorCatch(UserController.newAccessToken)); // Creates new access token (refresh)
 
 userRouter.delete(
   "/session",
