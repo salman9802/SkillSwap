@@ -1,15 +1,40 @@
-import { useState } from "react";
+import React from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { IoClose } from "react-icons/io5";
 
 import { Button } from "./ui/button";
-import { cn } from "@/lib/utils";
-import { IoClose } from "react-icons/io5";
+import { cn, getInitials } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import type { StoreState } from "@/features/store";
+import {
+  useLogoutMutation,
+  useRefreshQuery,
+} from "@/features/session/sessionApi";
+import { useStoreDispatch } from "@/lib/hooks";
+import {
+  clearCredentials,
+  setCrenentials,
+} from "@/features/session/sessionSlice";
+import Loader from "./utils/Loader";
 
 const Header = () => {
-  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isHamburgerOpen, setIsHamburgerOpen] = React.useState(false);
+  const navigate = useNavigate();
+
+  const { isAuthenticated, user } = useSelector(
+    (state: StoreState) => state.session,
+  );
+  const { data, isLoading, isFetching, isSuccess, isError } = useRefreshQuery();
+  const dispatch = useStoreDispatch();
+  const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
+
+  React.useEffect(() => {
+    if (data) {
+      dispatch(setCrenentials(data));
+    }
+  }, [data]);
 
   return (
     <header className="relative inset-x-0 z-50 bg-white">
@@ -29,22 +54,115 @@ const Header = () => {
         </button>
         {/* Buttons */}
         <div className="hidden items-center justify-center gap-4 md:flex">
-          {isAuthenticated ? (
-            <Link to="/user/account">
+          {/* when first render show loader
+          when fetching show loader
+          when fetched swith between ui elems */}
+
+          {isLoading || isFetching ? (
+            <Loader className="size-5" />
+          ) : !data || !isAuthenticated ? (
+            <>
+              <Link to="/user/register">
+                <Button className="cursor-pointer">Create an account</Button>
+              </Link>
+              <Link to="/user/login">
+                <Button className="cursor-pointer" variant="primary-outline">
+                  Log in
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <>
               <Button
-                variant="outline"
-                className="flex h-auto cursor-pointer items-center justify-between gap-4 px-4 py-2"
+                onClick={async () => {
+                  try {
+                    const res = await logout().unwrap();
+                    console.log(res);
+                    dispatch(clearCredentials());
+                    navigate("/", { replace: true });
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+                disabled={logoutLoading}
+                className="text-primary hover:text-primary cursor-pointer"
+                variant="ghost"
               >
-                <Avatar>
-                  <AvatarImage
-                    src="https://github.com/shadcn.pngf"
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>SK</AvatarFallback>
-                </Avatar>
-                <span className="text-gray-800">Salman Khan</span>
+                {logoutLoading ? (
+                  <Loader className="mx-auto size-5" />
+                ) : (
+                  "Log out"
+                )}
               </Button>
-            </Link>
+              <Link to="/user/account">
+                <Button
+                  variant="outline"
+                  className="flex h-auto cursor-pointer items-center justify-between gap-4 px-4 py-2"
+                >
+                  <Avatar>
+                    <AvatarImage
+                      src={user?.picture}
+                      alt={`@${data?.user?.name}`}
+                    />
+                    <AvatarFallback className="uppercase">
+                      {getInitials(data?.user?.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="text-gray-800 capitalize">
+                    {data?.user?.name || "Guest"}
+                  </span>
+                </Button>
+              </Link>
+            </>
+          )}
+
+          {/* {isAuthenticated ? (
+              !data && isFetching ? (
+              <Loader className="size-5" />
+            ) : (
+              <>
+                <Button
+                  onClick={async () => {
+                    try {
+                      const res = await logout().unwrap();
+                      console.log(res);
+                      dispatch(clearCredentials());
+                      navigate("/", { replace: true });
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
+                  disabled={logoutLoading}
+                  className="text-primary hover:text-primary cursor-pointer"
+                  variant="ghost"
+                >
+                  {logoutLoading ? (
+                    <Loader className="mx-auto size-5" />
+                  ) : (
+                    "Log out"
+                  )}
+                </Button>
+                <Link to="/user/account">
+                  <Button
+                    variant="outline"
+                    className="flex h-auto cursor-pointer items-center justify-between gap-4 px-4 py-2"
+                  >
+                    <Avatar>
+                      <AvatarImage
+                        src={user?.picture}
+                        alt={`@${data?.user?.name}`}
+                      />
+                      <AvatarFallback className="uppercase">
+                        {getInitials(data?.user?.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-gray-800 capitalize">
+                      {data?.user?.name || "Guest"}
+                    </span>
+                  </Button>
+                </Link>
+              </>
+            )
           ) : (
             <>
               <Link to="/user/register">
@@ -56,7 +174,7 @@ const Header = () => {
                 </Button>
               </Link>
             </>
-          )}
+          )} */}
           <Link to="/marketplace">
             <Button className="cursor-pointer" variant="ghost">
               Visit Marketplace

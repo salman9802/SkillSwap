@@ -28,6 +28,7 @@ export const errorMiddleware = (
       case "P2002": // Unique constraint failed
         return res.status(409).json({
           message: "A record with this value already exists.",
+          // message: `${error.meta?.target} already exists`,
           field: (error.meta?.target as string[])?.[0],
           stack: prettifyError(error.message),
         });
@@ -124,7 +125,7 @@ export const errorMiddleware = (
       default:
         // Server-related error.
         res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-          msg: "Something went wrong",
+          message: "Something went wrong",
           code: AppErrorCodes.SERVER_ERROR,
           stack: errorStack,
         });
@@ -134,7 +135,7 @@ export const errorMiddleware = (
 
   // Server-related error. (default)
   res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-    msg: "Something went wrong",
+    message: "Something went wrong",
     code: AppErrorCodes.SERVER_ERROR,
     stack: errorStack,
   });

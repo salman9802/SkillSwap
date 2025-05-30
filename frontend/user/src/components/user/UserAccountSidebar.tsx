@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MdManageHistory } from "react-icons/md";
 
-const UserAccountNavbar = ({ onClick }: { onClick?: () => any }) => {
+const UserAccountSidebar = ({ onClick }: { onClick?: () => any }) => {
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     cn(
       "font-medium px-6 py-3 flex items-center justify-start gap-4",
@@ -62,4 +62,4 @@ const UserAccountNavbar = ({ onClick }: { onClick?: () => any }) => {
   );
 };
 
-export default UserAccountNavbar;
+export default UserAccountSidebar;

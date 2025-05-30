@@ -13,7 +13,7 @@ import { STATUS_CODES } from "../constants/http";
 import * as UserService from "../services/user.service";
 import { appAssert } from "../lib/error";
 import { User, UserSession } from "../generated/prisma";
-import { setAuthCookies } from "../lib/cookie";
+import { setAuthCookies, unsetAuthCookies } from "../lib/cookie";
 import { ENV } from "../constants/env";
 import { AppErrorCodes } from "../constants/error";
 import prisma from "../db/client";
@@ -26,6 +26,26 @@ export const createUserAccount = async (
 ) => {
   const parsedUser = newUserSchema.parse({ ...req.body });
 
+  // check for existing user
+  const existingUser = await prisma.user.findFirst({
+    where: {
+      OR: [{ name: parsedUser.name }, { email: parsedUser.email }],
+    },
+  });
+
+  if (existingUser !== null) {
+    appAssert(
+      existingUser.name !== parsedUser.name,
+      STATUS_CODES.CONFLICT,
+      "Name already exists"
+    );
+    appAssert(
+      existingUser.email !== parsedUser.email,
+      STATUS_CODES.CONFLICT,
+      "Email already exists"
+    );
+  }
+
   const user = await UserService.createUser(parsedUser);
   const userSession = await UserService.createUserSession(user.id);
 
@@ -33,9 +53,7 @@ export const createUserAccount = async (
     UserService.createAccessAndRefreshTokens(userSession);
 
   setAuthCookies({ res, refreshToken }).status(STATUS_CODES.CREATED).json({
-    msg: "User created",
     user,
-    session: userSession,
     accessToken,
   });
 };
@@ -69,7 +87,6 @@ export const newUserSession = async (
 
   setAuthCookies({ res, refreshToken }).status(STATUS_CODES.OK).json({
     user: existingUser,
-    session: userSession,
     accessToken,
   });
 };
@@ -98,8 +115,21 @@ export const newAccessToken = async (
 
   const accessToken = UserService.createAccessToken(userSession as UserSession);
 
+  const user = await prisma.user.findFirst({
+    where: {
+      id: (userSession as UserSession).userId,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      picture: true,
+    },
+  });
+
   res.status(STATUS_CODES.OK).json({
     accessToken,
+    user,
   });
 };
 
@@ -125,7 +155,7 @@ export const deleteUserSession = async (
 
   await UserService.deleteUserSession(user?.id);
 
-  res.status(STATUS_CODES.OK).end();
+  unsetAuthCookies(res).status(STATUS_CODES.OK).end();
 };
 
 export const updateUser = async (
@@ -140,7 +170,7 @@ export const updateUser = async (
   const user = await UserService.updateUserDetails(req.user?.id, parsedData);
 
   res.status(STATUS_CODES.OK).json({
-    msg: "Update successful",
+    message: "Update successful",
     user: sanitizeUser(user),
   });
 };
@@ -158,7 +188,7 @@ export const updateUserPicture = async (
   });
 
   res.status(STATUS_CODES.OK).json({
-    msg: "File upload success",
+    message: "File upload success",
     file: {
       filename: req.file?.filename,
       path: `/uploads/${req.file?.filename}`,
@@ -190,7 +220,7 @@ export const createNewRequest = async (
   const request = await UserService.newRequest(req.user!, parsedRequest);
 
   res.status(STATUS_CODES.OK).json({
-    msg: "Request created successfully",
+    message: "Request created successfully",
     request,
   });
 };
@@ -414,7 +444,7 @@ export const updateSkillSwapSession = async (
   );
 
   res.status(STATUS_CODES.OK).json({
-    msg: "Session updated successfully",
+    message: "Session updated successfully",
     session,
   });
 };

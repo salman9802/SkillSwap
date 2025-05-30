@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import HomePage from "./pages/HomePage";
 import AuthLayout from "./pages/layouts/AuthLayout";
@@ -13,36 +14,40 @@ import ProfilePage from "./pages/user/ProfilePage";
 import ManageSessionsPage from "./pages/user/ManageSessionsPage";
 import SessionPage from "./pages/user/SessionPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import { store } from "./features/store";
 
 const App = () => {
   return (
-    <Routes>
-      <Route index element={<HomePage />} />
-      {/* // TODO: user auth context */}
-      {/* // TODO: check user authentication */}
-      <Route element={<AuthLayout />}>
-        <Route path="marketplace" element={<MarketplacePage />} />
-        <Route path="request/:requestId" element={<RequestPage />} />
+    <Provider store={store}>
+      <Routes>
+        <Route index element={<HomePage />} />
+        <Route path="user/register" element={<RegisterPage />} />
+        <Route path="user/login" element={<LoginPage />} />
 
-        <Route path="user">
-          <Route index element={<Navigate to="/user/account" replace />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="login" element={<LoginPage />} />
+        <Route element={<AuthLayout />}>
+          <Route path="marketplace" element={<MarketplacePage />} />
+          <Route path="request/:requestId" element={<RequestPage />} />
 
-          {/* // TODO: general user layout */}
-          <Route path="account" element={<UserAccountLayout />}>
-            <Route index element={<Navigate to="dashboard" replace />} />
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="new-request" element={<NewRequestPage />} />
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="manage-sessions" element={<ManageSessionsPage />} />
+          <Route path="user">
+            <Route index element={<Navigate to="/user/account" replace />} />
+
+            <Route path="account" element={<UserAccountLayout />}>
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<DashboardPage />} />
+              <Route path="new-request" element={<NewRequestPage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="manage-sessions" element={<ManageSessionsPage />} />
+            </Route>
+
+            <Route
+              path="account/sessions/:sessionId"
+              element={<SessionPage />}
+            />
           </Route>
-
-          <Route path="account/sessions/:sessionId" element={<SessionPage />} />
         </Route>
-      </Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Provider>
   );
 };
 

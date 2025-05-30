@@ -1,11 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 import Sidebar from "@/components/utils/Sidebar";
 import { cn } from "@/lib/utils";
-import { RxHamburgerMenu } from "react-icons/rx";
-import UserAccountNavbar from "@/components/user/UserAccountNavbar";
+import UserAccountSidebar from "@/components/user/UserAccountSidebar";
 
 const UserAccountLayout = () => {
   const [isHamburgerOpen, setIsHamburgerOpen] = React.useState(false);
@@ -13,7 +13,7 @@ const UserAccountLayout = () => {
   return (
     <Sidebar>
       <Sidebar.LeftContent className="sticky top-0 bottom-0 left-0 hidden px-7 py-14 md:block">
-        <UserAccountNavbar />
+        <UserAccountSidebar />
       </Sidebar.LeftContent>
       <Sidebar.RightContent
         className={cn(
@@ -41,7 +41,7 @@ const UserAccountLayout = () => {
               >
                 <IoClose className="size-5" />
               </button>
-              <UserAccountNavbar onClick={() => setIsHamburgerOpen(false)} />
+              <UserAccountSidebar onClick={() => setIsHamburgerOpen(false)} />
             </div>
           </div>
           {/* overlay */}

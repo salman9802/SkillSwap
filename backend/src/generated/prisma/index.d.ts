@@ -9097,11 +9097,11 @@ export namespace Prisma {
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    name?: string
     email?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     picture?: StringNullableFilter<"User"> | string | null
     country?: StringNullableFilter<"User"> | string | null
@@ -9115,7 +9115,7 @@ export namespace Prisma {
     chatMessages?: SkillSwapSessionChatMessageListRelationFilter
     asReviewer?: ReviewListRelationFilter
     asReviewee?: ReviewListRelationFilter
-  }, "id" | "email">
+  }, "id" | "name" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
