@@ -1,6 +1,6 @@
 import type { RegisterFormFields } from "@/lib/schemas";
 import api from "../api";
-import type { RegisterResponse } from "@/lib/types";
+import type { FetchDetailsResponse, RegisterResponse } from "@/lib/types";
 
 export const accountApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +18,14 @@ export const accountApi = api.injectEndpoints({
         body: payload,
       }),
     }),
+    fetchDetails: builder.query<FetchDetailsResponse, void>({
+      query: () => ({
+        url: `user/account`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useUpdateMutation } = accountApi;
+export const { useRegisterMutation, useUpdateMutation, useFetchDetailsQuery } =
+  accountApi;

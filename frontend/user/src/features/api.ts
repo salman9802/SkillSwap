@@ -37,24 +37,28 @@ const baseQueryWithReauth: BaseQueryFn<
 
   if (result.error && result.error.status === STATUS_CODES.UNAUTHORIZED) {
     const errorCode = result.error.data as AppErrorCodeType;
-    if (errorCode === APP_ERR_CODES.ACCESS_TOKEN_EXPIRED) {
-      // fetch new access token
+    // if (errorCode === APP_ERR_CODES.ACCESS_TOKEN_EXPIRED) {
+    // fetch new access token
 
-      const refreshResult = await baseQuery("user/session", api, extraOptions);
-      if (refreshResult.data) {
-        // successful refresh
+    const refreshResult = await baseQuery(
+      "user/session/access",
+      api,
+      extraOptions,
+    );
+    if (refreshResult.data) {
+      // successful refresh
 
-        const data = refreshResult.data as { accessToken: string; user: User };
-        api.dispatch(updateToken(data));
+      const data = refreshResult.data as { accessToken: string; user: User };
+      api.dispatch(updateToken(data));
 
-        // retry original query
-        result = await baseQuery(args, api, extraOptions);
-      } else {
-        // clear sessionSlice data & make logout request (to remove cookie)
-        api.dispatch(clearCredentials());
-        api.dispatch(sessionApi.endpoints.logout.initiate());
-      }
+      // retry original query
+      result = await baseQuery(args, api, extraOptions);
+    } else {
+      // clear sessionSlice data & make logout request (to remove cookie)
+      api.dispatch(clearCredentials());
+      api.dispatch(sessionApi.endpoints.logout.initiate());
     }
+    // }
   }
   return result;
 };

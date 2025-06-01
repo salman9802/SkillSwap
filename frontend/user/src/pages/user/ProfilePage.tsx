@@ -1,3 +1,6 @@
+import React from "react";
+import { useSelector } from "react-redux";
+
 import { FaCamera } from "react-icons/fa";
 import {
   Avatar,
@@ -6,8 +9,31 @@ import {
 } from "../../components/ui/avatar";
 import { Button } from "../../components/ui/button";
 import Section from "../../components/utils/Section";
+import { useStoreDispatch } from "@/lib/hooks";
+import type { StoreState } from "@/features/store";
+import { useFetchDetailsQuery } from "@/features/account/accountApi";
+import { setDetails } from "@/features/account/accountSlice";
+import Loader from "@/components/utils/Loader";
+import { getInitials } from "@/lib/utils";
+import SkeletonLoader from "@/components/utils/SkeletonLoader";
 
 const ProfilePage = () => {
+  // TODO: update modals
+  // TODO: update values
+  // TODO: update picture
+
+  // const userId = useSelector((state: StoreState) => state.session.user?.id);
+  const {
+    data,
+    isLoading: isLoadingDetails,
+    isSuccess,
+    isError,
+  } = useFetchDetailsQuery();
+
+  // React.useEffect(() => {
+  //   if (userDetails) setDetails(userDetails);
+  // }, [userDetails]);
+
   return (
     <div className="container mx-auto flex flex-col gap-20">
       {/* Profile */}
@@ -21,29 +47,41 @@ const ProfilePage = () => {
         </Section.Title>
         <Section.Content className="flex flex-col [&>*]:px-3 [&>*]:py-1.5 md:[&>*]:px-6 md:[&>*]:py-3 lg:[&>*]:px-12 lg:[&>*]:py-6">
           {/* Picture */}
-          <div className="">
-            <div className="relative mx-auto w-fit">
-              <Avatar className="size-52">
-                <AvatarImage
-                  src="https://github.com/shadcn.pngf"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>SK</AvatarFallback>
-              </Avatar>
-              <Button
-                variant="ghost"
-                className="hover:bg-accent absolute right-6 bottom-6 cursor-pointer"
-              >
-                <FaCamera className="size-5 text-black" />
-              </Button>
-            </div>
+          <div className="mx-auto">
+            {isLoadingDetails ? (
+              <SkeletonLoader className="size-52 rounded-full" />
+            ) : (
+              <div className="relative mx-auto w-fit">
+                <Avatar className="size-52">
+                  <AvatarImage
+                    src={data?.user.name}
+                    alt={`@${data?.user.name}`}
+                  />
+                  <AvatarFallback>
+                    {getInitials(data?.user.name)}
+                  </AvatarFallback>
+                </Avatar>
+                <Button
+                  variant="ghost"
+                  className="hover:bg-accent absolute right-6 bottom-6 cursor-pointer"
+                >
+                  <FaCamera className="size-5 text-black" />
+                </Button>
+              </div>
+            )}
             {/* <FaCamera className="absolute top-[75%] left-[55%] size-5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-black" /> */}
           </div>
           {/* Name */}
           <div className="flex w-full flex-col md:flex-row">
             <div className="flex-[1] font-medium text-gray-800">Name</div>
             <div className="flex flex-[2] items-center">
-              <div className="grow">John Marston</div>
+              <div className="grow">
+                {isLoadingDetails ? (
+                  <SkeletonLoader className="h-lh w-full" />
+                ) : (
+                  <span>{data?.user.name}</span>
+                )}
+              </div>
               <Button className="hover:bg-accent cursor-pointer" variant="link">
                 Update
               </Button>
@@ -55,7 +93,13 @@ const ProfilePage = () => {
               Email address
             </div>
             <div className="flex flex-[2] items-center">
-              <div className="grow">John@marston.com</div>
+              <div className="grow">
+                {isLoadingDetails ? (
+                  <SkeletonLoader className="h-lh w-full" />
+                ) : (
+                  <span>{data?.user.email}</span>
+                )}
+              </div>
               <Button className="hover:bg-accent cursor-pointer" variant="link">
                 Update
               </Button>
@@ -86,7 +130,15 @@ const ProfilePage = () => {
           <div className="flex w-full flex-col md:flex-row">
             <div className="flex-[1] font-medium text-gray-800">Country</div>
             <div className="flex flex-[2] items-center">
-              <div className="grow">India</div>
+              <div className="grow">
+                {isLoadingDetails ? (
+                  <SkeletonLoader className="h-lh w-full" />
+                ) : data?.user.country ? (
+                  data?.user.country
+                ) : (
+                  <span className="text-red-500">Not set</span>
+                )}
+              </div>
               <Button className="hover:bg-accent cursor-pointer" variant="link">
                 Update
               </Button>
@@ -96,7 +148,15 @@ const ProfilePage = () => {
           <div className="flex w-full flex-col md:flex-row">
             <div className="flex-[1] font-medium text-gray-800">Timezone</div>
             <div className="flex flex-[2] items-center">
-              <div className="grow">India/Kolkata</div>
+              <div className="grow">
+                {isLoadingDetails ? (
+                  <SkeletonLoader className="h-lh w-full" />
+                ) : data?.user.timezone ? (
+                  data?.user.timezone
+                ) : (
+                  <span className="text-red-500">Not set</span>
+                )}
+              </div>
               <Button className="hover:bg-accent cursor-pointer" variant="link">
                 Update
               </Button>
@@ -112,14 +172,29 @@ const ProfilePage = () => {
         </Section.Title>
         <Section.Content className="flex flex-col items-start [&>*]:px-3 [&>*]:py-1.5 md:[&>*]:px-6 md:[&>*]:py-3 lg:[&>*]:px-12 lg:[&>*]:py-6">
           {/* Skill */}
-          <div className="flex w-full items-center">
+          {/* <div className="flex w-full items-center">
             <div className="flex-[1] font-medium text-gray-800">
               Speaking French
             </div>
             <Button className="hover:bg-accent cursor-pointer" variant="link">
               Update
             </Button>
-          </div>
+          </div> */}
+          {isLoadingDetails
+            ? Array(3).fill(<SkeletonLoader className="mb-2 h-lh w-full" />)
+            : data?.user.offeredSkills.map((skill, i) => (
+                <div key={i} className="flex w-full items-center">
+                  <div className="flex-[1] font-medium text-gray-800">
+                    {skill}
+                  </div>
+                  <Button
+                    className="hover:bg-accent cursor-pointer"
+                    variant="link"
+                  >
+                    Update
+                  </Button>
+                </div>
+              ))}
           <Button
             variant="link"
             className="hover:bg-accent cursor-pointer font-bold"
@@ -136,12 +211,21 @@ const ProfilePage = () => {
         </Section.Title>
         <Section.Content className="flex flex-col items-start [&>*]:px-3 [&>*]:py-1.5 md:[&>*]:px-6 md:[&>*]:py-3 lg:[&>*]:px-12 lg:[&>*]:py-6">
           {/* Skill */}
-          <div className="flex w-full items-center">
-            <div className="flex-[1] font-medium text-gray-800">Fishing</div>
-            <Button className="hover:bg-accent cursor-pointer" variant="link">
-              Update
-            </Button>
-          </div>
+          {isLoadingDetails
+            ? Array(3).fill(<SkeletonLoader className="mb-2 h-lh w-full" />)
+            : data?.user.requestedSkills.map((skill, i) => (
+                <div key={i} className="flex w-full items-center">
+                  <div className="flex-[1] font-medium text-gray-800">
+                    {skill}
+                  </div>
+                  <Button
+                    className="hover:bg-accent cursor-pointer"
+                    variant="link"
+                  >
+                    Update
+                  </Button>
+                </div>
+              ))}
           <Button
             variant="link"
             className="hover:bg-accent cursor-pointer font-bold"

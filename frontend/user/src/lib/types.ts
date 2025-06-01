@@ -7,13 +7,6 @@ export type RequestCardDataType = {
 };
 
 // user
-export type UserDetails = User & {
-  country: string | null;
-  timezone: string | null;
-  offeredSkills: string[];
-  requestedSkills: string[];
-};
-
 export type User = {
   id: string;
   name: string;
@@ -21,9 +14,20 @@ export type User = {
   picture: string | undefined;
 };
 
+export type UserDetails = User & {
+  country: string | null;
+  timezone: string | null;
+  offeredSkills: string[];
+  requestedSkills: string[];
+};
+
 export type RegisterResponse = {
   user: User;
   accessToken: string;
+};
+
+export type FetchDetailsResponse = {
+  user: UserDetails;
 };
 
 // session
