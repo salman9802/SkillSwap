@@ -33,13 +33,25 @@ const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  // Don't attempt refresh if already trying it
+  // const isRefreshing = (args.url || args).includes("/auth/refresh");
+  // Type-safe check to see if this is a refresh call
+  const isRefreshing =
+    typeof args === "object" &&
+    "url" in args &&
+    args.url.includes("user/session/access");
+
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result.error && result.error.status === STATUS_CODES.UNAUTHORIZED) {
-    const errorCode = result.error.data as AppErrorCodeType;
+  if (
+    result.error &&
+    result.error.status === STATUS_CODES.UNAUTHORIZED &&
+    !isRefreshing
+  ) {
+    // const errorCode = result.error.data as AppErrorCodeType;
     // if (errorCode === APP_ERR_CODES.ACCESS_TOKEN_EXPIRED) {
-    // fetch new access token
 
+    // fetch new access token
     const refreshResult = await baseQuery(
       "user/session/access",
       api,

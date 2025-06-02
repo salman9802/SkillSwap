@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { IoAddCircle } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
@@ -51,13 +51,19 @@ const UserAccountSidebar = ({ onClick }: { onClick?: () => any }) => {
           <span>Manage Sessions</span>
         </NavLink>
       </div>
-      <div className="bg-primary/20 flex items-center justify-start gap-1.5 px-4 py-2">
+      <Link
+        to="/"
+        className="text-primary justify-start gap-1.5 px-6 py-3 underline"
+      >
+        Home
+      </Link>
+      {/* <div className="bg-primary/20 flex items-center justify-start gap-1.5 px-4 py-2">
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.pngf" alt="@shadcn" />
           <AvatarFallback>SK</AvatarFallback>
         </Avatar>
         <span className="text-gray-800">Salman Khan</span>
-      </div>
+      </div> */}
     </div>
   );
 };

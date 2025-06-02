@@ -21,5 +21,5 @@ export function getInitials(name: string | undefined) {
   return name
     ?.split(" ")
     .map((w) => w.charAt(0))
-    .join();
+    .join(" ");
 }

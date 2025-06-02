@@ -30,6 +30,16 @@ export type FetchDetailsResponse = {
   user: UserDetails;
 };
 
+export type UserUpdatePayload = {
+  name?: string;
+  email?: string;
+  password?: string;
+  country?: string;
+  timezone?: string;
+  offeredSkills?: string[];
+  requestedSkills?: string[];
+};
+
 // session
 export type UserSession = {
   id: string;
