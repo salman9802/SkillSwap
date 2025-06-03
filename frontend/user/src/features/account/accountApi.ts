@@ -41,8 +41,24 @@ export const accountApi = api.injectEndpoints({
       //   }
       // },
     }),
+    uploadPicture: builder.mutation<void, File>({
+      query: (file) => {
+        const formData = new FormData();
+        formData.append("picture", file);
+
+        return {
+          url: "user/upload-picture",
+          method: "PUT",
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
-export const { useRegisterMutation, useUpdateMutation, useFetchDetailsQuery } =
-  accountApi;
+export const {
+  useRegisterMutation,
+  useUpdateMutation,
+  useFetchDetailsQuery,
+  useUploadPictureMutation,
+} = accountApi;

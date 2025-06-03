@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
 import { FaCamera } from "react-icons/fa";
+import * as ct from "countries-and-timezones";
+
 import {
   Avatar,
   AvatarFallback,
@@ -14,10 +15,10 @@ import type { StoreState } from "@/features/store";
 import {
   useFetchDetailsQuery,
   useUpdateMutation,
+  useUploadPictureMutation,
 } from "@/features/account/accountApi";
-import { setDetails } from "@/features/account/accountSlice";
 import Loader from "@/components/utils/Loader";
-import { getInitials } from "@/lib/utils";
+import { cn, getInitials } from "@/lib/utils";
 import SkeletonLoader from "@/components/utils/SkeletonLoader";
 import {
   AlertDialog,
@@ -37,9 +38,26 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { MdDeleteOutline } from "react-icons/md";
+import { SERVER_URL } from "@/features/api";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { countries } from "@/lib/constants";
+import Combobox from "@/components/utils/Combobox";
 
 const ProfilePage = () => {
-  // TODO: update picture
+  // TODO: optimize combobox option display
   const [open, setOpen] = React.useState(false);
   const [fieldValue, setFieldValue] = React.useState("");
   const [dialogConfig, setDialogConfig] = React.useState<{
@@ -51,8 +69,15 @@ const ProfilePage = () => {
     message?: string;
     prevValue?: string;
   } | null>(null);
+  const [upload, setUpload] = React.useState<{
+    preview: string;
+    file: File;
+  } | null>(null);
+  const [locationFields, setLocationFields] = React.useState<{
+    countryId: string;
+    timezone: string;
+  }>({ countryId: "", timezone: "" });
 
-  // const userId = useSelector((state: StoreState) => state.session.user?.id);
   const {
     data,
     refetch: detailsRefetch,
@@ -76,10 +101,69 @@ const ProfilePage = () => {
       // isSuccess: isUpdateSuccess2,
     },
   ] = useUpdateMutation();
+  const [uploadPicture, { isLoading: pictureUploading }] =
+    useUploadPictureMutation();
+  const [updateUserLocation, { isLoading: isUpdatingLocation }] =
+    useUpdateMutation();
 
   // React.useEffect(() => {
   //   if (userDetails) setDetails(userDetails);
   // }, [userDetails]);
+
+  /** useEffect to ensure location state is set when user details are fetched */
+  React.useEffect(() => {
+    if (data) {
+      setLocationFields({
+        countryId: data.user.country ?? "",
+        timezone: data.user.timezone ?? "",
+      });
+    }
+  }, [data]);
+
+  /** Memoized array of timezones for selected country */
+  const countryTimezones = React.useMemo(() => {
+    if (locationFields.countryId.length > 0) {
+      // timezones for particular country
+
+      const country = ct.getCountry(locationFields.countryId);
+
+      if (country === undefined) return [];
+      else {
+        // set first timezone as user's
+        setLocationFields((prev) => ({
+          ...prev,
+          timezone: country.timezones[0],
+        }));
+        return country.timezones;
+      }
+      // return country === undefined ? [] : country.timezones;
+    } else {
+      // all timezones
+      return Object.keys(ct.getAllTimezones());
+    }
+  }, [locationFields.countryId]);
+
+  /** request to server to update user's location info */
+  React.useEffect(() => {
+    (async () => {
+      if (
+        locationFields.countryId.length > 0 &&
+        locationFields.timezone.length > 0
+      ) {
+        try {
+          const res = await updateUserLocation({
+            // country: ct.getCountry(locationFields.countryId)?.name,
+            country: locationFields.countryId,
+            timezone: locationFields.timezone,
+          }).unwrap();
+          console.log(res);
+          detailsRefetch();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    })();
+  }, [locationFields]);
 
   /** Handles opening and closing of shared dialog */
   const handleOpen = (
@@ -87,11 +171,6 @@ const ProfilePage = () => {
     currentValue: string | undefined | null,
   ) => {
     setDialogConfig(config);
-    // if (config?.field === "requestedSkill" || config?.field === "offeredSkill")
-    //   if (data)
-    //     data.user[`${config.field}s`] = data.user[`${config.field}s`].filter(
-    //       (v) => v !== currentValue,
-    //     );
     setFieldValue(typeof currentValue === "string" ? currentValue : "");
     setOpen(true);
   };
@@ -109,7 +188,6 @@ const ProfilePage = () => {
         await updateUser({
           [dialogConfig.field]: existingData.concat(fieldValue),
         });
-        // data.user[dialogConfig.field] = [""];
       } else {
         await updateUser({
           [dialogConfig.field]: fieldValue,
@@ -129,16 +207,28 @@ const ProfilePage = () => {
         skillListName === "requestedSkills") &&
       data
     ) {
-      // setOpen(true)
       await updateUser2({
         [skillListName]: data.user[skillListName].filter((s) => s !== skill),
       });
       console.log(updateResponse2);
       detailsRefetch();
-      // setOpen(false)
     }
   };
 
+  const handlePictureUpload = async () => {
+    if (upload === null) return;
+    try {
+      const res = await uploadPicture(upload.file).unwrap();
+      console.log(res);
+      setUpload(null);
+      detailsRefetch();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // console.dir(`locationFields: ${locationFields}`, {depth: null});
+  console.dir(locationFields, { depth: null });
   return (
     <div className="container mx-auto flex flex-col gap-20">
       {/* Shared Dialog */}
@@ -178,18 +268,71 @@ const ProfilePage = () => {
                 </>
               )}
 
-              {dialogConfig?.type === "dropdown" && dialogConfig.options && (
-                <Select value={fieldValue} onValueChange={setFieldValue}>
-                  <SelectTrigger>{fieldValue}</SelectTrigger>
-                  <SelectContent>
-                    {dialogConfig.options.map((opt) => (
-                      <SelectItem key={opt} value={opt}>
-                        {opt}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              )}
+              {/* {dialogConfig?.type === "dropdown" && dialogConfig.options && (
+                <Popover open={isComboboxOpen} onOpenChange={setIsComboboxOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      aria-expanded={open}
+                      className="w-[200px] justify-between"
+                    >
+                      {fieldValue !== "" ? fieldValue : "Select country..."}
+                      <ChevronsUpDown className="opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="z-[100] w-[200px] p-0">
+                    <Command>
+                      <CommandInput
+                        placeholder="Search country..."
+                        className="h-9"
+                      />
+                      <CommandList>
+                        <CommandEmpty>No country found.</CommandEmpty>
+                        <CommandGroup>
+                          {countries.map((country, i) => (
+                            <CommandItem
+                              key={i}
+                              value={country.name}
+                              onSelect={(currentValue) => {
+                                console.log(currentValue);
+                                setFieldValue(
+                                  currentValue === fieldValue
+                                    ? ""
+                                    : currentValue,
+                                );
+                                setIsComboboxOpen(false);
+                              }}
+                            >
+                              {`${country.name} (${country.code})`}
+                              <Check
+                                className={cn(
+                                  "ml-auto",
+                                  fieldValue === country.name
+                                    ? "opacity-100"
+                                    : "opacity-0",
+                                )}
+                              />
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover> */}
+
+              {/* // <Select value={fieldValue} onValueChange={setFieldValue}>
+                //   <SelectTrigger>{fieldValue}</SelectTrigger>
+                //   <SelectContent>
+                //     {dialogConfig.options.map((opt) => (
+                //       <SelectItem key={opt} value={opt}>
+                //         {opt}
+                //       </SelectItem>
+                //     ))}
+                //   </SelectContent>
+                // </Select> */}
+
+              {/* // )} */}
 
               <AlertDialogFooter>
                 <AlertDialogCancel disabled={isUpdateLoading}>
@@ -225,23 +368,73 @@ const ProfilePage = () => {
             {isLoadingDetails ? (
               <SkeletonLoader className="size-52 rounded-full" />
             ) : (
-              <div className="relative mx-auto w-fit">
-                <Avatar className="size-52">
-                  <AvatarImage
-                    src={data?.user.name}
-                    alt={`@${data?.user.name}`}
+              <>
+                <div className="relative mx-auto w-fit">
+                  <Avatar className="size-52">
+                    <AvatarImage
+                      src={
+                        upload?.preview
+                          ? upload.preview
+                          : `${SERVER_URL}${data?.user.picture}`
+                      }
+                      alt={`@${data?.user.name}`}
+                    />
+                    <AvatarFallback className="uppercase">
+                      {getInitials(data?.user.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <label
+                    htmlFor="picture"
+                    className="absolute right-6 bottom-6 cursor-pointer"
+                  >
+                    <FaCamera className="text-primary hover:text-primary/90 size-5" />
+                  </label>
+                  <input
+                    className="hidden"
+                    type="file"
+                    id="picture"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files && e.target.files[0];
+                      if (file === null) return;
+                      const fileReader = new FileReader();
+                      fileReader.onload = function () {
+                        if (typeof fileReader.result === "string") {
+                          setUpload({
+                            file,
+                            preview: fileReader.result,
+                          });
+                        }
+                      };
+                      fileReader.readAsDataURL(file);
+                    }}
                   />
-                  <AvatarFallback className="uppercase">
-                    {getInitials(data?.user.name)}
-                  </AvatarFallback>
-                </Avatar>
-                <Button
-                  variant="ghost"
-                  className="hover:bg-accent absolute right-6 bottom-6 cursor-pointer"
-                >
-                  <FaCamera className="size-5 text-black" />
-                </Button>
-              </div>
+                </div>
+                {/* action buttons */}
+                {upload !== null && (
+                  <div className="mt-6 flex items-center justify-center gap-3">
+                    <Button
+                      disabled={pictureUploading}
+                      onClick={() => setUpload(null)}
+                      className="cursor-pointer"
+                      variant="outline"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      disabled={pictureUploading}
+                      onClick={handlePictureUpload}
+                      className="cursor-pointer"
+                    >
+                      {pictureUploading ? (
+                        <Loader className="size-5" />
+                      ) : (
+                        "Save"
+                      )}
+                    </Button>
+                  </div>
+                )}
+              </>
             )}
             {/* <FaCamera className="absolute top-[75%] left-[55%] size-5 -translate-x-1/2 -translate-y-1/2 cursor-pointer text-black" /> */}
           </div>
@@ -353,12 +546,23 @@ const ProfilePage = () => {
                   <span className="text-red-500">Not set</span>
                 )}
               </div>
-              <Button
+              {isUpdatingLocation ? (
+                <Loader className="size-5" />
+              ) : (
+                <Combobox
+                  name="country"
+                  value={locationFields.countryId}
+                  onValueChange={(countryId) => {
+                    setLocationFields((prev) => ({ ...prev, countryId }));
+                  }}
+                  valueList={Object.values(countries).map((c) => c.id)}
+                  displayList={Object.values(countries).map(
+                    (c) => `${c.name} (${c.id})`,
+                  )}
+                />
+              )}
+              {/* <Button
                 onClick={() =>
-                  // handleOpen(
-                  //   { field: "Country", label: "New country", type: "text" },
-                  //   data?.user.country,
-                  // )
                   handleOpen(
                     {
                       field: "country",
@@ -373,7 +577,7 @@ const ProfilePage = () => {
                 variant="link"
               >
                 Update
-              </Button>
+              </Button> */}
             </div>
           </div>
           {/* Timezone */}
@@ -389,7 +593,20 @@ const ProfilePage = () => {
                   <span className="text-red-500">Not set</span>
                 )}
               </div>
-              <Button
+              {isUpdatingLocation ? (
+                <Loader className="size-5" />
+              ) : (
+                <Combobox
+                  name="timezone"
+                  value={locationFields.timezone}
+                  onValueChange={(timezone) =>
+                    setLocationFields((prev) => ({ ...prev, timezone }))
+                  }
+                  valueList={countryTimezones}
+                  displayList={countryTimezones}
+                />
+              )}
+              {/* <Button
                 onClick={() =>
                   handleOpen(
                     {
@@ -405,7 +622,7 @@ const ProfilePage = () => {
                 variant="link"
               >
                 Update
-              </Button>
+              </Button> */}
             </div>
           </div>
         </Section.Content>
@@ -423,14 +640,6 @@ const ProfilePage = () => {
         </Section.Title>
         <Section.Content className="flex flex-col items-start [&>*]:px-3 [&>*]:py-1.5 md:[&>*]:px-6 md:[&>*]:py-3 lg:[&>*]:px-12 lg:[&>*]:py-6">
           {/* Skill */}
-          {/* <div className="flex w-full items-center">
-            <div className="flex-[1] font-medium text-gray-800">
-              Speaking French
-            </div>
-            <Button className="hover:bg-accent cursor-pointer" variant="link">
-              Update
-            </Button>
-          </div> */}
           {isLoadingDetails
             ? Array(3).map((v) => (
                 <SkeletonLoader key={v} className="mb-2 h-lh w-full" />
