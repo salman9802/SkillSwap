@@ -4869,24 +4869,18 @@ export namespace Prisma {
   export type ScheduleMinAggregateOutputType = {
     id: string | null
     date: Date | null
-    startTime: string | null
-    endTime: string | null
     skillSwapRequestId: string | null
   }
 
   export type ScheduleMaxAggregateOutputType = {
     id: string | null
     date: Date | null
-    startTime: string | null
-    endTime: string | null
     skillSwapRequestId: string | null
   }
 
   export type ScheduleCountAggregateOutputType = {
     id: number
     date: number
-    startTime: number
-    endTime: number
     skillSwapRequestId: number
     _all: number
   }
@@ -4895,24 +4889,18 @@ export namespace Prisma {
   export type ScheduleMinAggregateInputType = {
     id?: true
     date?: true
-    startTime?: true
-    endTime?: true
     skillSwapRequestId?: true
   }
 
   export type ScheduleMaxAggregateInputType = {
     id?: true
     date?: true
-    startTime?: true
-    endTime?: true
     skillSwapRequestId?: true
   }
 
   export type ScheduleCountAggregateInputType = {
     id?: true
     date?: true
-    startTime?: true
-    endTime?: true
     skillSwapRequestId?: true
     _all?: true
   }
@@ -4992,8 +4980,6 @@ export namespace Prisma {
   export type ScheduleGroupByOutputType = {
     id: string
     date: Date
-    startTime: string
-    endTime: string
     skillSwapRequestId: string
     _count: ScheduleCountAggregateOutputType | null
     _min: ScheduleMinAggregateOutputType | null
@@ -5017,8 +5003,6 @@ export namespace Prisma {
   export type ScheduleSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     date?: boolean
-    startTime?: boolean
-    endTime?: boolean
     skillSwapRequestId?: boolean
     skillSwapRequest?: boolean | SkillSwapRequestDefaultArgs<ExtArgs>
     skillSwapSession?: boolean | Schedule$skillSwapSessionArgs<ExtArgs>
@@ -5030,12 +5014,10 @@ export namespace Prisma {
   export type ScheduleSelectScalar = {
     id?: boolean
     date?: boolean
-    startTime?: boolean
-    endTime?: boolean
     skillSwapRequestId?: boolean
   }
 
-  export type ScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "startTime" | "endTime" | "skillSwapRequestId", ExtArgs["result"]["schedule"]>
+  export type ScheduleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "skillSwapRequestId", ExtArgs["result"]["schedule"]>
   export type ScheduleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     skillSwapRequest?: boolean | SkillSwapRequestDefaultArgs<ExtArgs>
     skillSwapSession?: boolean | Schedule$skillSwapSessionArgs<ExtArgs>
@@ -5051,8 +5033,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       date: Date
-      startTime: string
-      endTime: string
       skillSwapRequestId: string
     }, ExtArgs["result"]["schedule"]>
     composites: {}
@@ -5450,8 +5430,6 @@ export namespace Prisma {
   interface ScheduleFieldRefs {
     readonly id: FieldRef<"Schedule", 'String'>
     readonly date: FieldRef<"Schedule", 'DateTime'>
-    readonly startTime: FieldRef<"Schedule", 'String'>
-    readonly endTime: FieldRef<"Schedule", 'String'>
     readonly skillSwapRequestId: FieldRef<"Schedule", 'String'>
   }
     
@@ -8912,8 +8890,6 @@ export namespace Prisma {
   export const ScheduleScalarFieldEnum: {
     id: 'id',
     date: 'date',
-    startTime: 'startTime',
-    endTime: 'endTime',
     skillSwapRequestId: 'skillSwapRequestId'
   };
 
@@ -9302,8 +9278,6 @@ export namespace Prisma {
     NOT?: ScheduleWhereInput | ScheduleWhereInput[]
     id?: StringFilter<"Schedule"> | string
     date?: DateTimeFilter<"Schedule"> | Date | string
-    startTime?: StringFilter<"Schedule"> | string
-    endTime?: StringFilter<"Schedule"> | string
     skillSwapRequestId?: StringFilter<"Schedule"> | string
     skillSwapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
     skillSwapSession?: SkillSwapSessionListRelationFilter
@@ -9312,8 +9286,6 @@ export namespace Prisma {
   export type ScheduleOrderByWithRelationInput = {
     id?: SortOrder
     date?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
     skillSwapRequestId?: SortOrder
     skillSwapRequest?: SkillSwapRequestOrderByWithRelationInput
     skillSwapSession?: SkillSwapSessionOrderByRelationAggregateInput
@@ -9325,8 +9297,6 @@ export namespace Prisma {
     OR?: ScheduleWhereInput[]
     NOT?: ScheduleWhereInput | ScheduleWhereInput[]
     date?: DateTimeFilter<"Schedule"> | Date | string
-    startTime?: StringFilter<"Schedule"> | string
-    endTime?: StringFilter<"Schedule"> | string
     skillSwapRequestId?: StringFilter<"Schedule"> | string
     skillSwapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
     skillSwapSession?: SkillSwapSessionListRelationFilter
@@ -9335,8 +9305,6 @@ export namespace Prisma {
   export type ScheduleOrderByWithAggregationInput = {
     id?: SortOrder
     date?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
     skillSwapRequestId?: SortOrder
     _count?: ScheduleCountOrderByAggregateInput
     _max?: ScheduleMaxOrderByAggregateInput
@@ -9349,8 +9317,6 @@ export namespace Prisma {
     NOT?: ScheduleScalarWhereWithAggregatesInput | ScheduleScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Schedule"> | string
     date?: DateTimeWithAggregatesFilter<"Schedule"> | Date | string
-    startTime?: StringWithAggregatesFilter<"Schedule"> | string
-    endTime?: StringWithAggregatesFilter<"Schedule"> | string
     skillSwapRequestId?: StringWithAggregatesFilter<"Schedule"> | string
   }
 
@@ -9783,8 +9749,6 @@ export namespace Prisma {
   export type ScheduleCreateInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
     skillSwapRequest: SkillSwapRequestCreateNestedOneWithoutAvailabilityInput
     skillSwapSession?: SkillSwapSessionCreateNestedManyWithoutScheduleInput
   }
@@ -9792,24 +9756,18 @@ export namespace Prisma {
   export type ScheduleUncheckedCreateInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
     skillSwapRequestId: string
     skillSwapSession?: SkillSwapSessionUncheckedCreateNestedManyWithoutScheduleInput
   }
 
   export type ScheduleUpdateInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
     skillSwapRequest?: SkillSwapRequestUpdateOneRequiredWithoutAvailabilityNestedInput
     skillSwapSession?: SkillSwapSessionUpdateManyWithoutScheduleNestedInput
   }
 
   export type ScheduleUncheckedUpdateInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
     skillSwapRequestId?: StringFieldUpdateOperationsInput | string
     skillSwapSession?: SkillSwapSessionUncheckedUpdateManyWithoutScheduleNestedInput
   }
@@ -9817,21 +9775,15 @@ export namespace Prisma {
   export type ScheduleCreateManyInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
     skillSwapRequestId: string
   }
 
   export type ScheduleUpdateManyMutationInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
   }
 
   export type ScheduleUncheckedUpdateManyInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
     skillSwapRequestId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -10348,24 +10300,18 @@ export namespace Prisma {
   export type ScheduleCountOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
     skillSwapRequestId?: SortOrder
   }
 
   export type ScheduleMaxOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
     skillSwapRequestId?: SortOrder
   }
 
   export type ScheduleMinOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
     skillSwapRequestId?: SortOrder
   }
 
@@ -11829,16 +11775,12 @@ export namespace Prisma {
   export type ScheduleCreateWithoutSkillSwapRequestInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
     skillSwapSession?: SkillSwapSessionCreateNestedManyWithoutScheduleInput
   }
 
   export type ScheduleUncheckedCreateWithoutSkillSwapRequestInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
     skillSwapSession?: SkillSwapSessionUncheckedCreateNestedManyWithoutScheduleInput
   }
 
@@ -11980,8 +11922,6 @@ export namespace Prisma {
     NOT?: ScheduleScalarWhereInput | ScheduleScalarWhereInput[]
     id?: StringFilter<"Schedule"> | string
     date?: DateTimeFilter<"Schedule"> | Date | string
-    startTime?: StringFilter<"Schedule"> | string
-    endTime?: StringFilter<"Schedule"> | string
     skillSwapRequestId?: StringFilter<"Schedule"> | string
   }
 
@@ -12258,16 +12198,12 @@ export namespace Prisma {
   export type ScheduleCreateWithoutSkillSwapSessionInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
     skillSwapRequest: SkillSwapRequestCreateNestedOneWithoutAvailabilityInput
   }
 
   export type ScheduleUncheckedCreateWithoutSkillSwapSessionInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
     skillSwapRequestId: string
   }
 
@@ -12367,15 +12303,11 @@ export namespace Prisma {
 
   export type ScheduleUpdateWithoutSkillSwapSessionInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
     skillSwapRequest?: SkillSwapRequestUpdateOneRequiredWithoutAvailabilityNestedInput
   }
 
   export type ScheduleUncheckedUpdateWithoutSkillSwapSessionInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
     skillSwapRequestId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -12816,28 +12748,20 @@ export namespace Prisma {
   export type ScheduleCreateManySkillSwapRequestInput = {
     id?: string
     date: Date | string
-    startTime: string
-    endTime: string
   }
 
   export type ScheduleUpdateWithoutSkillSwapRequestInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
     skillSwapSession?: SkillSwapSessionUpdateManyWithoutScheduleNestedInput
   }
 
   export type ScheduleUncheckedUpdateWithoutSkillSwapRequestInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
     skillSwapSession?: SkillSwapSessionUncheckedUpdateManyWithoutScheduleNestedInput
   }
 
   export type ScheduleUncheckedUpdateManyWithoutSkillSwapRequestInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    startTime?: StringFieldUpdateOperationsInput | string
-    endTime?: StringFieldUpdateOperationsInput | string
   }
 
   export type SkillSwapSessionCreateManyScheduleInput = {

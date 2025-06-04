@@ -40,7 +40,7 @@ const UserAccountSidebar = ({ onClick }: { onClick?: () => any }) => {
           className={navLinkClass}
         >
           <IoAddCircle className="size-5" />
-          <span>New request</span>
+          <span>New Skillswap request</span>
         </NavLink>
         <NavLink
           onClick={onClick}

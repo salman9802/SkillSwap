@@ -242,7 +242,14 @@ export const newRequest = async (user: SafeUser, request: NewRequest) => {
       requesterTimezone: user.timezone!,
       requesterId: user.id,
       requestedSkill: request.requestedSkill,
-      availability: { create: request.availability },
+      availability: {
+        create: request.availability,
+      },
+      // TODO: !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // availability: {
+      //   date: request.availability
+      // }
+      // availability: { create: request.availability },
     },
   });
 };

@@ -71,10 +71,10 @@ model SkillSwapRequest {
 }
 
 model Schedule {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  date      DateTime
-  startTime String
-  endTime   String
+  id   String   @id @default(auto()) @map("_id") @db.ObjectId
+  date DateTime
+  // startTime String
+  // endTime   String
 
   skillSwapRequestId String             @db.ObjectId
   skillSwapRequest   SkillSwapRequest   @relation(fields: [skillSwapRequestId], references: [id])

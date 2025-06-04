@@ -149,8 +149,6 @@ exports.Prisma.SkillSwapRequestScalarFieldEnum = {
 exports.Prisma.ScheduleScalarFieldEnum = {
   id: 'id',
   date: 'date',
-  startTime: 'startTime',
-  endTime: 'endTime',
   skillSwapRequestId: 'skillSwapRequestId'
 };
 

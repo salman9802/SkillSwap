@@ -38,36 +38,50 @@ export const updateUserSchema = z.object({
 
 export type UpdateUser = z.infer<typeof updateUserSchema>;
 
-const scheduleSchema = z
-  .object({
-    date: z
-      .string()
-      .refine((v) => !isNaN(Date.parse(v)), {
-        message: "Invalid date string",
-      })
-      .transform((v) => new Date(v)),
-    startTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
-      message: "Time must be in HH:mm format",
-    }),
-    endTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
-      message: "Time must be in HH:mm format",
-    }),
-  })
-  .refine(
-    (data) => {
-      const [startHour, startMinute] = data.startTime.split(":").map(Number);
-      const [endHour, endMinute] = data.endTime.split(":").map(Number);
+const scheduleSchema = z.object({
+  date: z
+    .string()
+    .refine((v) => !isNaN(Date.parse(v)), {
+      message: "Invalid date string",
+    })
+    .transform((v) => new Date(v)),
+  // startTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+  //   message: "Time must be in HH:mm format",
+  // }),
+  // endTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+  //   message: "Time must be in HH:mm format",
+  // }),
+});
 
-      const startInMinutes = startHour * 60 + startMinute;
-      const endInMinutes = endHour * 60 + endMinute;
+// const scheduleSchema = z.object({
+//   date: z
+//     .string()
+//     .refine((v) => !isNaN(Date.parse(v)), {
+//       message: "Invalid date string",
+//     })
+//     .transform((v) => new Date(v)),
+//   // startTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+//   //   message: "Time must be in HH:mm format",
+//   // }),
+//   // endTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
+//   //   message: "Time must be in HH:mm format",
+//   // }),
+// });
+// .refine(
+//   (data) => {
+//     const [startHour, startMinute] = data.startTime.split(":").map(Number);
+//     const [endHour, endMinute] = data.endTime.split(":").map(Number);
 
-      return startInMinutes < endInMinutes;
-    },
-    {
-      message: "Start time must be before end time",
-      path: ["startTime", "endTime"],
-    }
-  );
+//     const startInMinutes = startHour * 60 + startMinute;
+//     const endInMinutes = endHour * 60 + endMinute;
+
+//     return startInMinutes < endInMinutes;
+//   },
+//   {
+//     message: "Start time must be before end time",
+//     path: ["startTime", "endTime"],
+//   }
+// );
 
 export const newRequestSchema = z.object({
   timezone: z.string(),

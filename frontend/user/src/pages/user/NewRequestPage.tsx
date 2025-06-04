@@ -1,61 +1,86 @@
 import React from "react";
+import { MdDeleteOutline } from "react-icons/md";
 
 import ToggleGroup from "@/components/user/ToggleGroup";
 import Section from "@/components/utils/Section";
-import requestsJSON from "../../../__data/requests.json";
-import type { RequestCardDataType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { getInitials } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-// NOTE: Mock data
-const requests = requestsJSON as RequestCardDataType[];
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import { useFetchDetailsQuery } from "@/features/account/accountApi";
+import { SERVER_URL } from "@/features/api";
+import SkeletonLoader from "@/components/utils/SkeletonLoader";
+import DateTimePicker from "@/components/utils/DateTimePicker";
+import { useCreateSkillswapRequestMutation } from "@/features/skillswap-request/skillswapRequestApi";
+import Loader from "@/components/utils/Loader";
 
 const NewRequestPage = () => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [newDate, setNewDate] = React.useState<Date>();
+  const [skillswapRequest, setSkillswapRequest] = React.useState<{
+    requestedSkill: string;
+    availability: { date: Date }[];
+  }>({
+    requestedSkill: "",
+    availability: [],
+  });
+
+  const {
+    data: userDetails,
+    refetch: refetchUser,
+    isLoading: isUserLoading,
+  } = useFetchDetailsQuery();
+  const [createSkillswapRequest, { isLoading: isCreatingSkillswapRequest }] =
+    useCreateSkillswapRequestMutation();
+
+  const handleAddAvailability = () => {
+    if (newDate)
+      setSkillswapRequest((prev) => ({
+        ...prev,
+        availability: [...prev.availability, { date: newDate }],
+      }));
+    setNewDate(undefined);
+  };
+
+  const handleDeleteAvailability = (availability: { date: Date }) => {
+    // setAvailability((prev) => prev.filter((a) => a !== availability));
+    setSkillswapRequest((prev) => ({
+      ...prev,
+      availability: prev.availability.filter(
+        (a) => a.date !== availability.date,
+      ),
+    }));
+  };
+
+  // const handleUpdateAvailability = (index: number) => {
+  //   setNewDate(undefined);
+  // };
+
+  const handlePublishRequest = async () => {
+    if (
+      skillswapRequest.requestedSkill.length === 0 ||
+      skillswapRequest.availability.length === 0 ||
+      skillswapRequest.availability.length > 5
+    ) {
+      alert("Please select requested skill and have availability between 1-5");
+      return;
+    }
+
+    try {
+      const res = await createSkillswapRequest(skillswapRequest).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setSkillswapRequest({ requestedSkill: "", availability: [] });
+  };
 
   return (
     <div className="container mx-auto flex flex-col gap-10 text-xl">
       {/* Name */}
       <Section className="flex w-full flex-col items-start justify-between gap-4">
-        <h1 className="pb-6 text-xl md:text-2xl lg:text-3xl">New Request</h1>
+        <h1 className="pb-6 text-xl md:text-2xl lg:text-3xl">
+          New Skillswap Request
+        </h1>
         <Section.Title className="flex flex-col gap-2">
           <span className="text-xl font-semibold text-gray-900">Name</span>
           <p className="text-base text-gray-600">
@@ -64,31 +89,55 @@ const NewRequestPage = () => {
           </p>
         </Section.Title>
         <Section.Content className="flex w-full items-center gap-3 [&>*]:my-3">
-          {/* TODO: add profile picture */}
           <Avatar className="size-12">
-            <AvatarImage src="https://github.com/shadcn.pngf" alt="@shadcn" />
-            <AvatarFallback>JM</AvatarFallback>
+            <AvatarImage
+              src={`${SERVER_URL}${userDetails?.user.picture}`}
+              alt="@shadcn"
+            />
+            <AvatarFallback>
+              {getInitials(userDetails?.user.name)}
+            </AvatarFallback>
           </Avatar>
-          <div className="font-medium text-gray-700">John Marston</div>
+          <div className="font-medium text-gray-700">
+            {userDetails?.user.name}
+          </div>
         </Section.Content>
       </Section>
       {/* Requested skill */}
       <Section className="flex w-full flex-col items-start justify-between gap-4">
         <Section.Title className="flex w-full flex-col gap-2">
           <span className="text-xl font-semibold text-gray-900">
-            Requested skill
+            Requested skill <sup className="text-xl text-red-500">*</sup>
           </span>
           <p className="text-base text-gray-600">
             Skill you want to learn. (Only one can be selected)
           </p>
         </Section.Title>
         <Section.Content className="w-full [&>*]:py-3">
-          <ToggleGroup
-            className="[&>*]:cursor-pointer"
-            options={requests[0].skillsOffered}
-            selected={[requests[0].skillsOffered[2]]}
-            onChange={() => {}}
-          />
+          {isUserLoading && (
+            <div className="flex gap-3">
+              {Array.from({ length: 5 }, (_, i) => (
+                <SkeletonLoader key={i} className="h-lh w-1/12" />
+              ))}
+            </div>
+          )}
+          {userDetails !== undefined && (
+            <ToggleGroup
+              className="[&>*]:cursor-pointer"
+              options={userDetails.user.requestedSkills}
+              selected={
+                skillswapRequest.requestedSkill.length > 0
+                  ? [skillswapRequest.requestedSkill]
+                  : []
+              }
+              onChange={(selection) => {
+                setSkillswapRequest((prev) => ({
+                  ...prev,
+                  requestedSkill: selection[0],
+                }));
+              }}
+            />
+          )}
         </Section.Content>
       </Section>
       {/* Offered skill */}
@@ -103,19 +152,28 @@ const NewRequestPage = () => {
           </p>
         </Section.Title>
         <Section.Content className="w-full [&>*]:py-3">
-          <ToggleGroup
-            className="[&>*]:bg-gray-100 [&>*]:text-gray-400 [&>*]:hover:bg-gray-100 [&>*]:hover:text-gray-400"
-            options={requests[0].skillsOffered}
-            selected={[]}
-            onChange={() => {}}
-          />
+          {isUserLoading && (
+            <div className="flex gap-3">
+              {Array.from({ length: 5 }, (_, i) => (
+                <SkeletonLoader key={i} className="h-lh w-1/12" />
+              ))}
+            </div>
+          )}
+          {userDetails !== undefined && (
+            <ToggleGroup
+              className="[&>*]:bg-gray-100 [&>*]:text-gray-400 [&>*]:hover:bg-gray-100 [&>*]:hover:text-gray-400"
+              options={userDetails.user.offeredSkills}
+              selected={[]}
+              onChange={() => {}}
+            />
+          )}
         </Section.Content>
       </Section>
       {/* Availability schedule */}
       <Section className="flex w-full flex-col items-start justify-between gap-4">
         <Section.Title className="flex flex-col gap-2">
           <span className="text-xl font-semibold text-gray-900">
-            Availability
+            Availability <sup className="text-xl text-red-500">*</sup>
           </span>
           <p className="text-base text-gray-600">
             Select dates and respective timings for session. (Upto 5)
@@ -131,39 +189,65 @@ const NewRequestPage = () => {
         </div> */}
         <Section.Content className="w-full [&>*]:px-3 [&>*]:py-1.5 md:[&>*]:px-6 md:[&>*]:py-3 lg:[&>*]:px-12 lg:[&>*]:py-6">
           {/* One date&time */}
-          <div className="flex flex-col text-lg md:flex-row">
-            <div className="flex-[1] font-medium text-gray-800">
-              16 May, 2025
+          {skillswapRequest.availability.map((a, i) => (
+            <div key={i} className="flex flex-col text-lg md:flex-row">
+              <div className="flex-[1] font-medium text-gray-800">
+                {/* 16 May, 2025 */}
+                {a.date.toDateString()}
+              </div>
+              <div className="flex flex-[2] items-center">
+                {/* <div className="grow text-base">12:00, 13:00, 16:00</div> */}
+                <div className="grow text-base">
+                  {a.date.toLocaleTimeString()}
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleDeleteAvailability(a)}
+                    className="cursor-pointer text-red-500 hover:text-red-400"
+                  >
+                    <MdDeleteOutline className="size-5" />
+                  </button>
+                  {/* <AvailabilityUpdateAlertDialog
+                    trigger={
+                      <Button
+                        onClick={() => handleUpdateAvailability(i)}
+                        className="hover:bg-accent cursor-pointer"
+                        variant="link"
+                      >
+                        Update
+                      </Button>
+                    }
+                  >
+                    <DateTimePicker
+                      date={newDate}
+                      onValueChange={(date) => setNewDate(date)}
+                      className="w-fit [&>*]:cursor-pointer"
+                    />
+                  </AvailabilityUpdateAlertDialog> */}
+                </div>
+              </div>
             </div>
-            <div className="flex flex-[2] items-center">
-              <div className="grow text-base">12:00, 13:00, 16:00</div>
-              <Button className="hover:bg-accent cursor-pointer" variant="link">
-                Update
-              </Button>
-            </div>
-          </div>
+          ))}
 
-          <div className="flex flex-col text-lg md:flex-row">
-            <div className="flex-[1] font-medium text-gray-800">
-              16 May, 2025
-            </div>
-            <div className="flex flex-[2] items-center">
-              <div className="grow text-base">12:00, 13:00, 16:00</div>
-              <Button className="hover:bg-accent cursor-pointer" variant="link">
-                Update
-              </Button>
-            </div>
+          <div className="flex gap-3">
+            <DateTimePicker
+              date={newDate}
+              onValueChange={(date) => setNewDate(date)}
+              className="w-fit [&>*]:cursor-pointer"
+            />
+
+            <Button
+              onClick={handleAddAvailability}
+              variant="link"
+              className="cursor-pointer font-bold"
+            >
+              + Add another date & time
+            </Button>
           </div>
-          <Button
-            variant="link"
-            className="hover:bg-accent cursor-pointer font-bold"
-          >
-            + Add another date & time
-          </Button>
         </Section.Content>
       </Section>
       {/* Timezone */}
-      <Section className="flex w-full flex-col items-start justify-between gap-4">
+      {/* <Section className="flex w-full flex-col items-start justify-between gap-4">
         <Section.Title className="flex flex-col gap-2">
           <span className="text-xl font-semibold text-gray-900">Timezone</span>
           <p className="text-base text-gray-600">
@@ -221,13 +305,26 @@ const NewRequestPage = () => {
             </PopoverContent>
           </Popover>
         </Section.Content>
-      </Section>
+      </Section> */}
       {/* Action buttons */}
       <div className="my-12 flex items-center justify-end gap-6">
         {/* <Button className="cursor-pointer" variant="outline">
           Back
         </Button> */}
-        <Button className="cursor-pointer">Publish request</Button>
+        <Button
+          disabled={
+            skillswapRequest.requestedSkill.length === 0 ||
+            skillswapRequest.availability.length === 0
+          }
+          onClick={handlePublishRequest}
+          className="cursor-pointer"
+        >
+          {isCreatingSkillswapRequest ? (
+            <Loader className="size-5" />
+          ) : (
+            "Publish Skillswap request"
+          )}
+        </Button>
       </div>
     </div>
   );

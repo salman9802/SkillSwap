@@ -68,3 +68,9 @@ export type SessionRefreshReturnType = {
   user: User;
   accessToken: string;
 };
+
+// Skillswap request
+export type CreateSkillswapRequestPayloadType = {
+  requestedSkill: string;
+  availability: { date: Date }[];
+};
