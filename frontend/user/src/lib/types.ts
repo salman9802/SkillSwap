@@ -74,3 +74,28 @@ export type CreateSkillswapRequestPayloadType = {
   requestedSkill: string;
   availability: { date: Date }[];
 };
+
+export type SkillswapRequestCardDataType = {
+  id: string;
+  requester: {
+    name: string;
+    offeredSkills: string[];
+  };
+  requestedSkill: string;
+  createdAt: string;
+};
+
+export type MarketplaceFilter = {
+  date?: Date;
+  offeredSkills?: string[];
+  requestedSkill?: string;
+  offeredSkillSearch?: string;
+};
+
+export const MarketplaceSort = {
+  OLDEST_FIRST: "Oldest First",
+  NEWEST_FIRST: "Newest First",
+} as const;
+
+export type MarketplaceSortType =
+  (typeof MarketplaceSort)[keyof typeof MarketplaceSort];

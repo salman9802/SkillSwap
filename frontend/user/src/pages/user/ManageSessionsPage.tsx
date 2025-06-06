@@ -7,7 +7,8 @@ import { getRelativeTime } from "@/lib/time";
 import { Link } from "react-router-dom";
 
 // NOTE - Mock data
-const requests = requestsJSON as RequestCardDataType[];
+// const requests = requestsJSON as RequestCardDataType[];
+const requests = [] as RequestCardDataType[];
 const sessions = requests.slice(0, 5).map((r) => ({
   skillGiven: r.skillsRequested[0],
   skillReceived: r.skillsOffered[0],

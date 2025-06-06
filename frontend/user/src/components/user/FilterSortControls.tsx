@@ -1,7 +1,6 @@
 import React from "react";
+import { FaSort } from "react-icons/fa";
 
-import { Button } from "@/components/ui/button";
-import { FaCalendarAlt } from "react-icons/fa";
 import ToggleGroup from "./ToggleGroup";
 import { cn } from "@/lib/utils";
 import {
@@ -10,82 +9,133 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import {
+  MarketplaceSort,
+  type MarketplaceFilter,
+  type MarketplaceSortType,
+} from "@/lib/types";
+import DateTimePicker from "../utils/DateTimePicker";
 
-type SortPropsType = React.PropsWithChildren & {
-  className?: string;
+type SortControl = React.PropsWithChildren<
+  React.HTMLAttributes<HTMLDivElement>
+> & {
+  onSortChange: (sort: MarketplaceSortType) => void;
 };
 
-const Sort = ({ children, className }: SortPropsType) => {
+export const Sort = ({ children, className, onSortChange }: SortControl) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className={cn("cursor-pointer border bg-gray-50 px-4 py-2", className)}
+        className={cn(
+          "flex w-fit cursor-pointer items-center justify-center gap-3 border bg-gray-50 px-4 py-2",
+          className,
+        )}
       >
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem>Sort by: Most recent</DropdownMenuItem>
-        <DropdownMenuItem>Sort by: Oldest - Newest</DropdownMenuItem>
+        {Object.values(MarketplaceSort).map((v, i) => (
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => onSortChange(v)}
+            key={i}
+          >
+            {v}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-const Filters = () => {
-  const [offerSkills, setOfferSkills] = React.useState<string[]>([]);
-  const [requestSkills, setRequestSkills] = React.useState<string[]>([]);
+type FilterControl = React.PropsWithChildren<
+  React.HTMLAttributes<HTMLDivElement>
+> & {
+  onFilterChange: (filter: MarketplaceFilter) => void;
+};
+
+export const Filters = ({ onFilterChange, className }: FilterControl) => {
+  const [filter, setFilter] = React.useState<MarketplaceFilter>();
+
+  React.useEffect(() => {
+    if (filter) onFilterChange(filter);
+  }, [filter]);
+
   return (
-    <>
+    <div className={cn("flex flex-col gap-6", className)}>
       <h2 className="text-2xl font-bold">Filters</h2>
       {/* Date & Time */}
-      {/* TODO: add `Calendar` component in `Modal` or `Popover` */}
       <div className="grid gap-4">
         <div className="font-semibold">Date & Time</div>
-        <Button variant="primary-outline" className="cursor-pointer">
-          <FaCalendarAlt className="size-5" />
-        </Button>
+        <DateTimePicker
+          date={filter?.date}
+          onValueChange={(date) =>
+            setFilter((prev) => ({
+              ...prev,
+              date,
+            }))
+          }
+          className="w-fit [&>*]:cursor-pointer"
+        />
       </div>
       {/* Skills Offered by you */}
       <div className="grid gap-4">
         <div className="font-semibold">Skills offered by you</div>
         <ToggleGroup
+          className="[&>*]:cursor-pointer"
           options={["React", "Node.js", "Tailwind CSS", "Prisma", "Express"]}
-          selected={offerSkills}
-          onChange={setOfferSkills}
+          selected={filter && filter.offeredSkills ? filter.offeredSkills : []}
+          onChange={(selection) => {
+            setFilter((prev) => ({
+              ...prev,
+              offeredSkills: selection,
+            }));
+          }}
         />
       </div>
       {/* Skills Requested by you */}
       <div className="grid gap-4">
         <div className="font-semibold">Skills requested by you</div>
         <ToggleGroup
+          className="[&>*]:cursor-pointer"
           options={["MongoDB", "MySQL", "Javascript", "Typescript"]}
-          selected={requestSkills}
-          onChange={setRequestSkills}
+          selected={
+            filter && filter.requestedSkill ? [filter.requestedSkill] : []
+          }
+          onChange={(selection) => {
+            setFilter((prev) => ({
+              ...prev,
+              requestedSkill: selection[0],
+            }));
+          }}
         />
       </div>
-    </>
-  );
-};
-
-type FiltersPropsType = React.HTMLAttributes<HTMLDivElement>;
-
-const FilterSortControls = ({ className }: FiltersPropsType) => {
-  return (
-    <div className={cn("flex flex-col gap-8 bg-gray-100 px-6 py-3", className)}>
-      <h2 className="text-2xl font-bold">Sort</h2>
-      <div className="grid gap-4">
-        <Sort>Sort by: Most recent</Sort>
-        {/* <div className="font-semibold">Date & Time</div>
-        <Button variant="primary-outline" className="cursor-pointer">
-          <FaCalendarAlt className="size-5" />
-        </Button> */}
-      </div>
-      <Filters />
     </div>
   );
 };
 
-FilterSortControls.Sort = Sort;
-FilterSortControls.Filters = Filters;
+type FilterSortControlsPropType = React.HTMLAttributes<HTMLDivElement> &
+  FilterControl &
+  SortControl;
 
-export default FilterSortControls;
+export const DesktopFilterSortControls = ({
+  className,
+  sort,
+  onSortChange,
+  onFilterChange,
+}: FilterSortControlsPropType & {
+  sort: React.ReactNode;
+}) => {
+  return (
+    <div className={cn("flex flex-col gap-8 bg-gray-100 px-6 py-3", className)}>
+      <h2 className="text-2xl font-bold">Sort</h2>
+      <div className="grid gap-4">
+        <Sort onSortChange={onSortChange}>
+          {sort}
+          <FaSort />
+        </Sort>
+      </div>
+      <Filters onFilterChange={onFilterChange} />
+    </div>
+  );
+};

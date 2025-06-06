@@ -8,7 +8,15 @@ import ToggleGroup from "@/components/user/ToggleGroup";
 import { Button } from "@/components/ui/button";
 
 // NOTE: Mock data
-const requests = requestsJSON as RequestCardDataType[];
+// const requests = requestsJSON as RequestCardDataType[];
+const requests = [
+  {
+    id: 1,
+    requesterName: "Me",
+    skillsOffered: ["Some skill", "Another skill"],
+    skillsRequested: ["a"],
+  },
+] as RequestCardDataType[];
 const schedules = [
   new Date("2024-11-18T14:32:10.297Z"),
   new Date("2024-12-29T05:20:44.189Z"),

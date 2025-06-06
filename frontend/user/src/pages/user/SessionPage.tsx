@@ -19,11 +19,12 @@ const schedules = [
   new Date("2025-04-10T07:59:13.126Z"),
 ];
 const isAccepter = false;
-const requests = requestsJSON as RequestCardDataType[];
+// const requests = requestsJSON as RequestCardDataType[];
+const requests = [] as RequestCardDataType[];
 const session = {
-  skillGiven: requests[0].skillsRequested[0],
-  skillReceived: requests[0].skillsOffered[0],
-  when: requests[0].createdAt,
+  skillGiven: requests[0]?.skillsRequested[0],
+  skillReceived: requests[0]?.skillsOffered[0],
+  when: requests[0]?.createdAt,
 };
 const accepterAccepted = false;
 const sessionStatus: keyof typeof SESSION_STATUS = "SCHEDULED";

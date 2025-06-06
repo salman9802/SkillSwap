@@ -252,34 +252,50 @@ export const marketplace = async (
     offset: req.query.offset,
   });
 
-  const where = {
-    availability: parsed.availability
-      ? {
-          some: parsed.availability,
-        }
-      : undefined,
-    requestedSkill: parsed.offeredSkill
-      ? {
-          in: parsed.offeredSkill, // w.r.t. current user
-        }
-      : undefined,
-    requester: parsed.requestedSkill.length
-      ? {
-          offeredSkills: {
-            hasSome: parsed.requestedSkill, // w.r.t. current user
-          },
-        }
-      : undefined,
-  };
+  // TODO
+  // const where = {
+  //   availability: parsed.availability
+  //     ? {
+  //         some: parsed.availability,
+  //       }
+  //     : undefined,
+  //   requestedSkill: parsed.offeredSkill
+  //     ? {
+  //         in: parsed.offeredSkill, // w.r.t. current user
+  //       }
+  //     : undefined,
+  //   requester: parsed.requestedSkill.length
+  //     ? {
+  //         offeredSkills: {
+  //           hasSome: parsed.requestedSkill, // w.r.t. current user
+  //         },
+  //       }
+  //     : undefined,
+  // };
 
   // fetch from db
   const [requests, totalCount] = await Promise.all([
     prisma.skillSwapRequest.findMany({
       skip: parsed.offset,
       take: parsed.limit,
-      where,
+      // where,
+      // select: {
+      //   id: true,
+      // },
+      select: {
+        id: true,
+        requester: {
+          select: {
+            name: true,
+            offeredSkills: true,
+          },
+        },
+        requestedSkill: true,
+        createdAt: true,
+      },
     }),
-    prisma.skillSwapRequest.count({ where }),
+    // prisma.skillSwapRequest.count({ where }),
+    prisma.skillSwapRequest.count({}),
   ]);
 
   res.status(STATUS_CODES.OK).json({

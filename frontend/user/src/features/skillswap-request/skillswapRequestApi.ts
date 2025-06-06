@@ -1,4 +1,8 @@
-import type { CreateSkillswapRequestPayloadType } from "@/lib/types";
+import type {
+  CreateSkillswapRequestPayloadType,
+  MarketplaceFilter,
+  SkillswapRequestCardDataType,
+} from "@/lib/types";
 import api from "../api";
 
 const skillswapRequestApi = api.injectEndpoints({
@@ -13,7 +17,20 @@ const skillswapRequestApi = api.injectEndpoints({
         body: payload,
       }),
     }),
+    skillswapRequestMarketplace: builder.query<
+      { requests: SkillswapRequestCardDataType[]; totalCount: number },
+      MarketplaceFilter | void
+    >({
+      query: (filter) => ({
+        url: "user/marketplace",
+        method: "GET",
+        body: filter,
+      }),
+    }),
   }),
 });
 
-export const { useCreateSkillswapRequestMutation } = skillswapRequestApi;
+export const {
+  useCreateSkillswapRequestMutation,
+  useSkillswapRequestMarketplaceQuery,
+} = skillswapRequestApi;

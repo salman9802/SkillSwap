@@ -95,8 +95,8 @@ export const marketplaceFilterSchema = z.object({
   limit: z.coerce.number().min(1).default(10),
   offset: z.coerce.number().min(0).default(0),
   availability: scheduleSchema.optional(),
-  offeredSkill: z.array(z.string()).optional(),
-  requestedSkill: z.array(z.string()).default([]),
+  offeredSkills: z.array(z.string()).optional(),
+  requestedSkill: z.string().optional(),
 });
 
 export type MarketplaceFilter = z.infer<typeof marketplaceFilterSchema>;
