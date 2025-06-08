@@ -12,14 +12,14 @@ import {
 import {
   MarketplaceSort,
   type MarketplaceFilter,
-  type MarketplaceSortType,
+  type MarketplaceSortKeyType,
 } from "@/lib/types";
 import DateTimePicker from "../utils/DateTimePicker";
 
 type SortControl = React.PropsWithChildren<
   React.HTMLAttributes<HTMLDivElement>
 > & {
-  onSortChange: (sort: MarketplaceSortType) => void;
+  onSortChange: (sort: MarketplaceSortKeyType) => void;
 };
 
 export const Sort = ({ children, className, onSortChange }: SortControl) => {
@@ -34,10 +34,10 @@ export const Sort = ({ children, className, onSortChange }: SortControl) => {
         {children}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        {Object.values(MarketplaceSort).map((v, i) => (
+        {Object.entries(MarketplaceSort).map(([k, v], i) => (
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => onSortChange(v)}
+            onClick={() => onSortChange(k as MarketplaceSortKeyType)}
             key={i}
           >
             {v}
@@ -51,15 +51,20 @@ export const Sort = ({ children, className, onSortChange }: SortControl) => {
 type FilterControl = React.PropsWithChildren<
   React.HTMLAttributes<HTMLDivElement>
 > & {
+  filters: MarketplaceFilter | undefined;
   onFilterChange: (filter: MarketplaceFilter) => void;
 };
 
-export const Filters = ({ onFilterChange, className }: FilterControl) => {
-  const [filter, setFilter] = React.useState<MarketplaceFilter>();
+export const Filters = ({
+  filters,
+  onFilterChange,
+  className,
+}: FilterControl) => {
+  // const [filter, setFilter] = React.useState<MarketplaceFilter>();
 
-  React.useEffect(() => {
-    if (filter) onFilterChange(filter);
-  }, [filter]);
+  // React.useEffect(() => {
+  //   if (filter) onFilterChange(filter);
+  // }, [filter]);
 
   return (
     <div className={cn("flex flex-col gap-6", className)}>
@@ -68,13 +73,8 @@ export const Filters = ({ onFilterChange, className }: FilterControl) => {
       <div className="grid gap-4">
         <div className="font-semibold">Date & Time</div>
         <DateTimePicker
-          date={filter?.date}
-          onValueChange={(date) =>
-            setFilter((prev) => ({
-              ...prev,
-              date,
-            }))
-          }
+          date={filters?.date}
+          onValueChange={(date) => onFilterChange({ ...filters, date })}
           className="w-fit [&>*]:cursor-pointer"
         />
       </div>
@@ -84,12 +84,14 @@ export const Filters = ({ onFilterChange, className }: FilterControl) => {
         <ToggleGroup
           className="[&>*]:cursor-pointer"
           options={["React", "Node.js", "Tailwind CSS", "Prisma", "Express"]}
-          selected={filter && filter.offeredSkills ? filter.offeredSkills : []}
+          selected={
+            filters && filters.offeredSkills ? filters.offeredSkills : []
+          }
           onChange={(selection) => {
-            setFilter((prev) => ({
-              ...prev,
+            onFilterChange({
+              ...filters,
               offeredSkills: selection,
-            }));
+            });
           }}
         />
       </div>
@@ -100,13 +102,13 @@ export const Filters = ({ onFilterChange, className }: FilterControl) => {
           className="[&>*]:cursor-pointer"
           options={["MongoDB", "MySQL", "Javascript", "Typescript"]}
           selected={
-            filter && filter.requestedSkill ? [filter.requestedSkill] : []
+            filters && filters.requestedSkill ? [filters.requestedSkill] : []
           }
           onChange={(selection) => {
-            setFilter((prev) => ({
-              ...prev,
+            onFilterChange({
+              ...filters,
               requestedSkill: selection[0],
-            }));
+            });
           }}
         />
       </div>
@@ -121,6 +123,7 @@ type FilterSortControlsPropType = React.HTMLAttributes<HTMLDivElement> &
 export const DesktopFilterSortControls = ({
   className,
   sort,
+  filters,
   onSortChange,
   onFilterChange,
 }: FilterSortControlsPropType & {
@@ -131,11 +134,11 @@ export const DesktopFilterSortControls = ({
       <h2 className="text-2xl font-bold">Sort</h2>
       <div className="grid gap-4">
         <Sort onSortChange={onSortChange}>
-          {sort}
+          {MarketplaceSort[sort as MarketplaceSortKeyType]}
           <FaSort />
         </Sort>
       </div>
-      <Filters onFilterChange={onFilterChange} />
+      <Filters filters={filters} onFilterChange={onFilterChange} />
     </div>
   );
 };

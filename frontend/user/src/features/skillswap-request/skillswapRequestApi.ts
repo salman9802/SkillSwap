@@ -1,6 +1,7 @@
 import type {
   CreateSkillswapRequestPayloadType,
   MarketplaceFilter,
+  MarketplacePayloadType,
   SkillswapRequestCardDataType,
 } from "@/lib/types";
 import api from "../api";
@@ -19,12 +20,23 @@ const skillswapRequestApi = api.injectEndpoints({
     }),
     skillswapRequestMarketplace: builder.query<
       { requests: SkillswapRequestCardDataType[]; totalCount: number },
-      MarketplaceFilter | void
+      MarketplacePayloadType
     >({
-      query: (filter) => ({
+      query: (params) => ({
         url: "user/marketplace",
         method: "GET",
-        body: filter,
+        params:
+          params !== undefined
+            ? {
+                ...params,
+                offeredSkills: params.offeredSkills?.join(","),
+                offeredSkillQuery:
+                  params.offeredSkillQuery !== undefined &&
+                  params.offeredSkillQuery.length > 0
+                    ? params.offeredSkillQuery
+                    : undefined,
+              }
+            : undefined,
       }),
     }),
   }),

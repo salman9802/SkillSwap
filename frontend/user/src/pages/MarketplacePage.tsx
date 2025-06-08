@@ -19,37 +19,81 @@ import SkillswapRequestCard from "@/components/user/SkillswapRequestCard";
 import {
   MarketplaceSort,
   type MarketplaceFilter,
-  type MarketplaceSortType,
+  type MarketplaceSortKeyType,
+  type SkillswapRequestCardDataType,
 } from "@/lib/types";
 import { useSkillswapRequestMarketplaceQuery } from "@/features/skillswap-request/skillswapRequestApi";
 import SkeletonLoader from "@/components/utils/SkeletonLoader";
 import { Button } from "@/components/ui/button";
+import { useDebounce } from "@/lib/hooks";
 
 const MarketplacePage = () => {
   setPageTitle("Skills Marketplace - SkillSwap");
 
   const [filters, setFilters] = React.useState<MarketplaceFilter | undefined>();
-  const [sort, setSort] = React.useState<MarketplaceSortType>(
-    MarketplaceSort.NEWEST_FIRST,
-  );
+  const [sort, setSort] =
+    React.useState<MarketplaceSortKeyType>("NEWEST_FIRST");
+  const [offeredSkillQuery, setOfferedSkillQuery] = React.useState("");
+  const [requests, setRequests] = React.useState<
+    SkillswapRequestCardDataType[]
+  >([]);
 
   // For mobile
   const [showFilters, setShowFilters] = React.useState(false);
 
-  const { data: skillswapRequests, isLoading: isRequestsLoading } =
-    useSkillswapRequestMarketplaceQuery();
+  const debouncedOfferedSkillQuery = useDebounce<string>(
+    offeredSkillQuery,
+    1000,
+  );
 
-  const handleSortFilter = () => {
-    // TODO: request to server
-    console.log(`sort: ${sort}`);
-    console.dir(filters);
+  let {
+    data: skillswapRequests,
+    isLoading: isRequestsLoading,
+    isFetching: isRequestsFetching,
+  } = useSkillswapRequestMarketplaceQuery({
+    ...filters,
+    date: filters?.date?.toISOString(),
+    offeredSkillQuery: debouncedOfferedSkillQuery,
+  });
+
+  const handleSort = () => {
+    // skillswapRequests.requests = skillswapRequests?.requests.sort(());
+    if (skillswapRequests !== undefined) {
+      if (sort === "OLDEST_FIRST") {
+        setRequests(
+          [...skillswapRequests.requests].sort(
+            (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
+          ),
+        );
+      } else {
+        setRequests(
+          [...skillswapRequests.requests].sort(
+            (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+          ),
+        );
+      }
+    }
   };
+
+  // React.useEffect(() => {
+  //   handleFilter();
+  //   console.log(skillswapRequests);
+  // }, [debouncedOfferedSkillQuery]);
+
+  React.useEffect(() => {
+    if (skillswapRequests) setRequests(skillswapRequests.requests);
+  }, [skillswapRequests?.requests]);
+
+  React.useEffect(() => {
+    handleSort();
+  }, [sort, skillswapRequests]);
 
   return (
     <SidebarProvider>
       <Sidebar collapsible="offcanvas">
         <SidebarContent className="bg-gray-100">
           <DesktopFilterSortControls
+            filters={filters}
             onFilterChange={(filter) => {
               setFilters(filter);
             }}
@@ -58,21 +102,21 @@ const MarketplacePage = () => {
               setSort(sort);
             }}
           />
-          <div className="mx-auto mt-6 flex items-center gap-3">
+          {/* <div className="mx-auto mt-6 flex items-center gap-3">
             <Button
               onClick={() => {
-                setSort(MarketplaceSort.NEWEST_FIRST);
-                setFilters(undefined);
+                setSort("NEWEST_FIRST");
+                setFilters({});
               }}
               variant="ghost"
               className="cursor-pointer"
             >
               Reset
             </Button>
-            <Button onClick={handleSortFilter} className="cursor-pointer">
+            <Button onClick={handleFilter} className="cursor-pointer">
               Apply
             </Button>
-          </div>
+          </div> */}
         </SidebarContent>
       </Sidebar>
       <div className="@container/sidebar-right flex grow flex-col gap-8">
@@ -82,44 +126,49 @@ const MarketplacePage = () => {
             <Input
               className="pr-[calc(var(--pad)+12px+1px+20px)]"
               placeholder="Search by offered skill..."
+              value={offeredSkillQuery}
+              onChange={(e) => setOfferedSkillQuery(e.target.value)}
             />
             <FaSearch className="absolute right-[var(--pad)] size-5 text-gray-600" />
           </div>
 
           {/* FilterSortControls (Mobile) */}
-          <div className="mx-auto flex w-2/3 gap-3">
-            <Sort
-              onSortChange={(sort) => {
-                setSort(sort);
-              }}
-              className="border-none p-2 md:hidden"
-            >
-              <CgSortAz className="size-6" />
-            </Sort>
-            <div className="p-2 md:hidden">
-              <Button onClick={() => setShowFilters((prev) => !prev)}>
-                <FaFilter className="size-5" />
-              </Button>
+          <div className="md:hidden">
+            <div className="mx-auto flex w-2/3 gap-3">
+              <Sort
+                onSortChange={(sort) => {
+                  setSort(sort);
+                }}
+                className="border-none p-2"
+              >
+                <CgSortAz className="size-6" />
+              </Sort>
+              <div className="p-2 md:hidden">
+                <Button onClick={() => setShowFilters((prev) => !prev)}>
+                  <FaFilter className="size-5" />
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="mx-auto mt-6 flex w-2/3 items-center gap-3">
-            <Button
-              onClick={() => {
-                setSort(MarketplaceSort.NEWEST_FIRST);
-                setFilters(undefined);
-              }}
-              variant="ghost"
-              className="cursor-pointer"
-            >
-              Reset
-            </Button>
-            <Button onClick={handleSortFilter} className="cursor-pointer">
-              Apply
-            </Button>
+            {/* <div className="mx-auto mt-6 flex w-2/3 items-center gap-3">
+              <Button
+                onClick={() => {
+                  setSort("NEWEST_FIRST");
+                  setFilters(undefined);
+                }}
+                variant="ghost"
+                className="cursor-pointer"
+              >
+                Reset
+              </Button>
+              <Button onClick={handleFilter} className="cursor-pointer">
+                Apply
+              </Button>
+            </div> */}
           </div>
 
           {showFilters && (
             <Filters
+              filters={filters}
               className="border-b py-6"
               onFilterChange={(filter) => {
                 setFilters(filter);
@@ -131,7 +180,7 @@ const MarketplacePage = () => {
           <h2 className="text-xl font-medium md:text-2xl lg:text-4xl">
             Skill Requests{" "}
             <span className="text-lg font-light md:text-xl lg:text-2xl">
-              {isRequestsLoading ? (
+              {isRequestsLoading || isRequestsFetching ? (
                 <SkeletonLoader className="inline-block h-lh rounded-full" />
               ) : (
                 <span>({skillswapRequests?.totalCount} results)</span>
@@ -141,13 +190,13 @@ const MarketplacePage = () => {
           <div className="grid grid-cols-1 gap-3 @xl/sidebar-right:grid-cols-2 @4xl/sidebar-right:grid-cols-3 @5xl/sidebar-right:grid-cols-4">
             {/* :@max-md/sidebar-right */}
 
-            {isRequestsLoading &&
+            {(isRequestsLoading || isRequestsFetching) &&
               Array.from({ length: 12 }, (_, i) => (
                 <SkeletonLoader className="h-[25vh] w-full" key={i} />
               ))}
 
-            {skillswapRequests?.requests &&
-              skillswapRequests.requests.map((skillswapRequest, i) => (
+            {requests.length > 0 &&
+              requests.map((skillswapRequest, i) => (
                 <SkillswapRequestCard
                   key={i}
                   skillswapRequest={skillswapRequest}

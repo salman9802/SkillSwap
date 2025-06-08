@@ -89,7 +89,6 @@ export type MarketplaceFilter = {
   date?: Date;
   offeredSkills?: string[];
   requestedSkill?: string;
-  offeredSkillSearch?: string;
 };
 
 export const MarketplaceSort = {
@@ -97,5 +96,13 @@ export const MarketplaceSort = {
   NEWEST_FIRST: "Newest First",
 } as const;
 
-export type MarketplaceSortType =
-  (typeof MarketplaceSort)[keyof typeof MarketplaceSort];
+// export type MarketplaceSortType =
+//   (typeof MarketplaceSort)[keyof typeof MarketplaceSort];
+export type MarketplaceSortKeyType = keyof typeof MarketplaceSort;
+
+export type MarketplacePayloadType = {
+  date?: string;
+  offeredSkills?: string[];
+  requestedSkill?: string;
+  offeredSkillQuery?: string;
+};

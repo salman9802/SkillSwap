@@ -91,15 +91,26 @@ export const newRequestSchema = z.object({
 
 export type NewRequest = z.infer<typeof newRequestSchema>;
 
-export const marketplaceFilterSchema = z.object({
-  limit: z.coerce.number().min(1).default(10),
-  offset: z.coerce.number().min(0).default(0),
-  availability: scheduleSchema.optional(),
-  offeredSkills: z.array(z.string()).optional(),
+// export const marketplaceFilterSchema = z.object({
+//   limit: z.coerce.number().min(1).default(10),
+//   offset: z.coerce.number().min(0).default(0),
+//   availability: scheduleSchema.optional(),
+//   offeredSkills: z.array(z.string()).optional(),
+//   requestedSkill: z.string().optional(),
+// });
+
+// export type MarketplaceFilter = z.infer<typeof marketplaceFilterSchema>;
+
+export const marketplaceParamsSchema = z.object({
+  // limit: z.coerce.number().min(1).default(10),
+  // offset: z.coerce.number().min(0).default(0),
+  date: scheduleSchema.optional(),
+  offeredSkills: z.string().optional(),
   requestedSkill: z.string().optional(),
+  offeredSkillQuery: z.string().optional(),
 });
 
-export type MarketplaceFilter = z.infer<typeof marketplaceFilterSchema>;
+export type MarketplaceParamsType = z.infer<typeof marketplaceParamsSchema>;
 
 export const newSkillSwapSessionSchema = z.object({
   offeredSkill: z.string(),

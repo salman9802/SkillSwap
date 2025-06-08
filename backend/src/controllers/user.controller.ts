@@ -3,6 +3,7 @@ import express from "express";
 import {
   existingUserSchema,
   marketplaceFilterSchema,
+  marketplaceParamsSchema,
   newRequestSchema,
   newSkillSwapSessionSchema,
   newUserSchema,
@@ -245,11 +246,11 @@ export const marketplace = async (
   // console.log(limit, offset);
 
   // validate filter options
-  const filters = req.body;
-  const parsed = marketplaceFilterSchema.parse({
+  const filters = req.query;
+  const parsed = marketplaceParamsSchema.parse({
     ...filters,
-    limit: req.query.limit,
-    offset: req.query.offset,
+    // limit: req.query.limit,
+    // offset: req.query.offset,
   });
 
   // TODO
@@ -273,15 +274,52 @@ export const marketplace = async (
   //     : undefined,
   // };
 
+  // const where = {
+  //   // availability: parsed.availability
+  //   availability: parsed.date
+  //     ? {
+  //         some: parsed.date,
+  //       }
+  //     : undefined,
+
+  //   // requestedSkill: parsed.offeredSkill
+  //   //   ? {
+  //   //       in: parsed.offeredSkill, // w.r.t. current user
+  //   //     }
+  //   //   : undefined,
+  //   // requester: parsed.requestedSkill.length
+  //   //   ? {
+  //   //       offeredSkills: {
+  //   //         hasSome: parsed.requestedSkill, // w.r.t. current user
+  //   //       },
+  //   //     }
+  //   //   : undefined,
+  // };
+
+  const where = {
+    availability: parsed.date
+      ? {
+          some: parsed.date,
+        }
+      : undefined,
+
+    requester: {
+      offeredSkills: parsed.offeredSkills
+        ? {
+            hasEvery: parsed.offeredSkills.split(","),
+          }
+        : undefined,
+    },
+
+    requestedSkill: parsed.requestedSkill,
+  };
+
   // fetch from db
   const [requests, totalCount] = await Promise.all([
     prisma.skillSwapRequest.findMany({
-      skip: parsed.offset,
-      take: parsed.limit,
-      // where,
-      // select: {
-      //   id: true,
-      // },
+      // skip: parsed.offset,
+      // take: parsed.limit,
+      where,
       select: {
         id: true,
         requester: {
@@ -294,13 +332,23 @@ export const marketplace = async (
         createdAt: true,
       },
     }),
-    // prisma.skillSwapRequest.count({ where }),
-    prisma.skillSwapRequest.count({}),
+    prisma.skillSwapRequest.count({ where }),
+    // prisma.skillSwapRequest.count({}),
   ]);
 
+  const offeredSkillQueryMatchedRequests =
+    parsed.offeredSkillQuery === undefined
+      ? requests
+      : requests.filter((r) =>
+          r.requester.offeredSkills.includes(parsed.offeredSkillQuery as string)
+        );
+
   res.status(STATUS_CODES.OK).json({
-    requests,
-    totalCount,
+    requests: offeredSkillQueryMatchedRequests,
+    totalCount:
+      parsed.offeredSkillQuery === undefined
+        ? totalCount
+        : offeredSkillQueryMatchedRequests.length,
   });
 };
 
