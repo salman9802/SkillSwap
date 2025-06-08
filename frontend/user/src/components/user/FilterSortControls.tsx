@@ -15,6 +15,8 @@ import {
   type MarketplaceSortKeyType,
 } from "@/lib/types";
 import DateTimePicker from "../utils/DateTimePicker";
+import { useFetchDetailsQuery } from "@/features/account/accountApi";
+import SkeletonLoader from "../utils/SkeletonLoader";
 
 type SortControl = React.PropsWithChildren<
   React.HTMLAttributes<HTMLDivElement>
@@ -60,57 +62,64 @@ export const Filters = ({
   onFilterChange,
   className,
 }: FilterControl) => {
-  // const [filter, setFilter] = React.useState<MarketplaceFilter>();
-
-  // React.useEffect(() => {
-  //   if (filter) onFilterChange(filter);
-  // }, [filter]);
-
+  const { data, isLoading: isLoadingData } = useFetchDetailsQuery();
   return (
     <div className={cn("flex flex-col gap-6", className)}>
       <h2 className="text-2xl font-bold">Filters</h2>
-      {/* Date & Time */}
+      {/* Availability */}
       <div className="grid gap-4">
-        <div className="font-semibold">Date & Time</div>
+        <div className="font-semibold">Availability</div>
         <DateTimePicker
           date={filters?.date}
           onValueChange={(date) => onFilterChange({ ...filters, date })}
           className="w-fit [&>*]:cursor-pointer"
         />
       </div>
-      {/* Skills Offered by you */}
+      {/* Skills Offered */}
       <div className="grid gap-4">
-        <div className="font-semibold">Skills offered by you</div>
-        <ToggleGroup
-          className="[&>*]:cursor-pointer"
-          options={["React", "Node.js", "Tailwind CSS", "Prisma", "Express"]}
-          selected={
-            filters && filters.offeredSkills ? filters.offeredSkills : []
-          }
-          onChange={(selection) => {
-            onFilterChange({
-              ...filters,
-              offeredSkills: selection,
-            });
-          }}
-        />
+        <div className="font-semibold">Skills offered</div>
+        {!data ? (
+          <div className="bg-white p-3">
+            <SkeletonLoader className="w-full" />
+          </div>
+        ) : (
+          <ToggleGroup
+            className="[&>*]:cursor-pointer"
+            options={data.user.requestedSkills}
+            selected={
+              filters && filters.offeredSkills ? filters.offeredSkills : []
+            }
+            onChange={(selection) => {
+              onFilterChange({
+                ...filters,
+                offeredSkills: selection,
+              });
+            }}
+          />
+        )}
       </div>
-      {/* Skills Requested by you */}
+      {/* Skills Requested */}
       <div className="grid gap-4">
-        <div className="font-semibold">Skills requested by you</div>
-        <ToggleGroup
-          className="[&>*]:cursor-pointer"
-          options={["MongoDB", "MySQL", "Javascript", "Typescript"]}
-          selected={
-            filters && filters.requestedSkill ? [filters.requestedSkill] : []
-          }
-          onChange={(selection) => {
-            onFilterChange({
-              ...filters,
-              requestedSkill: selection[0],
-            });
-          }}
-        />
+        <div className="font-semibold">Skills requested</div>
+        {!data ? (
+          <div className="bg-white p-3">
+            <SkeletonLoader className="w-full" />
+          </div>
+        ) : (
+          <ToggleGroup
+            className="[&>*]:cursor-pointer"
+            options={data.user.offeredSkills}
+            selected={
+              filters && filters.requestedSkill ? [filters.requestedSkill] : []
+            }
+            onChange={(selection) => {
+              onFilterChange({
+                ...filters,
+                requestedSkill: selection[0],
+              });
+            }}
+          />
+        )}
       </div>
     </div>
   );
