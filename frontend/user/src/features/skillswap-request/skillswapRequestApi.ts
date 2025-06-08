@@ -1,6 +1,5 @@
 import type {
   CreateSkillswapRequestPayloadType,
-  MarketplaceFilter,
   MarketplacePayloadType,
   SkillswapRequestCardDataType,
 } from "@/lib/types";
@@ -35,6 +34,9 @@ const skillswapRequestApi = api.injectEndpoints({
                   params.offeredSkillQuery.length > 0
                     ? params.offeredSkillQuery
                     : undefined,
+                requestedSkill: params.requestedSkill
+                  ? params.requestedSkill
+                  : undefined,
               }
             : undefined,
       }),

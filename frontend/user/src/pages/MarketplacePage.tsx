@@ -26,23 +26,38 @@ import { useSkillswapRequestMarketplaceQuery } from "@/features/skillswap-reques
 import SkeletonLoader from "@/components/utils/SkeletonLoader";
 import { Button } from "@/components/ui/button";
 import { useDebounce } from "@/lib/hooks";
+import { useSearchParams } from "react-router-dom";
 
 const MarketplacePage = () => {
   setPageTitle("Skills Marketplace - SkillSwap");
 
-  const [filters, setFilters] = React.useState<MarketplaceFilter | undefined>();
   const [sort, setSort] =
     React.useState<MarketplaceSortKeyType>("NEWEST_FIRST");
-  const [offeredSkillQuery, setOfferedSkillQuery] = React.useState("");
   const [requests, setRequests] = React.useState<
     SkillswapRequestCardDataType[]
   >([]);
+  const [showFilters, setShowFilters] = React.useState(false); // For mobile
 
-  // For mobile
-  const [showFilters, setShowFilters] = React.useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // Filter query params
+  const date = searchParams.get("date")
+    ? new Date(searchParams.get("date") as string)
+    : undefined;
+  const offeredSkills = searchParams.get("offered-skills")
+    ? searchParams.get("offered-skills")?.split(",")
+    : undefined;
+  const requestedSkill = searchParams.get(
+    "requested-skill",
+  ) as MarketplaceFilter["requestedSkill"];
+  const offeredSkillQuery = searchParams.get("offered-skill-query");
+
+  const [localOfferedSkillQuery, setLocalOfferedSkillQuery] = React.useState(
+    offeredSkillQuery ? offeredSkillQuery : "",
+  );
 
   const debouncedOfferedSkillQuery = useDebounce<string>(
-    offeredSkillQuery,
+    localOfferedSkillQuery,
     1000,
   );
 
@@ -51,8 +66,11 @@ const MarketplacePage = () => {
     isLoading: isRequestsLoading,
     isFetching: isRequestsFetching,
   } = useSkillswapRequestMarketplaceQuery({
-    ...filters,
-    date: filters?.date?.toISOString(),
+    // ...filters,
+    // date: filters?.date?.toISOString(),
+    offeredSkills,
+    requestedSkill,
+    date: date?.toISOString(),
     offeredSkillQuery: debouncedOfferedSkillQuery,
   });
 
@@ -75,48 +93,58 @@ const MarketplacePage = () => {
     }
   };
 
-  // React.useEffect(() => {
-  //   handleFilter();
-  //   console.log(skillswapRequests);
-  // }, [debouncedOfferedSkillQuery]);
-
+  /** useEffect to sync `requests` state with `skillswapRequests.requests` */
   React.useEffect(() => {
     if (skillswapRequests) setRequests(skillswapRequests.requests);
   }, [skillswapRequests?.requests]);
 
+  /** useEffect to sort when `sort` changes or data fetched */
   React.useEffect(() => {
     handleSort();
   }, [sort, skillswapRequests]);
+
+  /** useEffect to sync debounced value with state */
+  React.useEffect(() => {
+    setSearchParams((params) => {
+      if (
+        debouncedOfferedSkillQuery !== undefined &&
+        debouncedOfferedSkillQuery.length > 0
+      )
+        params.set("offered-skill-query", debouncedOfferedSkillQuery);
+      else params.delete("offered-skill-query");
+      return params;
+    });
+  }, [debouncedOfferedSkillQuery]);
 
   return (
     <SidebarProvider>
       <Sidebar collapsible="offcanvas">
         <SidebarContent className="bg-gray-100">
           <DesktopFilterSortControls
-            filters={filters}
+            // filters={filters}
+            filters={{ offeredSkills, requestedSkill, date }}
             onFilterChange={(filter) => {
-              setFilters(filter);
+              // setFilters(filter);
+              setSearchParams((params) => {
+                if (filter.date) params.set("date", filter.date.toISOString());
+                else params.delete("date");
+
+                if (filter.offeredSkills && filter.offeredSkills.length > 0)
+                  params.set("offered-skills", filter.offeredSkills.join(","));
+                else params.delete("offered-skills");
+
+                if (filter.requestedSkill && filter.requestedSkill.length > 0)
+                  params.set("requested-skill", filter.requestedSkill);
+                else params.delete("requested-skill");
+
+                return params;
+              });
             }}
             sort={sort}
             onSortChange={(sort) => {
               setSort(sort);
             }}
           />
-          {/* <div className="mx-auto mt-6 flex items-center gap-3">
-            <Button
-              onClick={() => {
-                setSort("NEWEST_FIRST");
-                setFilters({});
-              }}
-              variant="ghost"
-              className="cursor-pointer"
-            >
-              Reset
-            </Button>
-            <Button onClick={handleFilter} className="cursor-pointer">
-              Apply
-            </Button>
-          </div> */}
         </SidebarContent>
       </Sidebar>
       <div className="@container/sidebar-right flex grow flex-col gap-8">
@@ -126,8 +154,9 @@ const MarketplacePage = () => {
             <Input
               className="pr-[calc(var(--pad)+12px+1px+20px)]"
               placeholder="Search by offered skill..."
-              value={offeredSkillQuery}
-              onChange={(e) => setOfferedSkillQuery(e.target.value)}
+              // value={offeredSkillQuery}
+              value={localOfferedSkillQuery}
+              onChange={(e) => setLocalOfferedSkillQuery(e.target.value)}
             />
             <FaSearch className="absolute right-[var(--pad)] size-5 text-gray-600" />
           </div>
@@ -149,29 +178,33 @@ const MarketplacePage = () => {
                 </Button>
               </div>
             </div>
-            {/* <div className="mx-auto mt-6 flex w-2/3 items-center gap-3">
-              <Button
-                onClick={() => {
-                  setSort("NEWEST_FIRST");
-                  setFilters(undefined);
-                }}
-                variant="ghost"
-                className="cursor-pointer"
-              >
-                Reset
-              </Button>
-              <Button onClick={handleFilter} className="cursor-pointer">
-                Apply
-              </Button>
-            </div> */}
           </div>
 
           {showFilters && (
             <Filters
-              filters={filters}
+              // filters={filters}
+              filters={{ offeredSkills, requestedSkill, date }}
               className="border-b py-6"
               onFilterChange={(filter) => {
-                setFilters(filter);
+                // setFilters(filter);
+                setSearchParams((params) => {
+                  if (filter.date)
+                    params.set("date", filter.date.toISOString());
+                  else params.delete("date");
+
+                  if (filter.offeredSkills && filter.offeredSkills.length > 0)
+                    params.set(
+                      "offered-skills",
+                      filter.offeredSkills.join(","),
+                    );
+                  else params.delete("offered-skills");
+
+                  if (filter.requestedSkill && filter.requestedSkill.length > 0)
+                    params.set("requested-skill", filter.requestedSkill);
+                  else params.delete("requested-skill");
+
+                  return params;
+                });
               }}
             />
           )}
@@ -195,13 +228,18 @@ const MarketplacePage = () => {
                 <SkeletonLoader className="h-[25vh] w-full" key={i} />
               ))}
 
-            {requests.length > 0 &&
+            {requests.length > 0 ? (
               requests.map((skillswapRequest, i) => (
                 <SkillswapRequestCard
                   key={i}
                   skillswapRequest={skillswapRequest}
                 />
-              ))}
+              ))
+            ) : (
+              <div className="text-lg font-light text-gray-800 md:text-xl lg:text-2xl">
+                No requests found
+              </div>
+            )}
           </div>
         </div>
       </div>

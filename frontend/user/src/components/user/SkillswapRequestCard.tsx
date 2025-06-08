@@ -1,10 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import type {
-  RequestCardDataType,
-  SkillswapRequestCardDataType,
-} from "../../lib/types";
+import type { SkillswapRequestCardDataType } from "../../lib/types";
 import { Card, CardContent, CardHeader } from "../ui/card";
 
 type RequestCardPropsType = React.HTMLAttributes<HTMLDivElement> & {
