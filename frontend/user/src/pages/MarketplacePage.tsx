@@ -17,7 +17,6 @@ import { setPageTitle } from "@/lib/utils";
 
 import SkillswapRequestCard from "@/components/user/SkillswapRequestCard";
 import {
-  MarketplaceSort,
   type MarketplaceFilter,
   type MarketplaceSortKeyType,
   type SkillswapRequestCardDataType,
@@ -145,6 +144,25 @@ const MarketplacePage = () => {
               setSort(sort);
             }}
           />
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <Button
+              onClick={() => {
+                setSearchParams((params) => {
+                  params.delete("date");
+                  params.delete("offered-skills");
+                  params.delete("requested-skill");
+                  return params;
+                });
+              }}
+              variant="primary-outline"
+              className="cursor-pointer"
+            >
+              Reset
+            </Button>
+            {/* <Button onClick={handleFilter} className="cursor-pointer">
+              Apply
+            </Button> */}
+          </div>
         </SidebarContent>
       </Sidebar>
       <div className="@container/sidebar-right flex grow flex-col gap-8">
@@ -177,6 +195,26 @@ const MarketplacePage = () => {
                   <FaFilter className="size-5" />
                 </Button>
               </div>
+            </div>
+
+            <div className="mt-6 flex w-2/3 items-center justify-center gap-3">
+              <Button
+                onClick={() => {
+                  setSearchParams((params) => {
+                    params.delete("date");
+                    params.delete("offered-skills");
+                    params.delete("requested-skill");
+                    return params;
+                  });
+                }}
+                variant="primary-outline"
+                className="cursor-pointer"
+              >
+                Reset
+              </Button>
+              {/* <Button onClick={handleFilter} className="cursor-pointer">
+                Apply
+              </Button> */}
             </div>
           </div>
 

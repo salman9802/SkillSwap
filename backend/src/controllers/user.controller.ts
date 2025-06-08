@@ -2,7 +2,6 @@ import express from "express";
 
 import {
   existingUserSchema,
-  marketplaceFilterSchema,
   marketplaceParamsSchema,
   newRequestSchema,
   newSkillSwapSessionSchema,
@@ -299,7 +298,7 @@ export const marketplace = async (
   const where = {
     availability: parsed.date
       ? {
-          some: parsed.date,
+          some: { date: new Date(parsed.date) },
         }
       : undefined,
 
@@ -330,6 +329,7 @@ export const marketplace = async (
         },
         requestedSkill: true,
         createdAt: true,
+        availability: true,
       },
     }),
     prisma.skillSwapRequest.count({ where }),

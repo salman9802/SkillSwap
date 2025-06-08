@@ -83,6 +83,7 @@ export type SkillswapRequestCardDataType = {
   };
   requestedSkill: string;
   createdAt: string;
+  availability: { date: string }[];
 };
 
 export type MarketplaceFilter = {

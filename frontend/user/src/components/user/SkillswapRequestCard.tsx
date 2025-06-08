@@ -50,6 +50,24 @@ const SkillswapRequestCard = ({ skillswapRequest }: RequestCardPropsType) => {
                 ))} */}
               </div>
             </div>
+            {/* SECTION: Availability */}
+            <div className="flex flex-1 flex-col gap-1.5">
+              <p className="font-medium">Availability</p>
+              <div className="flex flex-wrap gap-3">
+                {skillswapRequest.availability.map((a, i) => {
+                  const date = new Date(a.date);
+
+                  return (
+                    <p
+                      className="rounded-sm bg-gray-100 px-3 py-1.5 text-gray-700"
+                      key={i}
+                    >
+                      {date.toDateString()} {date.toLocaleTimeString()}
+                    </p>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>

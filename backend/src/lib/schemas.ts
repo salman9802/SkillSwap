@@ -104,7 +104,7 @@ export type NewRequest = z.infer<typeof newRequestSchema>;
 export const marketplaceParamsSchema = z.object({
   // limit: z.coerce.number().min(1).default(10),
   // offset: z.coerce.number().min(0).default(0),
-  date: scheduleSchema.optional(),
+  date: z.string().optional(),
   offeredSkills: z.string().optional(),
   requestedSkill: z.string().optional(),
   offeredSkillQuery: z.string().optional(),
