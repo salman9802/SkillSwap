@@ -296,6 +296,7 @@ export const marketplace = async (
   // };
 
   const where = {
+    closed: false,
     availability: parsed.date
       ? {
           some: { date: new Date(parsed.date) },
@@ -357,6 +358,8 @@ export const request = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
+  const user = req.user!;
+
   const { id } = req.params;
   appAssert(id, STATUS_CODES.NOT_FOUND);
 
@@ -368,7 +371,12 @@ export const request = async (
       id: true,
       requestedSkill: true,
       createdAt: true,
-      availability: true,
+      availability: {
+        select: {
+          id: true,
+          date: true,
+        },
+      },
       requester: {
         select: {
           name: true,
@@ -378,12 +386,15 @@ export const request = async (
               rating: true,
             },
           },
+          picture: true,
         },
       },
+      closed: true,
     },
   });
 
   appAssert(request !== null, STATUS_CODES.NOT_FOUND);
+  appAssert(!request!.closed, STATUS_CODES.CONFLICT, "Request closed");
 
   const reviewScore = request?.requester.asReviewee.reduce(
     (previousValue, review) => previousValue + review.rating,
@@ -396,6 +407,7 @@ export const request = async (
       reviewScore !== 0
         ? reviewScore! / request!.requester.asReviewee.length
         : undefined,
+    canProvideSkill: user.offeredSkills.includes(request!.requestedSkill),
   });
 };
 

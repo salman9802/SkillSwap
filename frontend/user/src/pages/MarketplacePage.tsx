@@ -25,7 +25,7 @@ import { useSkillswapRequestMarketplaceQuery } from "@/features/skillswap-reques
 import SkeletonLoader from "@/components/utils/SkeletonLoader";
 import { Button } from "@/components/ui/button";
 import { useDebounce } from "@/lib/hooks";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const MarketplacePage = () => {
   setPageTitle("Skills Marketplace - SkillSwap");
@@ -168,7 +168,13 @@ const MarketplacePage = () => {
       <div className="@container/sidebar-right flex grow flex-col gap-8">
         <div className="flex flex-col justify-center gap-3 px-6 py-3">
           {/* Search by offered skill */}
-          <div className="relative mx-auto flex w-2/3 items-center gap-1.5 [--pad:8px]">
+          <div className="relative mr-auto ml-24 flex w-2/3 items-center gap-1.5 [--pad:8px]">
+            <Link
+              to="/"
+              className="text-primary mr-48 underline hover:no-underline"
+            >
+              Home
+            </Link>
             <Input
               className="pr-[calc(var(--pad)+12px+1px+20px)]"
               placeholder="Search by offered skill..."

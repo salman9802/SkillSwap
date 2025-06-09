@@ -107,3 +107,52 @@ export type MarketplacePayloadType = {
   requestedSkill?: string;
   offeredSkillQuery?: string;
 };
+
+type SkillswapRequestRequester = {
+  name: string;
+  offeredSkills: string[];
+  picture: string;
+};
+
+/** Type for Skillswap request object */
+export type SkillswapRequest = {
+  id: string;
+  requestedSkill: string;
+  createdAt: Date;
+  availability: {
+    id: string;
+    date: Date;
+  }[];
+  requester: SkillswapRequestRequester;
+};
+
+/** Type for response from `.../request/:id` */
+export type SkillswapRequestResponse = {
+  // Remove availablity from `SkillswapRequest`
+  request: Omit<SkillswapRequest, "availability" | "createdAt"> & {
+    // Add array of <type without date> U <changed date type>
+    availability: Array<
+      // Type of availability array's individual element - date + changed date
+      Omit<SkillswapRequest["availability"][number], "date"> & {
+        date: string;
+      }
+    >;
+    createdAt: string;
+  };
+  reviewScore?: number;
+  canProvideSkill: boolean;
+};
+
+// Skillswap session
+export type NewSkillswapSession = {
+  offeredSkill: string;
+  // schedule?: { date: Date };
+  scheduleId: string;
+};
+
+export type CreateSkillswapSessionPayload = {
+  // schedule: { date: Date };
+  scheduleId: string;
+  requestId: string;
+  offeredSkill: string;
+};
