@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ToggleGroup from "@/components/user/ToggleGroup";
 import Section from "@/components/utils/Section";
-import { SESSION_STATUS, SkillGiven, SkillReceived } from "@/lib/constants";
+import { SESSION_STATUS, SkillOffered, SkillRequested } from "@/lib/constants";
 import type { RequestCardDataType } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import requestsJSON from "../../../__data/requests.json";
@@ -111,8 +111,8 @@ const SessionPage = () => {
         </Section.Title>
         <Section.Content className="w-full [&>*]:my-3">
           <div className="flex flex-wrap gap-2 [&>*]:w-fit">
-            <SkillGiven>{session.skillGiven}</SkillGiven>
-            <SkillReceived>{session.skillReceived}</SkillReceived>
+            <SkillOffered>{session.skillGiven}</SkillOffered>
+            <SkillRequested>{session.skillReceived}</SkillRequested>
           </div>
         </Section.Content>
       </Section>

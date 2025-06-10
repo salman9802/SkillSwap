@@ -105,7 +105,9 @@ export const SESSION_STATUS = {
   },
 } as const;
 
-export const SkillGiven = ({
+export type SessionStatusKey = keyof typeof SESSION_STATUS;
+
+export const SkillOffered = ({
   children,
   className,
 }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {
@@ -122,7 +124,7 @@ export const SkillGiven = ({
   );
 };
 
-export const SkillReceived = ({
+export const SkillRequested = ({
   children,
   className,
 }: React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>) => {

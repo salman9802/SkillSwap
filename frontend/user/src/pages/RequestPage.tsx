@@ -73,7 +73,7 @@ const RequestPage = () => {
 
   /** Memoized value of schedule belonging to `scheduleId` */
   const schedule: { id: string; date: Date } | undefined = React.useMemo(() => {
-    if (request && session.scheduleId.length > 0) {
+    if (request && session.scheduleId && session.scheduleId.length > 0) {
       return request.availability.filter((a) => a.id === session.scheduleId)[0];
     }
     return undefined;

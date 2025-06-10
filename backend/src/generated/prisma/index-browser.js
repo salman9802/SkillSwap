@@ -132,7 +132,7 @@ exports.Prisma.ReviewScalarFieldEnum = {
   comment: 'comment',
   reviewerId: 'reviewerId',
   revieweeId: 'revieweeId',
-  skillSwapSessionId: 'skillSwapSessionId'
+  skillswapSessionId: 'skillswapSessionId'
 };
 
 exports.Prisma.SkillSwapRequestScalarFieldEnum = {
@@ -149,7 +149,7 @@ exports.Prisma.SkillSwapRequestScalarFieldEnum = {
 exports.Prisma.ScheduleScalarFieldEnum = {
   id: 'id',
   date: 'date',
-  skillSwapRequestId: 'skillSwapRequestId'
+  skillswapRequestId: 'skillswapRequestId'
 };
 
 exports.Prisma.SkillSwapSessionScalarFieldEnum = {
@@ -158,7 +158,7 @@ exports.Prisma.SkillSwapSessionScalarFieldEnum = {
   offeredSkill: 'offeredSkill',
   createdAt: 'createdAt',
   scheduleId: 'scheduleId',
-  skillSwapRequestId: 'skillSwapRequestId'
+  skillswapRequestId: 'skillswapRequestId'
 };
 
 exports.Prisma.SkillSwapSessionChatMessageScalarFieldEnum = {
@@ -166,7 +166,7 @@ exports.Prisma.SkillSwapSessionChatMessageScalarFieldEnum = {
   content: 'content',
   createdAt: 'createdAt',
   senderId: 'senderId',
-  skillSwapSessionId: 'skillSwapSessionId'
+  skillswapSessionId: 'skillswapSessionId'
 };
 
 exports.Prisma.UserSessionScalarFieldEnum = {

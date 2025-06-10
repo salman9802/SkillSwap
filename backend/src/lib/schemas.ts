@@ -29,7 +29,7 @@ export const updateUserSchema = z.object({
     .min(8, "Password must be minimum of 8 characters")
     .regex(/\d/, "Password must contain at least one number")
     .optional(),
-  // picture: z.string().optional(),
+  picture: z.string().optional(),
   country: z.string().optional(),
   timezone: z.string().optional(),
   offeredSkills: z.array(z.string()).optional(),

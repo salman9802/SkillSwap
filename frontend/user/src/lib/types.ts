@@ -156,3 +156,24 @@ export type CreateSkillswapSessionPayload = {
   requestId: string;
   offeredSkill: string;
 };
+
+export type AllSkillswapSessionResponse = {
+  sessions: {
+    id: string;
+    isRequester: boolean;
+    createdAt: string;
+    status: string;
+    offeredSkill: string;
+    schedule: string;
+    skillswapRequest: { requestedSkill: string };
+  }[];
+  totalCount: number;
+};
+
+export type SkillswapSessionPreview = Omit<
+  AllSkillswapSessionResponse["sessions"][number],
+  "createdAt" | "schedule"
+> & {
+  createdAt: Date;
+  schedule: Date;
+};

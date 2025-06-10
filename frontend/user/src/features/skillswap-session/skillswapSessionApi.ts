@@ -1,4 +1,7 @@
-import type { CreateSkillswapSessionPayload } from "@/lib/types";
+import type {
+  AllSkillswapSessionResponse,
+  CreateSkillswapSessionPayload,
+} from "@/lib/types";
 import api from "../api";
 
 const skillswapSessionApi = api.injectEndpoints({
@@ -13,7 +16,26 @@ const skillswapSessionApi = api.injectEndpoints({
         body: payload,
       }),
     }),
+    fetchAllSkillswapSessions: builder.query<
+      AllSkillswapSessionResponse,
+      { offset: number; limit: number }
+    >({
+      query: (params) => ({
+        url: "user/ss-session",
+        method: "GET",
+        params,
+      }),
+    }),
+    // fetchSkillswapSession: builder.query<void, string>({
+    //   query: (sessionId) => ({
+    //     url: "",
+    //     method: "GET",
+    //   }),
+    // }),
   }),
 });
 
-export const { useCreateSkillswapSessionMutation } = skillswapSessionApi;
+export const {
+  useCreateSkillswapSessionMutation,
+  useFetchAllSkillswapSessionsQuery,
+} = skillswapSessionApi;

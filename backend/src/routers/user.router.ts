@@ -58,13 +58,13 @@ userRouter.post(
 userRouter.get(
   "/ss-session",
   errorCatch(userHasAccess),
-  errorCatch(UserController.skillSwapSessions)
+  errorCatch(UserController.skillswapSessions)
 );
 
 userRouter.get(
   "/ss-session/:id",
   errorCatch(userHasAccess),
-  errorCatch(UserController.skillSwapSession)
+  errorCatch(UserController.skillswapSession)
 );
 
 userRouter.put(

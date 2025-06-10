@@ -284,7 +284,7 @@ export const createSkillSwapSession = async (
     data: {
       offeredSkill: newSkillSwapSession.offeredSkill,
       scheduleId: newSkillSwapSession.scheduleId,
-      skillSwapRequestId: newSkillSwapSession.requestId,
+      skillswapRequestId: newSkillSwapSession.requestId,
     },
   });
 };
@@ -305,7 +305,7 @@ export const updateSkillSwapSessionStatus = async ({
       status: true,
       schedule: true,
       review: true,
-      skillSwapRequest: {
+      skillswapRequest: {
         select: {
           requesterId: true,
           accepterId: true,
@@ -332,7 +332,7 @@ export const updateSkillSwapSessionStatus = async ({
     case "OPEN":
       // OPEN -> ACCEPTED
       appAssert(
-        userId === session.skillSwapRequest.accepterId,
+        userId === session.skillswapRequest.accepterId,
         STATUS_CODES.FORBIDDEN,
         "Accepter hasn't confirmed the session."
       );
@@ -349,7 +349,7 @@ export const updateSkillSwapSessionStatus = async ({
     case "ACCEPTED":
       // ACCEPTED -> SCHEDULED
       appAssert(
-        userId === session.skillSwapRequest.requesterId,
+        userId === session.skillswapRequest.requesterId,
         STATUS_CODES.FORBIDDEN,
         "Requester hasn't confirmed the session."
       );
@@ -366,14 +366,14 @@ export const updateSkillSwapSessionStatus = async ({
     case "SCHEDULED":
       // SCHEDULED -> FINISHED
       appAssert(
-        userId === session.skillSwapRequest.accepterId ||
-          userId === session.skillSwapRequest.requesterId,
+        userId === session.skillswapRequest.accepterId ||
+          userId === session.skillswapRequest.requesterId,
         STATUS_CODES.FORBIDDEN
       );
 
       const date = moment.tz(
         `${session.schedule.date} ${session.schedule.endTime}`,
-        session.skillSwapRequest.requesterTimezone
+        session.skillswapRequest.requesterTimezone
       );
 
       // const [hour, minute] = session.schedule.endTime.split(":").map(Number);

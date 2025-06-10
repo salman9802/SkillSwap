@@ -439,28 +439,51 @@ export const newSkillSwapSession = async (
   });
 };
 
-export const skillSwapSessions = async (
+export const skillswapSessions = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const parsed = paginationSchema.parse({ ...req.body });
+  const user = req.user!;
+
+  const parsed = paginationSchema.parse({ ...req.query });
 
   const [sessions, totalCount] = await Promise.all([
     prisma.skillSwapSession.findMany({
       skip: parsed.offset,
       take: parsed.limit,
+      select: {
+        id: true,
+        createdAt: true,
+        status: true,
+        offeredSkill: true,
+        schedule: true,
+        skillswapRequest: {
+          select: {
+            requestedSkill: true,
+            requesterId: true,
+          },
+        },
+      },
     }),
     prisma.skillSwapSession.count(),
   ]);
 
   res.status(STATUS_CODES.OK).json({
-    sessions,
+    sessions: sessions.map((session) => ({
+      ...session,
+      schedule: session.schedule.date,
+      isRequester: session.skillswapRequest.requesterId === user.id,
+      skillswapRequest: {
+        ...session.skillswapRequest,
+        requesterId: undefined,
+      },
+    })),
     totalCount,
   });
 };
 
-export const skillSwapSession = async (
+export const skillswapSession = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
@@ -475,7 +498,7 @@ export const skillSwapSession = async (
       status: true,
       schedule: true,
       offeredSkill: true,
-      skillSwapRequest: {
+      skillswapRequest: {
         select: {
           requestedSkill: true,
           requester: {
