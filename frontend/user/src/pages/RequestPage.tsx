@@ -98,7 +98,6 @@ const RequestPage = () => {
       session.scheduleId.length > 0 &&
       session.offeredSkill.length > 0
     ) {
-      console.log(session);
       try {
         // const res = await createSkillswapSession(
         //   session as CreateSkillswapSessionPayload,
@@ -110,9 +109,9 @@ const RequestPage = () => {
           scheduleId: session.scheduleId,
         }).unwrap();
 
-        const payload = res as unknown as { session: { sessionId: string } };
-
-        navigate(`/user/account/sessions/${payload.session.sessionId}`);
+        const payload = res as unknown as { session: { id: string } };
+        console.log(payload.session);
+        navigate(`/user/account/sessions/${payload.session.id}`);
       } catch (error) {
         console.error(error);
       }
