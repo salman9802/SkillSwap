@@ -233,15 +233,16 @@ const NewRequestPage = () => {
             <DateTimePicker
               date={newDate}
               onValueChange={(date) => setNewDate(date)}
-              className="w-fit [&>*]:cursor-pointer"
+              className="w-fit shadow-lg [&>*]:cursor-pointer"
             />
 
             <Button
-              onClick={handleAddAvailability}
               variant="link"
+              onClick={handleAddAvailability}
+              disabled={newDate === undefined}
               className="cursor-pointer font-bold"
             >
-              + Add another date & time
+              + Add date & time
             </Button>
           </div>
         </Section.Content>

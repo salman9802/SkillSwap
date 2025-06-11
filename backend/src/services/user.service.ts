@@ -10,6 +10,7 @@ import {
   NewRequest,
   NewSkillSwapSession,
   NewUser,
+  SkillswapSessionReview,
   UpdateUser,
 } from "../lib/schemas";
 import {
@@ -371,14 +372,14 @@ export const updateSkillSwapSessionStatus = async ({
         STATUS_CODES.FORBIDDEN
       );
 
-      const date = moment.tz(
-        `${session.schedule.date} ${session.schedule.endTime}`,
-        session.skillswapRequest.requesterTimezone
-      );
+      // const date = moment.tz(
+      //   `${session.schedule.date} ${session.schedule.endTime}`,
+      //   session.skillswapRequest.requesterTimezone
+      // );
 
       // const [hour, minute] = session.schedule.endTime.split(":").map(Number);
       // session.schedule.date.setHours(hour, minute)
-      if (date.valueOf() < Date.now()) {
+      if (session.schedule.date.getTime() < Date.now()) {
         // schedule has passed
         return await prisma.skillSwapSession.update({
           data: {
@@ -418,4 +419,28 @@ export const updateSkillSwapSessionStatus = async ({
     default:
       return false;
   }
+};
+
+export const createSkillswapSessionReview = async ({
+  review,
+  sessionId,
+  reviewerId,
+}: {
+  review: SkillswapSessionReview;
+  sessionId: string;
+  reviewerId: string;
+}) => {
+  return await prisma.skillSwapSession.update({
+    where: {
+      id: sessionId,
+    },
+    data: {
+      review: {
+        create: {
+          ...review,
+          reviewerId,
+        },
+      },
+    },
+  });
 };

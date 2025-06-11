@@ -1520,10 +1520,12 @@ export namespace Prisma {
 
   export type SkillSwapSessionCountOutputType = {
     chatMessages: number
+    review: number
   }
 
   export type SkillSwapSessionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chatMessages?: boolean | SkillSwapSessionCountOutputTypeCountChatMessagesArgs
+    review?: boolean | SkillSwapSessionCountOutputTypeCountReviewArgs
   }
 
   // Custom InputTypes
@@ -1542,6 +1544,13 @@ export namespace Prisma {
    */
   export type SkillSwapSessionCountOutputTypeCountChatMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SkillSwapSessionChatMessageWhereInput
+  }
+
+  /**
+   * SkillSwapSessionCountOutputType without action
+   */
+  export type SkillSwapSessionCountOutputTypeCountReviewArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReviewWhereInput
   }
 
 
@@ -6048,7 +6057,7 @@ export namespace Prisma {
       skillswapRequest: Prisma.$SkillSwapRequestPayload<ExtArgs>
       schedule: Prisma.$SchedulePayload<ExtArgs>
       chatMessages: Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>[]
-      review: Prisma.$ReviewPayload<ExtArgs> | null
+      review: Prisma.$ReviewPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6423,7 +6432,7 @@ export namespace Prisma {
     skillswapRequest<T extends SkillSwapRequestDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapRequestDefaultArgs<ExtArgs>>): Prisma__SkillSwapRequestClient<$Result.GetResult<Prisma.$SkillSwapRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     schedule<T extends ScheduleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ScheduleDefaultArgs<ExtArgs>>): Prisma__ScheduleClient<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     chatMessages<T extends SkillSwapSession$chatMessagesArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapSession$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillSwapSessionChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    review<T extends SkillSwapSession$reviewArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapSession$reviewArgs<ExtArgs>>): Prisma__ReviewClient<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    review<T extends SkillSwapSession$reviewArgs<ExtArgs> = {}>(args?: Subset<T, SkillSwapSession$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6869,6 +6878,11 @@ export namespace Prisma {
      */
     include?: ReviewInclude<ExtArgs> | null
     where?: ReviewWhereInput
+    orderBy?: ReviewOrderByWithRelationInput | ReviewOrderByWithRelationInput[]
+    cursor?: ReviewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReviewScalarFieldEnum | ReviewScalarFieldEnum[]
   }
 
   /**
@@ -9154,7 +9168,7 @@ export namespace Prisma {
 
   export type ReviewWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    skillswapSessionId?: string
+    reviewerId_skillswapSessionId?: ReviewReviewerIdSkillswapSessionIdCompoundUniqueInput
     AND?: ReviewWhereInput | ReviewWhereInput[]
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
@@ -9162,10 +9176,11 @@ export namespace Prisma {
     comment?: StringNullableFilter<"Review"> | string | null
     reviewerId?: StringFilter<"Review"> | string
     revieweeId?: StringFilter<"Review"> | string
+    skillswapSessionId?: StringFilter<"Review"> | string
     reviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
     reviewee?: XOR<UserScalarRelationFilter, UserWhereInput>
     skillswapSession?: XOR<SkillSwapSessionScalarRelationFilter, SkillSwapSessionWhereInput>
-  }, "id" | "skillswapSessionId">
+  }, "id" | "reviewerId_skillswapSessionId">
 
   export type ReviewOrderByWithAggregationInput = {
     id?: SortOrder
@@ -9333,7 +9348,7 @@ export namespace Prisma {
     skillswapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
     schedule?: XOR<ScheduleScalarRelationFilter, ScheduleWhereInput>
     chatMessages?: SkillSwapSessionChatMessageListRelationFilter
-    review?: XOR<ReviewNullableScalarRelationFilter, ReviewWhereInput> | null
+    review?: ReviewListRelationFilter
   }
 
   export type SkillSwapSessionOrderByWithRelationInput = {
@@ -9346,7 +9361,7 @@ export namespace Prisma {
     skillswapRequest?: SkillSwapRequestOrderByWithRelationInput
     schedule?: ScheduleOrderByWithRelationInput
     chatMessages?: SkillSwapSessionChatMessageOrderByRelationAggregateInput
-    review?: ReviewOrderByWithRelationInput
+    review?: ReviewOrderByRelationAggregateInput
   }
 
   export type SkillSwapSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -9362,7 +9377,7 @@ export namespace Prisma {
     skillswapRequest?: XOR<SkillSwapRequestScalarRelationFilter, SkillSwapRequestWhereInput>
     schedule?: XOR<ScheduleScalarRelationFilter, ScheduleWhereInput>
     chatMessages?: SkillSwapSessionChatMessageListRelationFilter
-    review?: XOR<ReviewNullableScalarRelationFilter, ReviewWhereInput> | null
+    review?: ReviewListRelationFilter
   }, "id" | "skillswapRequestId">
 
   export type SkillSwapSessionOrderByWithAggregationInput = {
@@ -9671,7 +9686,6 @@ export namespace Prisma {
     closedAt?: Date | string | null
     requestedSkill: string
     createdAt?: Date | string
-    accepterId?: string | null
     availability?: ScheduleCreateNestedManyWithoutSkillswapRequestInput
     requester: UserCreateNestedOneWithoutSkillswapRequestsCreatedInput
     accepter?: UserCreateNestedOneWithoutSkillswapRequestsAcceptedInput
@@ -9697,7 +9711,6 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
     availability?: ScheduleUpdateManyWithoutSkillswapRequestNestedInput
     requester?: UserUpdateOneRequiredWithoutSkillswapRequestsCreatedNestedInput
     accepter?: UserUpdateOneWithoutSkillswapRequestsAcceptedNestedInput
@@ -9733,7 +9746,6 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SkillSwapRequestUncheckedUpdateManyInput = {
@@ -9795,7 +9807,7 @@ export namespace Prisma {
     skillswapRequest: SkillSwapRequestCreateNestedOneWithoutSkillswapSessionInput
     schedule: ScheduleCreateNestedOneWithoutSkillswapSessionInput
     chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSkillswapSessionInput
-    review?: ReviewCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionUncheckedCreateInput = {
@@ -9806,7 +9818,7 @@ export namespace Prisma {
     scheduleId: string
     skillswapRequestId: string
     chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillswapSessionInput
-    review?: ReviewUncheckedCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewUncheckedCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionUpdateInput = {
@@ -9816,7 +9828,7 @@ export namespace Prisma {
     skillswapRequest?: SkillSwapRequestUpdateOneRequiredWithoutSkillswapSessionNestedInput
     schedule?: ScheduleUpdateOneRequiredWithoutSkillswapSessionNestedInput
     chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSkillswapSessionNestedInput
-    review?: ReviewUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type SkillSwapSessionUncheckedUpdateInput = {
@@ -9826,7 +9838,7 @@ export namespace Prisma {
     scheduleId?: StringFieldUpdateOperationsInput | string
     skillswapRequestId?: StringFieldUpdateOperationsInput | string
     chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillswapSessionNestedInput
-    review?: ReviewUncheckedUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type SkillSwapSessionCreateManyInput = {
@@ -10138,6 +10150,11 @@ export namespace Prisma {
     isNot?: SkillSwapSessionWhereInput
   }
 
+  export type ReviewReviewerIdSkillswapSessionIdCompoundUniqueInput = {
+    reviewerId: string
+    skillswapSessionId: string
+  }
+
   export type ReviewCountOrderByAggregateInput = {
     id?: SortOrder
     rating?: SortOrder
@@ -10325,11 +10342,6 @@ export namespace Prisma {
   export type ScheduleScalarRelationFilter = {
     is?: ScheduleWhereInput
     isNot?: ScheduleWhereInput
-  }
-
-  export type ReviewNullableScalarRelationFilter = {
-    is?: ReviewWhereInput | null
-    isNot?: ReviewWhereInput | null
   }
 
   export type SkillSwapSessionCountOrderByAggregateInput = {
@@ -10925,10 +10937,11 @@ export namespace Prisma {
     connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
   }
 
-  export type ReviewCreateNestedOneWithoutSkillswapSessionInput = {
-    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput>
-    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput
-    connect?: ReviewWhereUniqueInput
+  export type ReviewCreateNestedManyWithoutSkillswapSessionInput = {
+    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput> | ReviewCreateWithoutSkillswapSessionInput[] | ReviewUncheckedCreateWithoutSkillswapSessionInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput | ReviewCreateOrConnectWithoutSkillswapSessionInput[]
+    createMany?: ReviewCreateManySkillswapSessionInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillswapSessionInput = {
@@ -10938,10 +10951,11 @@ export namespace Prisma {
     connect?: SkillSwapSessionChatMessageWhereUniqueInput | SkillSwapSessionChatMessageWhereUniqueInput[]
   }
 
-  export type ReviewUncheckedCreateNestedOneWithoutSkillswapSessionInput = {
-    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput>
-    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput
-    connect?: ReviewWhereUniqueInput
+  export type ReviewUncheckedCreateNestedManyWithoutSkillswapSessionInput = {
+    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput> | ReviewCreateWithoutSkillswapSessionInput[] | ReviewUncheckedCreateWithoutSkillswapSessionInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput | ReviewCreateOrConnectWithoutSkillswapSessionInput[]
+    createMany?: ReviewCreateManySkillswapSessionInputEnvelope
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
   }
 
   export type EnumScheduleStatusFieldUpdateOperationsInput = {
@@ -10978,14 +10992,18 @@ export namespace Prisma {
     deleteMany?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
   }
 
-  export type ReviewUpdateOneWithoutSkillswapSessionNestedInput = {
-    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput>
-    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput
-    upsert?: ReviewUpsertWithoutSkillswapSessionInput
-    disconnect?: ReviewWhereInput | boolean
-    delete?: ReviewWhereInput | boolean
-    connect?: ReviewWhereUniqueInput
-    update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutSkillswapSessionInput, ReviewUpdateWithoutSkillswapSessionInput>, ReviewUncheckedUpdateWithoutSkillswapSessionInput>
+  export type ReviewUpdateManyWithoutSkillswapSessionNestedInput = {
+    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput> | ReviewCreateWithoutSkillswapSessionInput[] | ReviewUncheckedCreateWithoutSkillswapSessionInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput | ReviewCreateOrConnectWithoutSkillswapSessionInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutSkillswapSessionInput | ReviewUpsertWithWhereUniqueWithoutSkillswapSessionInput[]
+    createMany?: ReviewCreateManySkillswapSessionInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutSkillswapSessionInput | ReviewUpdateWithWhereUniqueWithoutSkillswapSessionInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutSkillswapSessionInput | ReviewUpdateManyWithWhereWithoutSkillswapSessionInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillswapSessionNestedInput = {
@@ -11002,14 +11020,18 @@ export namespace Prisma {
     deleteMany?: SkillSwapSessionChatMessageScalarWhereInput | SkillSwapSessionChatMessageScalarWhereInput[]
   }
 
-  export type ReviewUncheckedUpdateOneWithoutSkillswapSessionNestedInput = {
-    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput>
-    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput
-    upsert?: ReviewUpsertWithoutSkillswapSessionInput
-    disconnect?: ReviewWhereInput | boolean
-    delete?: ReviewWhereInput | boolean
-    connect?: ReviewWhereUniqueInput
-    update?: XOR<XOR<ReviewUpdateToOneWithWhereWithoutSkillswapSessionInput, ReviewUpdateWithoutSkillswapSessionInput>, ReviewUncheckedUpdateWithoutSkillswapSessionInput>
+  export type ReviewUncheckedUpdateManyWithoutSkillswapSessionNestedInput = {
+    create?: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput> | ReviewCreateWithoutSkillswapSessionInput[] | ReviewUncheckedCreateWithoutSkillswapSessionInput[]
+    connectOrCreate?: ReviewCreateOrConnectWithoutSkillswapSessionInput | ReviewCreateOrConnectWithoutSkillswapSessionInput[]
+    upsert?: ReviewUpsertWithWhereUniqueWithoutSkillswapSessionInput | ReviewUpsertWithWhereUniqueWithoutSkillswapSessionInput[]
+    createMany?: ReviewCreateManySkillswapSessionInputEnvelope
+    set?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    disconnect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    delete?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    connect?: ReviewWhereUniqueInput | ReviewWhereUniqueInput[]
+    update?: ReviewUpdateWithWhereUniqueWithoutSkillswapSessionInput | ReviewUpdateWithWhereUniqueWithoutSkillswapSessionInput[]
+    updateMany?: ReviewUpdateManyWithWhereWithoutSkillswapSessionInput | ReviewUpdateManyWithWhereWithoutSkillswapSessionInput[]
+    deleteMany?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutChatMessagesInput = {
@@ -11274,7 +11296,6 @@ export namespace Prisma {
     closedAt?: Date | string | null
     requestedSkill: string
     createdAt?: Date | string
-    accepterId?: string | null
     availability?: ScheduleCreateNestedManyWithoutSkillswapRequestInput
     accepter?: UserCreateNestedOneWithoutSkillswapRequestsAcceptedInput
     skillswapSession?: SkillSwapSessionCreateNestedOneWithoutSkillswapRequestInput
@@ -11308,7 +11329,6 @@ export namespace Prisma {
     closedAt?: Date | string | null
     requestedSkill: string
     createdAt?: Date | string
-    accepterId?: string | null
     availability?: ScheduleCreateNestedManyWithoutSkillswapRequestInput
     requester: UserCreateNestedOneWithoutSkillswapRequestsCreatedInput
     skillswapSession?: SkillSwapSessionCreateNestedOneWithoutSkillswapRequestInput
@@ -11321,7 +11341,7 @@ export namespace Prisma {
     closedAt?: Date | string | null
     requestedSkill: string
     createdAt?: Date | string
-    accepterId?: string | null
+    requesterId: string
     availability?: ScheduleUncheckedCreateNestedManyWithoutSkillswapRequestInput
     skillswapSession?: SkillSwapSessionUncheckedCreateNestedOneWithoutSkillswapRequestInput
   }
@@ -11882,7 +11902,7 @@ export namespace Prisma {
     createdAt?: Date | string
     schedule: ScheduleCreateNestedOneWithoutSkillswapSessionInput
     chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSkillswapSessionInput
-    review?: ReviewCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionUncheckedCreateWithoutSkillswapRequestInput = {
@@ -11892,7 +11912,7 @@ export namespace Prisma {
     createdAt?: Date | string
     scheduleId: string
     chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillswapSessionInput
-    review?: ReviewUncheckedCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewUncheckedCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionCreateOrConnectWithoutSkillswapRequestInput = {
@@ -12032,7 +12052,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     schedule?: ScheduleUpdateOneRequiredWithoutSkillswapSessionNestedInput
     chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSkillswapSessionNestedInput
-    review?: ReviewUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type SkillSwapSessionUncheckedUpdateWithoutSkillswapRequestInput = {
@@ -12041,7 +12061,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scheduleId?: StringFieldUpdateOperationsInput | string
     chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillswapSessionNestedInput
-    review?: ReviewUncheckedUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type SkillSwapRequestCreateWithoutAvailabilityInput = {
@@ -12051,7 +12071,6 @@ export namespace Prisma {
     closedAt?: Date | string | null
     requestedSkill: string
     createdAt?: Date | string
-    accepterId?: string | null
     requester: UserCreateNestedOneWithoutSkillswapRequestsCreatedInput
     accepter?: UserCreateNestedOneWithoutSkillswapRequestsAcceptedInput
     skillswapSession?: SkillSwapSessionCreateNestedOneWithoutSkillswapRequestInput
@@ -12081,7 +12100,7 @@ export namespace Prisma {
     createdAt?: Date | string
     skillswapRequest: SkillSwapRequestCreateNestedOneWithoutSkillswapSessionInput
     chatMessages?: SkillSwapSessionChatMessageCreateNestedManyWithoutSkillswapSessionInput
-    review?: ReviewCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionUncheckedCreateWithoutScheduleInput = {
@@ -12091,7 +12110,7 @@ export namespace Prisma {
     createdAt?: Date | string
     skillswapRequestId: string
     chatMessages?: SkillSwapSessionChatMessageUncheckedCreateNestedManyWithoutSkillswapSessionInput
-    review?: ReviewUncheckedCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewUncheckedCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionCreateOrConnectWithoutScheduleInput = {
@@ -12120,7 +12139,6 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
     requester?: UserUpdateOneRequiredWithoutSkillswapRequestsCreatedNestedInput
     accepter?: UserUpdateOneWithoutSkillswapRequestsAcceptedNestedInput
     skillswapSession?: SkillSwapSessionUpdateOneWithoutSkillswapRequestNestedInput
@@ -12172,7 +12190,6 @@ export namespace Prisma {
     closedAt?: Date | string | null
     requestedSkill: string
     createdAt?: Date | string
-    accepterId?: string | null
     availability?: ScheduleCreateNestedManyWithoutSkillswapRequestInput
     requester: UserCreateNestedOneWithoutSkillswapRequestsCreatedInput
     accepter?: UserCreateNestedOneWithoutSkillswapRequestsAcceptedInput
@@ -12256,6 +12273,10 @@ export namespace Prisma {
     create: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput>
   }
 
+  export type ReviewCreateManySkillswapSessionInputEnvelope = {
+    data: ReviewCreateManySkillswapSessionInput | ReviewCreateManySkillswapSessionInput[]
+  }
+
   export type SkillSwapRequestUpsertWithoutSkillswapSessionInput = {
     update: XOR<SkillSwapRequestUpdateWithoutSkillswapSessionInput, SkillSwapRequestUncheckedUpdateWithoutSkillswapSessionInput>
     create: XOR<SkillSwapRequestCreateWithoutSkillswapSessionInput, SkillSwapRequestUncheckedCreateWithoutSkillswapSessionInput>
@@ -12273,7 +12294,6 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
     availability?: ScheduleUpdateManyWithoutSkillswapRequestNestedInput
     requester?: UserUpdateOneRequiredWithoutSkillswapRequestsCreatedNestedInput
     accepter?: UserUpdateOneWithoutSkillswapRequestsAcceptedNestedInput
@@ -12327,29 +12347,20 @@ export namespace Prisma {
     data: XOR<SkillSwapSessionChatMessageUpdateManyMutationInput, SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillswapSessionInput>
   }
 
-  export type ReviewUpsertWithoutSkillswapSessionInput = {
+  export type ReviewUpsertWithWhereUniqueWithoutSkillswapSessionInput = {
+    where: ReviewWhereUniqueInput
     update: XOR<ReviewUpdateWithoutSkillswapSessionInput, ReviewUncheckedUpdateWithoutSkillswapSessionInput>
     create: XOR<ReviewCreateWithoutSkillswapSessionInput, ReviewUncheckedCreateWithoutSkillswapSessionInput>
-    where?: ReviewWhereInput
   }
 
-  export type ReviewUpdateToOneWithWhereWithoutSkillswapSessionInput = {
-    where?: ReviewWhereInput
+  export type ReviewUpdateWithWhereUniqueWithoutSkillswapSessionInput = {
+    where: ReviewWhereUniqueInput
     data: XOR<ReviewUpdateWithoutSkillswapSessionInput, ReviewUncheckedUpdateWithoutSkillswapSessionInput>
   }
 
-  export type ReviewUpdateWithoutSkillswapSessionInput = {
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewer?: UserUpdateOneRequiredWithoutAsReviewerNestedInput
-    reviewee?: UserUpdateOneRequiredWithoutAsRevieweeNestedInput
-  }
-
-  export type ReviewUncheckedUpdateWithoutSkillswapSessionInput = {
-    rating?: IntFieldUpdateOperationsInput | number
-    comment?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewerId?: StringFieldUpdateOperationsInput | string
-    revieweeId?: StringFieldUpdateOperationsInput | string
+  export type ReviewUpdateManyWithWhereWithoutSkillswapSessionInput = {
+    where: ReviewScalarWhereInput
+    data: XOR<ReviewUpdateManyMutationInput, ReviewUncheckedUpdateManyWithoutSkillswapSessionInput>
   }
 
   export type UserCreateWithoutChatMessagesInput = {
@@ -12400,7 +12411,7 @@ export namespace Prisma {
     createdAt?: Date | string
     skillswapRequest: SkillSwapRequestCreateNestedOneWithoutSkillswapSessionInput
     schedule: ScheduleCreateNestedOneWithoutSkillswapSessionInput
-    review?: ReviewCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionUncheckedCreateWithoutChatMessagesInput = {
@@ -12410,7 +12421,7 @@ export namespace Prisma {
     createdAt?: Date | string
     scheduleId: string
     skillswapRequestId: string
-    review?: ReviewUncheckedCreateNestedOneWithoutSkillswapSessionInput
+    review?: ReviewUncheckedCreateNestedManyWithoutSkillswapSessionInput
   }
 
   export type SkillSwapSessionCreateOrConnectWithoutChatMessagesInput = {
@@ -12480,7 +12491,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skillswapRequest?: SkillSwapRequestUpdateOneRequiredWithoutSkillswapSessionNestedInput
     schedule?: ScheduleUpdateOneRequiredWithoutSkillswapSessionNestedInput
-    review?: ReviewUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type SkillSwapSessionUncheckedUpdateWithoutChatMessagesInput = {
@@ -12489,7 +12500,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     scheduleId?: StringFieldUpdateOperationsInput | string
     skillswapRequestId?: StringFieldUpdateOperationsInput | string
-    review?: ReviewUncheckedUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type UserCreateWithoutUserSessionsInput = {
@@ -12595,7 +12606,7 @@ export namespace Prisma {
     closedAt?: Date | string | null
     requestedSkill: string
     createdAt?: Date | string
-    accepterId?: string | null
+    requesterId: string
   }
 
   export type SkillSwapSessionChatMessageCreateManySenderInput = {
@@ -12627,7 +12638,6 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
     availability?: ScheduleUpdateManyWithoutSkillswapRequestNestedInput
     accepter?: UserUpdateOneWithoutSkillswapRequestsAcceptedNestedInput
     skillswapSession?: SkillSwapSessionUpdateOneWithoutSkillswapRequestNestedInput
@@ -12659,7 +12669,6 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
     availability?: ScheduleUpdateManyWithoutSkillswapRequestNestedInput
     requester?: UserUpdateOneRequiredWithoutSkillswapRequestsCreatedNestedInput
     skillswapSession?: SkillSwapSessionUpdateOneWithoutSkillswapRequestNestedInput
@@ -12671,7 +12680,7 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    requesterId?: StringFieldUpdateOperationsInput | string
     availability?: ScheduleUncheckedUpdateManyWithoutSkillswapRequestNestedInput
     skillswapSession?: SkillSwapSessionUncheckedUpdateOneWithoutSkillswapRequestNestedInput
   }
@@ -12682,7 +12691,7 @@ export namespace Prisma {
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     requestedSkill?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    accepterId?: NullableStringFieldUpdateOperationsInput | string | null
+    requesterId?: StringFieldUpdateOperationsInput | string
   }
 
   export type SkillSwapSessionChatMessageUpdateWithoutSenderInput = {
@@ -12778,7 +12787,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skillswapRequest?: SkillSwapRequestUpdateOneRequiredWithoutSkillswapSessionNestedInput
     chatMessages?: SkillSwapSessionChatMessageUpdateManyWithoutSkillswapSessionNestedInput
-    review?: ReviewUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type SkillSwapSessionUncheckedUpdateWithoutScheduleInput = {
@@ -12787,7 +12796,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     skillswapRequestId?: StringFieldUpdateOperationsInput | string
     chatMessages?: SkillSwapSessionChatMessageUncheckedUpdateManyWithoutSkillswapSessionNestedInput
-    review?: ReviewUncheckedUpdateOneWithoutSkillswapSessionNestedInput
+    review?: ReviewUncheckedUpdateManyWithoutSkillswapSessionNestedInput
   }
 
   export type SkillSwapSessionUncheckedUpdateManyWithoutScheduleInput = {
@@ -12802,6 +12811,14 @@ export namespace Prisma {
     content: string
     createdAt?: Date | string
     senderId: string
+  }
+
+  export type ReviewCreateManySkillswapSessionInput = {
+    id?: string
+    rating: number
+    comment?: string | null
+    reviewerId: string
+    revieweeId: string
   }
 
   export type SkillSwapSessionChatMessageUpdateWithoutSkillswapSessionInput = {
@@ -12820,6 +12837,27 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     senderId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ReviewUpdateWithoutSkillswapSessionInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewer?: UserUpdateOneRequiredWithoutAsReviewerNestedInput
+    reviewee?: UserUpdateOneRequiredWithoutAsRevieweeNestedInput
+  }
+
+  export type ReviewUncheckedUpdateWithoutSkillswapSessionInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    revieweeId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ReviewUncheckedUpdateManyWithoutSkillswapSessionInput = {
+    rating?: IntFieldUpdateOperationsInput | number
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewerId?: StringFieldUpdateOperationsInput | string
+    revieweeId?: StringFieldUpdateOperationsInput | string
   }
 
 

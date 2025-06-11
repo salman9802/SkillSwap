@@ -16,7 +16,7 @@ datasource db {
 
 model User {
   id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  name            String   @unique // TODO
+  name            String   @unique
   email           String   @unique
   password        String
   picture         String?
@@ -27,8 +27,8 @@ model User {
   createdAt       DateTime @default(now())
 
   userSessions              UserSession?
-  skillSwapRequestsCreated  SkillSwapRequest[]            @relation("RequesterRelation")
-  skillSwapRequestsAccepted SkillSwapRequest[]            @relation("AccepterRelation")
+  skillswapRequestsCreated  SkillSwapRequest[]            @relation("RequesterRelation")
+  skillswapRequestsAccepted SkillSwapRequest[]            @relation("AccepterRelation")
   chatMessages              SkillSwapSessionChatMessage[]
   asReviewer                Review[]                      @relation("ReviewerRelation")
   asReviewee                Review[]                      @relation("RevieweeRelation")
@@ -43,11 +43,11 @@ model Review {
 
   reviewerId         String @db.ObjectId
   revieweeId         String @db.ObjectId
-  skillSwapSessionId String @unique @db.ObjectId
+  skillswapSessionId String @unique @db.ObjectId
 
   reviewer         User             @relation("ReviewerRelation", fields: [reviewerId], references: [id])
   reviewee         User             @relation("RevieweeRelation", fields: [revieweeId], references: [id])
-  skillSwapSession SkillSwapSession @relation(fields: [skillSwapSessionId], references: [id])
+  skillswapSession SkillSwapSession @relation(fields: [skillswapSessionId], references: [id])
 
   @@map("reviews")
 }
@@ -64,21 +64,21 @@ model SkillSwapRequest {
   requesterId      String            @db.ObjectId
   accepterId       String?           @db.ObjectId
   requester        User              @relation("RequesterRelation", fields: [requesterId], references: [id])
-  accepter         User?             @relation("AccepterRelation", fields: [requesterId], references: [id])
-  skillSwapSession SkillSwapSession?
+  accepter         User?             @relation("AccepterRelation", fields: [accepterId], references: [id])
+  skillswapSession SkillSwapSession?
 
   @@map("skillswap_requests")
 }
 
 model Schedule {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  date      DateTime
-  startTime String
-  endTime   String
+  id   String   @id @default(auto()) @map("_id") @db.ObjectId
+  date DateTime
+  // startTime String
+  // endTime   String
 
-  skillSwapRequestId String             @db.ObjectId
-  skillSwapRequest   SkillSwapRequest   @relation(fields: [skillSwapRequestId], references: [id])
-  skillSwapSession   SkillSwapSession[]
+  skillswapRequestId String             @db.ObjectId
+  skillswapRequest   SkillSwapRequest   @relation(fields: [skillswapRequestId], references: [id])
+  skillswapSession   SkillSwapSession[]
 
   @@map("schedules")
 }
@@ -90,8 +90,8 @@ model SkillSwapSession {
   createdAt    DateTime       @default(now())
 
   scheduleId         String                        @db.ObjectId
-  skillSwapRequestId String                        @unique @db.ObjectId
-  skillSwapRequest   SkillSwapRequest              @relation(fields: [skillSwapRequestId], references: [id])
+  skillswapRequestId String                        @unique @db.ObjectId
+  skillswapRequest   SkillSwapRequest              @relation(fields: [skillswapRequestId], references: [id])
   schedule           Schedule                      @relation(fields: [scheduleId], references: [id])
   chatMessages       SkillSwapSessionChatMessage[]
   review             Review?
@@ -105,9 +105,9 @@ model SkillSwapSessionChatMessage {
   createdAt DateTime @default(now())
 
   senderId           String           @db.ObjectId
-  skillSwapSessionId String           @db.ObjectId
+  skillswapSessionId String           @db.ObjectId
   sender             User             @relation(fields: [senderId], references: [id])
-  skillSwapSession   SkillSwapSession @relation(fields: [skillSwapSessionId], references: [id])
+  skillswapSession   SkillSwapSession @relation(fields: [skillswapSessionId], references: [id])
 
   @@map("skillswap_session_chat_messages")
 }

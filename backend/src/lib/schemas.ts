@@ -125,3 +125,13 @@ export const paginationSchema = z.object({
   limit: z.coerce.number().min(1).default(10),
   offset: z.coerce.number().min(0).default(0),
 });
+
+export const skillswapSessionReviewSchema = z.object({
+  rating: z.number().min(1).max(5),
+  comment: z.string().optional(),
+  revieweeId: z.string(),
+});
+
+export type SkillswapSessionReview = z.infer<
+  typeof skillswapSessionReviewSchema
+>;

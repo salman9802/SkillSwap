@@ -177,3 +177,32 @@ export type SkillswapSessionPreview = Omit<
   createdAt: Date;
   schedule: Date;
 };
+
+export type SkillswapSessionResponse = {
+  skillswapRequest: {
+    requesterId: string;
+    accepterId: string;
+    requestedSkill: string;
+    requester: {
+      name: string;
+      picture: string;
+    };
+    accepter: {
+      name: string;
+      picture: string;
+    };
+  };
+  status: string;
+  schedule: {
+    date: string;
+  };
+  offeredSkill: string;
+  isRequester: boolean;
+  hasReviewed: boolean;
+};
+
+export type SkillswapSessionReview = {
+  rating: number;
+  comment?: string;
+  revieweeId: string;
+};

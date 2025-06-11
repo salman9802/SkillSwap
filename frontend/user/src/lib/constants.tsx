@@ -53,7 +53,8 @@ export const SOCIALS = [
 
 export const SESSION_STATUS = {
   OPEN: {
-    description: "Session created after request acceptance",
+    description:
+      "This session was created after the someone accepted the request",
     jsx: (
       <div className="w-fit rounded-md bg-blue-100 px-3 py-1.5 text-blue-700">
         OPEN
@@ -61,7 +62,8 @@ export const SESSION_STATUS = {
     ),
   },
   ACCEPTED: {
-    description: "Session confirmed by accepter",
+    description:
+      "Session confirmed by accepter (Requester can now confirm the session)",
     jsx: (
       <div className="w-fit rounded-md bg-amber-100 px-3 py-1.5 text-amber-700">
         ACCEPTED
@@ -70,7 +72,7 @@ export const SESSION_STATUS = {
   },
   SCHEDULED: {
     description:
-      "Session has been scheduled after confirmation from both parties.",
+      "Session has been scheduled after confirmation from both parties",
     jsx: (
       <div className="w-fit rounded-md bg-green-100 px-3 py-1.5 text-green-700">
         SCHEDULED
@@ -79,7 +81,7 @@ export const SESSION_STATUS = {
   },
   FINISHED: {
     description:
-      "Session happened. Requester and accepter can rate the session",
+      "Session happened. Requester and accepter can rate the session beside the respective person",
     jsx: (
       <div className="w-fit rounded-md bg-gray-100 px-3 py-1.5 text-gray-700">
         FINISHED
@@ -87,8 +89,7 @@ export const SESSION_STATUS = {
     ),
   },
   CLOSED: {
-    description:
-      "Both parties have rated the session and the session is closed",
+    description: "Session is closed",
     jsx: (
       <div className="w-fit rounded-md bg-purple-100 px-3 py-1.5 text-purple-700">
         CLOSED

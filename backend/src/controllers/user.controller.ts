@@ -7,6 +7,8 @@ import {
   newSkillSwapSessionSchema,
   newUserSchema,
   paginationSchema,
+  SkillswapSessionReview,
+  skillswapSessionReviewSchema,
   updateUserSchema,
 } from "../lib/schemas";
 import { STATUS_CODES } from "../constants/http";
@@ -452,6 +454,20 @@ export const skillswapSessions = async (
     prisma.skillSwapSession.findMany({
       skip: parsed.offset,
       take: parsed.limit,
+      where: {
+        OR: [
+          {
+            skillswapRequest: {
+              accepterId: user.id,
+            },
+          },
+          {
+            skillswapRequest: {
+              requesterId: user.id,
+            },
+          },
+        ],
+      },
       select: {
         id: true,
         createdAt: true,
@@ -466,7 +482,22 @@ export const skillswapSessions = async (
         },
       },
     }),
-    prisma.skillSwapSession.count(),
+    prisma.skillSwapSession.count({
+      where: {
+        OR: [
+          {
+            skillswapRequest: {
+              accepterId: user.id,
+            },
+          },
+          {
+            skillswapRequest: {
+              requesterId: user.id,
+            },
+          },
+        ],
+      },
+    }),
   ]);
 
   res.status(STATUS_CODES.OK).json({
@@ -488,6 +519,8 @@ export const skillswapSession = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
+  const user = req.user!;
+
   const { id } = req.params;
 
   const session = await prisma.skillSwapSession.findFirst({
@@ -496,10 +529,21 @@ export const skillswapSession = async (
     },
     select: {
       status: true,
-      schedule: true,
       offeredSkill: true,
+      schedule: {
+        select: {
+          date: true,
+        },
+      },
+      review: {
+        select: {
+          reviewerId: true,
+        },
+      },
       skillswapRequest: {
         select: {
+          requesterId: true,
+          accepterId: true,
           requestedSkill: true,
           requester: {
             select: {
@@ -519,11 +563,21 @@ export const skillswapSession = async (
   });
 
   res.status(STATUS_CODES.OK).json({
-    session,
+    session: {
+      ...session,
+      isRequester: session?.skillswapRequest.requesterId === user.id,
+      // hasReviewed: session?.review
+      //   ? session?.review[0]?.reviewerId === user.id
+      //   : false,
+      hasReviewed:
+        session?.review.filter((r) => r.reviewerId === user.id).length !== 0,
+      // ? session?.review[0]?.reviewerId === user.id
+      // : false,
+    },
   });
 };
 
-export const updateSkillSwapSession = async (
+export const updateSkillswapSession = async (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
@@ -546,4 +600,101 @@ export const updateSkillSwapSession = async (
     message: "Session updated successfully",
     session,
   });
+};
+
+export const rejectSkillswapSession = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const user = req.user!;
+
+  const { id } = req.params;
+
+  // user must either be a requester or accepter
+  const session = await prisma.skillSwapSession.findFirst({
+    where: {
+      id,
+    },
+    select: {
+      skillswapRequest: {
+        select: {
+          requesterId: true,
+          accepterId: true,
+        },
+      },
+    },
+  });
+  appAssert(session !== null, STATUS_CODES.BAD_REQUEST, "No session");
+
+  appAssert(
+    session?.skillswapRequest.requesterId === user.id ||
+      session?.skillswapRequest.accepterId === user.id,
+    STATUS_CODES.FORBIDDEN
+  );
+
+  // update session
+  await prisma.skillSwapSession.update({
+    where: {
+      id,
+    },
+    data: {
+      status: "CANCELLED",
+    },
+  });
+
+  res.status(STATUS_CODES.OK);
+};
+
+export const reviewSkillswapSession = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  // skillswapSessionId
+  const { id } = req.params;
+  // reviewerId
+  const user = req.user!;
+
+  // verify if user is part of session and have not reviewed yet
+  const session = await prisma.skillSwapSession.findFirst({
+    where: {
+      id,
+    },
+    select: {
+      review: {
+        select: {
+          reviewerId: true,
+        },
+      },
+      skillswapRequest: {
+        select: {
+          requesterId: true,
+          accepterId: true,
+        },
+      },
+    },
+  });
+  appAssert(
+    user.id === session?.skillswapRequest.accepterId ||
+      user.id === session?.skillswapRequest.requesterId,
+    STATUS_CODES.FORBIDDEN
+  );
+  appAssert(
+    session?.review.filter((r) => r.reviewerId === user.id).length === 0,
+    STATUS_CODES.CONFLICT,
+    "Can only review once"
+  );
+
+  const parsed: SkillswapSessionReview = skillswapSessionReviewSchema.parse({
+    ...req.body,
+  });
+
+  await UserService.createSkillswapSessionReview({
+    review: parsed,
+    sessionId: id,
+    reviewerId: user.id,
+  });
+
+  res.status(STATUS_CODES.OK);
 };

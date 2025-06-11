@@ -70,7 +70,19 @@ userRouter.get(
 userRouter.put(
   "/ss-session/:id",
   errorCatch(userHasAccess),
-  errorCatch(UserController.updateSkillSwapSession)
+  errorCatch(UserController.updateSkillswapSession)
+);
+
+userRouter.put(
+  "/ss-session/:id/reject",
+  errorCatch(userHasAccess),
+  errorCatch(UserController.rejectSkillswapSession)
+);
+
+userRouter.post(
+  "/ss-session/:id/review",
+  errorCatch(userHasAccess),
+  errorCatch(UserController.reviewSkillswapSession)
 );
 
 export default userRouter;

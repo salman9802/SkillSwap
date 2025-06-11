@@ -43,12 +43,13 @@ model Review {
 
   reviewerId         String @db.ObjectId
   revieweeId         String @db.ObjectId
-  skillswapSessionId String @unique @db.ObjectId
+  skillswapSessionId String @db.ObjectId
 
   reviewer         User             @relation("ReviewerRelation", fields: [reviewerId], references: [id])
   reviewee         User             @relation("RevieweeRelation", fields: [revieweeId], references: [id])
   skillswapSession SkillSwapSession @relation(fields: [skillswapSessionId], references: [id])
 
+  @@unique([reviewerId, skillswapSessionId])
   @@map("reviews")
 }
 
@@ -64,7 +65,7 @@ model SkillSwapRequest {
   requesterId      String            @db.ObjectId
   accepterId       String?           @db.ObjectId
   requester        User              @relation("RequesterRelation", fields: [requesterId], references: [id])
-  accepter         User?             @relation("AccepterRelation", fields: [requesterId], references: [id])
+  accepter         User?             @relation("AccepterRelation", fields: [accepterId], references: [id])
   skillswapSession SkillSwapSession?
 
   @@map("skillswap_requests")
@@ -94,7 +95,7 @@ model SkillSwapSession {
   skillswapRequest   SkillSwapRequest              @relation(fields: [skillswapRequestId], references: [id])
   schedule           Schedule                      @relation(fields: [scheduleId], references: [id])
   chatMessages       SkillSwapSessionChatMessage[]
-  review             Review?
+  review             Review[]
 
   @@map("skillswap_sessions")
 }
