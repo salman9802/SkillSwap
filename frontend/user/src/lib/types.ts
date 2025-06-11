@@ -206,3 +206,10 @@ export type SkillswapSessionReview = {
   comment?: string;
   revieweeId: string;
 };
+
+export type SkillswapSessionChatResponse = {
+  messages: {
+    content: string;
+    senderId: string;
+  }[];
+};

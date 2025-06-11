@@ -85,4 +85,10 @@ userRouter.post(
   errorCatch(UserController.reviewSkillswapSession)
 );
 
+userRouter.get(
+  "/ss-session/:id/chat",
+  errorCatch(userHasAccess),
+  errorCatch(UserController.skillswapSessionChat)
+);
+
 export default userRouter;

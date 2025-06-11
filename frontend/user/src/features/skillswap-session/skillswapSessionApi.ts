@@ -1,6 +1,7 @@
 import type {
   AllSkillswapSessionResponse,
   CreateSkillswapSessionPayload,
+  SkillswapSessionChatResponse,
   SkillswapSessionResponse,
   SkillswapSessionReview,
 } from "@/lib/types";
@@ -58,6 +59,17 @@ const skillswapSessionApi = api.injectEndpoints({
         body: review,
       }),
     }),
+    fetchSkillswapSessionChat: builder.query<
+      SkillswapSessionChatResponse["messages"],
+      string
+    >({
+      query: (sessionId) => ({
+        url: `user/ss-session/${sessionId}/chat`,
+        method: "GET",
+      }),
+      transformResponse: (response: SkillswapSessionChatResponse) =>
+        response.messages,
+    }),
   }),
 });
 
@@ -68,4 +80,5 @@ export const {
   useRejectSkillswapSessionMutation,
   useUpdateSkillswapSessionMutation,
   useReviewSkillswapSessionMutation,
+  useFetchSkillswapSessionChatQuery,
 } = skillswapSessionApi;

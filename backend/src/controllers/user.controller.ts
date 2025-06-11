@@ -698,3 +698,26 @@ export const reviewSkillswapSession = async (
 
   res.status(STATUS_CODES.OK);
 };
+
+export const skillswapSessionChat = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  // sessionId
+  const { id } = req.params;
+
+  const messages = await prisma.skillSwapSessionChatMessage.findMany({
+    where: {
+      skillswapSessionId: id,
+    },
+    select: {
+      content: true,
+      senderId: true,
+    },
+  });
+
+  res.status(STATUS_CODES.OK).json({
+    messages,
+  });
+};

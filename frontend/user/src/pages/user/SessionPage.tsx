@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { MdOutlineStarRate, MdRateReview, MdStarRate } from "react-icons/md";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ToggleGroup from "@/components/user/ToggleGroup";
 import Section from "@/components/utils/Section";
 import {
   SESSION_STATUS,
@@ -10,12 +10,8 @@ import {
   SkillRequested,
   type SessionStatusKey,
 } from "@/lib/constants";
-import type {
-  RequestCardDataType,
-  SkillswapSessionResponse,
-} from "@/lib/types";
+import type { SkillswapSessionResponse } from "@/lib/types";
 import { cn, getInitials } from "@/lib/utils";
-import requestsJSON from "../../../__data/requests.json";
 import { Button } from "@/components/ui/button";
 import ChatContainer from "@/components/user/ChatContainer";
 import {
@@ -29,7 +25,6 @@ import SkeletonLoader from "@/components/utils/SkeletonLoader";
 import Countdown from "@/components/utils/Countdown";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -38,35 +33,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  MdOutlineRateReview,
-  MdOutlineStarRate,
-  MdRateReview,
-  MdStarRate,
-} from "react-icons/md";
-import { Input } from "@/components/ui/input";
-import Loader from "@/components/utils/Loader";
 
-// NOTE: Mock data
-const schedules = [
-  new Date("2024-11-18T14:32:10.297Z"),
-  new Date("2024-12-29T05:20:44.189Z"),
-  new Date("2025-02-08T18:05:37.521Z"),
-  new Date("2025-01-14T11:47:59.038Z"),
-  new Date("2025-03-22T03:14:22.804Z"),
-  new Date("2024-10-05T21:18:00.659Z"),
-  new Date("2025-04-10T07:59:13.126Z"),
-];
-const isAccepter = false;
-// const requests = requestsJSON as RequestCardDataType[];
-const requests = [] as RequestCardDataType[];
-const session = {
-  skillGiven: requests[0]?.skillsRequested[0],
-  skillReceived: requests[0]?.skillsOffered[0],
-  when: requests[0]?.createdAt,
-};
-const accepterAccepted = false;
-const sessionStatus: keyof typeof SESSION_STATUS = "SCHEDULED";
+import Loader from "@/components/utils/Loader";
 
 const ReviewDialog: React.FC<{
   skillswapSession: SkillswapSessionResponse;
@@ -322,7 +290,7 @@ const SessionPage = () => {
           {skillswapSession && !skillswapSession.isRequester && (
             <>
               <div className="[&>*]:hover:text-primary mt-6! ml-3 [&>*]:cursor-pointer">
-                <ChatContainer />
+                <ChatContainer sessionId={sessionId} />
               </div>
               {skillswapSession.status === "FINISHED" && (
                 <div className="mt-6! ml-3 [&>*]:cursor-pointer">
@@ -357,7 +325,7 @@ const SessionPage = () => {
           {skillswapSession && skillswapSession.isRequester && (
             <>
               <div className="[&>*]:hover:text-primary mt-6! ml-3 [&>*]:cursor-pointer">
-                <ChatContainer />
+                <ChatContainer sessionId={sessionId} />
               </div>
               {skillswapSession.status === "FINISHED" && (
                 <div className="mt-6! ml-3 [&>*]:cursor-pointer">

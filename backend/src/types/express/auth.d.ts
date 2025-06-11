@@ -1,4 +1,5 @@
 import { JwtPayload } from "jsonwebtoken";
+
 import { User } from "../../generated/prisma";
 import { SafeUser } from "../../lib/sanitize";
 

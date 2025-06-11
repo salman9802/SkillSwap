@@ -1,3 +1,5 @@
+import http from "http";
+
 import express from "express";
 import "dotenv/config";
 import colors from "@colors/colors";
@@ -8,6 +10,9 @@ import apiRouter from "./routers";
 import { ENV } from "./constants/env";
 import prisma from "./db/client";
 import { errorMiddleware } from "./middlewares/error.middleware";
+import { Server } from "socket.io";
+import { socketAuthMiddleware } from "./middlewares/socket-auth.middleware";
+import { skillswapSessionChatSocket } from "./sockets/user.socket";
 
 const server = express();
 
@@ -29,7 +34,7 @@ server.get("/", (req, res) => {
   res.send("Hello world");
 });
 
-// api middelware
+// api
 server.use("/api", apiRouter);
 
 // custom error handler
@@ -41,6 +46,27 @@ server.listen(ENV.PORT, (error) => {
     console.log(
       colors.blue(`Server started on ${ENV.SERVER_BASE_URL}:${ENV.PORT}`)
     );
+});
+
+// Socket implementation
+const socketHttpServer = http.createServer(server);
+const io = new Server(socketHttpServer, {
+  cors: {
+    origin: ENV.CLIENT_BASE_URL,
+    credentials: true,
+  },
+});
+
+// auth middleware
+io.use(socketAuthMiddleware);
+
+// setup io server for skill swap session
+skillswapSessionChatSocket(io);
+
+socketHttpServer.listen(ENV.SOCKET_PORT, () => {
+  console.log(
+    colors.yellow(`Socket http server started on port ${ENV.SOCKET_PORT}`)
+  );
 });
 
 // Graceful shutdown

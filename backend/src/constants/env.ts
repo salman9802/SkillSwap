@@ -30,6 +30,10 @@ const envSchema = z.object({
   ),
   ACCESS_TOKEN_COOKIE: z.string().optional().default("accssess"),
   REFRESH_TOKEN_COOKIE: z.string().optional().default("refssresh"),
+  SOCKET_PORT: z.preprocess(
+    (val) => (typeof val === "string" ? Number(val) : val),
+    z.number().default(8080)
+  ),
 });
 
 let env;
