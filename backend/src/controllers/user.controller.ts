@@ -643,7 +643,7 @@ export const rejectSkillswapSession = async (
     },
   });
 
-  res.status(STATUS_CODES.OK);
+  res.status(STATUS_CODES.OK).send();
 };
 
 export const reviewSkillswapSession = async (
@@ -696,7 +696,7 @@ export const reviewSkillswapSession = async (
     reviewerId: user.id,
   });
 
-  res.status(STATUS_CODES.OK);
+  res.status(STATUS_CODES.OK).send();
 };
 
 export const skillswapSessionChat = async (

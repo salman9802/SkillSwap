@@ -249,6 +249,7 @@ const SessionPage = () => {
     try {
       const res = await rejectSession(sessionId);
       console.log(res);
+      refetchSession();
     } catch (error) {
       console.error(error);
     }
@@ -380,8 +381,9 @@ const SessionPage = () => {
               date={scheduledDate}
               onComplete={async () => {
                 if (
-                  skillswapSession?.status === "OPEN" ||
-                  skillswapSession?.status === "ACCEPTED"
+                  skillswapSession?.status !== "CANCELLED" &&
+                  (skillswapSession?.status === "OPEN" ||
+                    skillswapSession?.status === "ACCEPTED")
                 )
                   handleSessionRejection();
 
