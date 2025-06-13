@@ -481,6 +481,9 @@ export const skillswapSessions = async (
           },
         },
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     }),
     prisma.skillSwapSession.count({
       where: {

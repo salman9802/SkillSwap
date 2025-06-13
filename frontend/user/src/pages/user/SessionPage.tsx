@@ -460,7 +460,7 @@ const SessionPage = () => {
               disabled={
                 skillswapSession.status === "CANCELLED" ||
                 isRejectLoading ||
-                skillswapSession.status === "CANCELLED"
+                skillswapSession.status === "SCHEDULED"
               }
               className="cursor-pointer hover:bg-red-500"
               variant="destructive"
