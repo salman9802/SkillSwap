@@ -400,9 +400,42 @@ export const updateSkillSwapSessionStatus = async ({
       break;
 
     case "FINISHED":
-      // TODO: If both have reviewed then FINISHED -> CLOSED
+      // FINISHED -> CLOSED
+
+      const hasReviewed =
+        (await prisma.skillSwapSession.count({
+          where: {
+            AND: [
+              { id: sessionId },
+              {
+                review: {
+                  some: {
+                    reviewerId: userId,
+                  },
+                },
+              },
+            ],
+          },
+        })) > 0;
+
+      const hasBeenReviewed =
+        (await prisma.skillSwapSession.count({
+          where: {
+            AND: [
+              { id: sessionId },
+              {
+                review: {
+                  some: {
+                    revieweeId: userId,
+                  },
+                },
+              },
+            ],
+          },
+        })) > 0;
+
       appAssert(
-        session.review !== null,
+        hasReviewed && hasBeenReviewed,
         STATUS_CODES.CONFLICT,
         "Session can only be closed after both users have rated each other."
       );

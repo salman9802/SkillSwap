@@ -39,7 +39,8 @@ import Loader from "@/components/utils/Loader";
 const ReviewDialog: React.FC<{
   skillswapSession: SkillswapSessionResponse;
   sessionId: string;
-}> = ({ skillswapSession, sessionId }) => {
+  onReviewFinish: () => any;
+}> = ({ skillswapSession, sessionId, onReviewFinish }) => {
   const [open, setOpen] = React.useState(false);
 
   const [review, setReview] = React.useState({
@@ -61,6 +62,7 @@ const ReviewDialog: React.FC<{
         },
       }).unwrap();
       console.log(res);
+      onReviewFinish();
     } catch (error) {
       console.error(error);
     } finally {
@@ -298,6 +300,7 @@ const SessionPage = () => {
                   <ReviewDialog
                     sessionId={sessionId}
                     skillswapSession={skillswapSession}
+                    onReviewFinish={() => updateSession(sessionId)}
                   />
                 </div>
               )}
@@ -333,6 +336,7 @@ const SessionPage = () => {
                   <ReviewDialog
                     sessionId={sessionId}
                     skillswapSession={skillswapSession}
+                    onReviewFinish={() => updateSession(sessionId)}
                   />
                 </div>
               )}
@@ -458,9 +462,8 @@ const SessionPage = () => {
             <Button
               onClick={handleSessionRejection}
               disabled={
-                skillswapSession.status === "CANCELLED" ||
-                isRejectLoading ||
-                skillswapSession.status === "SCHEDULED"
+                skillswapSession.status !== "OPEN" &&
+                skillswapSession.status !== "ACCEPTED"
               }
               className="cursor-pointer hover:bg-red-500"
               variant="destructive"
@@ -491,9 +494,8 @@ const SessionPage = () => {
             <Button
               onClick={handleSessionRejection}
               disabled={
-                skillswapSession?.status === "CANCELLED" ||
-                isRejectLoading ||
-                skillswapSession?.status === "SCHEDULED"
+                skillswapSession?.status !== "OPEN" &&
+                skillswapSession?.status !== "ACCEPTED"
               }
               className="cursor-pointer hover:bg-red-500"
               variant="destructive"
