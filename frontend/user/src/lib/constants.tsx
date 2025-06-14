@@ -563,3 +563,15 @@ export type AppErrorCodeType =
 // ];
 
 export const countries = ct.getAllCountries();
+
+// export const USERDASHBOARD_TIMEPERIODS = {
+//   "Last week": "last_week",
+//   "Last month": "last_month",
+//   "Last 3 months": "last_3_months",
+// };
+
+export const USERDASHBOARD_TIMEPERIODS = {
+  last_week: "Last week",
+  last_month: "Last month",
+  last_3_months: "Last 3 months",
+};

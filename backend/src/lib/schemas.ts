@@ -135,3 +135,11 @@ export const skillswapSessionReviewSchema = z.object({
 export type SkillswapSessionReview = z.infer<
   typeof skillswapSessionReviewSchema
 >;
+
+export const dashboardQueryParamsSchema = z.object({
+  timePeriod: z.enum(["last_week", "last_month", "last_3_months"]),
+});
+
+export type DashboardQueryParams = z.infer<typeof dashboardQueryParamsSchema>;
+
+export type DashboardTimePeriod = DashboardQueryParams["timePeriod"];

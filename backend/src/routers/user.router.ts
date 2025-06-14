@@ -31,6 +31,12 @@ userRouter.put(
   errorCatch(UserController.updateUserPicture)
 ); // update user picture
 
+userRouter.get(
+  "/dashboard",
+  errorCatch(userHasAccess),
+  errorCatch(UserController.dashboard)
+);
+
 userRouter.post(
   "/new-request",
   errorCatch(userHasAccess),

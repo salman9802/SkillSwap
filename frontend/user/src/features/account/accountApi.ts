@@ -3,6 +3,8 @@ import api from "../api";
 import type {
   FetchDetailsResponse,
   RegisterResponse,
+  UserDashboardResponse,
+  UserDashboardQueryParams,
   UserUpdatePayload,
 } from "@/lib/types";
 
@@ -53,6 +55,13 @@ export const accountApi = api.injectEndpoints({
         };
       },
     }),
+    dashboard: builder.query<UserDashboardResponse, UserDashboardQueryParams>({
+      query: (params) => ({
+        url: "user/dashboard",
+        method: "GET",
+        params,
+      }),
+    }),
   }),
 });
 
@@ -61,4 +70,5 @@ export const {
   useUpdateMutation,
   useFetchDetailsQuery,
   useUploadPictureMutation,
+  useDashboardQuery,
 } = accountApi;

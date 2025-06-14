@@ -40,6 +40,25 @@ export type UserUpdatePayload = {
   requestedSkills?: string[];
 };
 
+export type UserDashboardResponse = {
+  totalSessionsCompleted: number;
+  totalRequestsCreated: number;
+  totalRequestsCompleted: number;
+  totalSessionsCancelled: number;
+  totalChatMessagesCreated: number;
+  sessionsClosedInRange: {
+    // date: string;
+    // count: number;
+    [key: string]: number;
+  };
+  rangeStart: string;
+  rangeEnd: string;
+};
+
+export type UserDashboardQueryParams = {
+  timePeriod: "last_week" | "last_month" | "last_3_months";
+};
+
 // session
 export type UserSession = {
   id: string;

@@ -1,6 +1,7 @@
 import express from "express";
 
 import {
+  dashboardQueryParamsSchema,
   existingUserSchema,
   marketplaceParamsSchema,
   newRequestSchema,
@@ -722,5 +723,245 @@ export const skillswapSessionChat = async (
 
   res.status(STATUS_CODES.OK).json({
     messages,
+  });
+};
+
+export const dashboard = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const user = req.user!;
+
+  const { timePeriod } = dashboardQueryParamsSchema.parse(req.query);
+
+  // total sessions completed
+  const totalSessionsCompleted = await prisma.skillSwapSession.count({
+    where: {
+      AND: [
+        { status: "CLOSED" },
+        {
+          OR: [
+            {
+              skillswapRequest: {
+                requesterId: user.id,
+              },
+            },
+            {
+              skillswapRequest: {
+                accepterId: user.id,
+              },
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  // total requests created
+  const totalRequestsCreated = await prisma.skillSwapRequest.count({
+    where: {
+      requesterId: user.id,
+    },
+  });
+
+  // total requests closed
+  const totalRequestsCompleted = await prisma.skillSwapRequest.count({
+    where: {
+      AND: [
+        {
+          closed: true,
+        },
+        {
+          OR: [
+            {
+              requesterId: user.id,
+            },
+            {
+              accepterId: user.id,
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  // total sessions cancelled
+  const totalSessionsCancelled = await prisma.skillSwapSession.count({
+    where: {
+      AND: [
+        { status: "CANCELLED" },
+        {
+          OR: [
+            {
+              skillswapRequest: {
+                requesterId: user.id,
+              },
+            },
+            {
+              skillswapRequest: {
+                accepterId: user.id,
+              },
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  // total chat messages created
+  const totalChatMessagesCreated =
+    await prisma.skillSwapSessionChatMessage.count({
+      where: {
+        senderId: user.id,
+      },
+    });
+
+  // TODO: sessions completed (graph)
+  /* 
+  Last week - date=YYYY-mm-dd (start date)
+  Last month - (some kind of number)
+  Last 3 month - (some kind of number) (start month)
+   */
+  // let date;
+  // date = new Date();
+  // date.setUTCSeconds(date.getUTCSeconds() - 60 * 60 * 24 * 7);
+
+  // const lastWeek = date.toISOString().split("T")[0];
+
+  // date = new Date();
+  // date.setUTCMonth(date.getUTCMonth() - 1);
+  // const lastMonth = date.getMonth();
+
+  // const rangeStart = new Date();
+
+  const rangeEnd = new Date();
+  const rangeStart = new Date(
+    Date.UTC(
+      rangeEnd.getUTCFullYear(),
+      rangeEnd.getUTCMonth(),
+      rangeEnd.getUTCDate(),
+      0,
+      0,
+      0,
+      0
+    )
+  );
+
+  switch (timePeriod) {
+    case "last_week":
+      rangeStart.setUTCDate(rangeStart.getUTCDate() - 7);
+      break;
+    case "last_month":
+      rangeStart.setUTCMonth(rangeStart.getUTCMonth() - 1);
+      break;
+    case "last_3_months":
+      rangeStart.setUTCMonth(rangeStart.getUTCMonth() - 3);
+      break;
+    default:
+      res.status(STATUS_CODES.BAD_REQUEST);
+      break;
+  }
+
+  // set time 00:00:00:0000
+  rangeStart.setUTCHours(0, 0, 0, 0);
+
+  // const result = await prisma.$runCommandRaw({
+  //   aggregate: "skillswap_sessions",
+  //   // pipeline: [],
+  //   pipeline: [
+  //   {
+  //     $match: {
+  //       createdAt: {
+  //         $gte: new Date(rangeStart.toISOString()),
+  //       },
+  //       status: "CLOSED",
+  //     },
+  //     // $match: {
+  //     //   $expr: {
+  //     //     $gte: ["$createdAt", rangeStart], // rangeStart is a Date object
+  //     //   },
+  //     //   status: "active",
+  //     // },
+  //   },
+  //   {
+  //     $group: {
+  //       _id: {
+  //         $dateToString: {
+  //           format: "%Y-%m-%d",
+  //           date: "$createdAt",
+  //         },
+  //       },
+  //       count: { $sum: 1 },
+  //     },
+  //   },
+  //   // { $group: { _id: "$createdAt", count: { $sum: 1 } } },
+  //   { $sort: { _id: 1 } },
+  //   {
+  //     $project: {
+  //       _id: 0,
+  //       date: "$_id",
+  //       count: 1,
+  //     },
+  //   },
+  // ],
+  //   cursor: {}, // required when using runCommandRaw for aggregation
+  // });
+  // as {
+  //   cursor: {
+  //     firstBatch: any;
+  //     // firstBatch: {
+  //     //   date: string;
+  //     //   count: number;
+  //     // };
+  //   };
+  // };
+  // const sessionsClosedInRange = result;
+  // const sessionsClosedInRange = result.cursor?.firstBatch;
+
+  // 1. Fetch all matching sessions
+  const sessions = await prisma.skillSwapSession.findMany({
+    where: {
+      createdAt: { gte: rangeStart },
+      status: "CLOSED",
+    },
+    select: {
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+
+  // 2. Group by date (ignoring time)
+  const countsByDate: Record<string, number> = {};
+
+  for (const session of sessions) {
+    // const day = formatISO(startOfDay(session.createdAt), { representation: 'date' });
+    const day = session.createdAt.toISOString().split("T")[0];
+    countsByDate[day] = (countsByDate[day] || 0) + 1;
+  }
+
+  // 3. Convert to desired format
+  // const sessionsClosedInRange = Object.entries(countsByDate)
+  //   .map(([date, count]) => ({ date, count }))
+  //   .sort((a, b) => a.date.localeCompare(b.date));
+
+  res.status(STATUS_CODES.OK).json({
+    totalSessionsCompleted,
+    totalRequestsCreated,
+    totalRequestsCompleted,
+    totalSessionsCancelled,
+    totalChatMessagesCreated,
+    sessionsClosedInRange: countsByDate,
+    rangeStart,
+    rangeEnd,
+    //   test: await prisma.skillSwapSession.findMany({
+    //     where: {
+    //       createdAt: { gte: rangeStart },
+    //       status: "CLOSED", // or use a variable
+    //     },
+    //     // take: 1,
+    //   }),
   });
 };
