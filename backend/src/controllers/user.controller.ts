@@ -382,6 +382,7 @@ export const request = async (
       },
       requester: {
         select: {
+          id: true,
           name: true,
           offeredSkills: true,
           asReviewee: {

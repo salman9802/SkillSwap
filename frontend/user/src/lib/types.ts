@@ -128,6 +128,7 @@ export type MarketplacePayloadType = {
 };
 
 type SkillswapRequestRequester = {
+  id: string;
   name: string;
   offeredSkills: string[];
   picture: string;

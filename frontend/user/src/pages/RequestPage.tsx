@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { GoStarFill } from "react-icons/go";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,6 +24,7 @@ import { BsExclamationCircleFill } from "react-icons/bs";
 import { IoIosWarning } from "react-icons/io";
 import { useCreateSkillswapSessionMutation } from "@/features/skillswap-session/skillswapSessionApi";
 import Loader from "@/components/utils/Loader";
+import type { StoreState } from "@/features/store";
 
 // NOTE: Mock data
 // const requests = requestsJSON as RequestCardDataType[];
@@ -45,6 +47,8 @@ const schedules = [
 ];
 
 const RequestPage = () => {
+  const userId = useSelector((store: StoreState) => store.session.user?.id);
+
   const { requestId } = useParams() as { requestId: string };
   const { data, isLoading, isError, error } =
     useFetchSkillswapRequestDetailsQuery(requestId);
@@ -262,7 +266,8 @@ const RequestPage = () => {
             session?.offeredSkill === undefined ||
             session?.offeredSkill?.length === 0 ||
             session?.scheduleId?.length === 0 ||
-            !data?.canProvideSkill
+            !data?.canProvideSkill ||
+            request?.requester.id === userId
           }
           onClick={handleCreateSession}
           className="cursor-pointer"
