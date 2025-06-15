@@ -33,11 +33,18 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-        <div className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
+        <div className="w-5/6 overflow-hidden md:w-1/2 lg:w-full lg:max-w-lg">
           <img
-            className="rounded object-cover object-center"
+            className="scale-150 rounded-full object-center mix-blend-multiply"
             alt="hero"
-            src="hero.webp"
+            src="hero2.avif"
+            //   style="mask-image: radial-gradient(circle, white 50%, transparent 100%);
+            //  -webkit-mask-image: radial-gradient(circle, white 50%, transparent 100%);"
+            style={{
+              maskImage: "radial-gradient(circle, white 10%, transparent 60%)",
+              WebkitMaskImage:
+                "radial-gradient(circle, white 50%, transparent 100%)",
+            }}
           />
         </div>
       </div>
