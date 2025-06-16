@@ -5,6 +5,7 @@
     "dev:user": "concurrently --raw --kill-others-on-fail --names \"frontend,backend\" --prefix-colors \"bgBlue.bold,bgGreen.bold\"  \"npm run dev:userfrontend\" \"npm run dev:backend\""
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "generate-license-file": "^4.0.0"
   }
 }
