@@ -32,9 +32,9 @@ const MarketplacePage = () => {
 
   const [sort, setSort] =
     React.useState<MarketplaceSortKeyType>("NEWEST_FIRST");
-  const [requests, setRequests] = React.useState<
-    SkillswapRequestCardDataType[]
-  >([]);
+  // const [requests, setRequests] = React.useState<
+  //   SkillswapRequestCardDataType[]
+  // >([]);
   const [showFilters, setShowFilters] = React.useState(false); // For mobile
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -63,7 +63,7 @@ const MarketplacePage = () => {
   let {
     data: skillswapRequests,
     isLoading: isRequestsLoading,
-    isFetching: isRequestsFetching,
+    // isFetching: isRequestsFetching,
   } = useSkillswapRequestMarketplaceQuery({
     // ...filters,
     // date: filters?.date?.toISOString(),
@@ -73,33 +73,23 @@ const MarketplacePage = () => {
     offeredSkillQuery: debouncedOfferedSkillQuery,
   });
 
-  const handleSort = () => {
-    // skillswapRequests.requests = skillswapRequests?.requests.sort(());
-    if (skillswapRequests !== undefined) {
+  const displayRequests = React.useMemo<
+    SkillswapRequestCardDataType[] | undefined
+  >(() => {
+    if (skillswapRequests === undefined) return [];
+    else {
+      let requests = [...skillswapRequests.requests];
       if (sort === "OLDEST_FIRST") {
-        setRequests(
-          [...skillswapRequests.requests].sort(
-            (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
-          ),
+        requests.sort(
+          (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
         );
       } else {
-        setRequests(
-          [...skillswapRequests.requests].sort(
-            (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
-          ),
+        requests.sort(
+          (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
         );
       }
+      return requests;
     }
-  };
-
-  /** useEffect to sync `requests` state with `skillswapRequests.requests` */
-  React.useEffect(() => {
-    if (skillswapRequests) setRequests(skillswapRequests.requests);
-  }, [skillswapRequests?.requests]);
-
-  /** useEffect to sort when `sort` changes or data fetched */
-  React.useEffect(() => {
-    handleSort();
   }, [sort, skillswapRequests]);
 
   /** useEffect to sync debounced value with state */
@@ -257,7 +247,7 @@ const MarketplacePage = () => {
           <h2 className="text-xl font-medium md:text-2xl lg:text-4xl">
             Skill Requests{" "}
             <span className="text-lg font-light md:text-xl lg:text-2xl">
-              {isRequestsLoading || isRequestsFetching ? (
+              {isRequestsLoading ? (
                 <SkeletonLoader className="inline-block h-lh rounded-full" />
               ) : (
                 <span>({skillswapRequests?.totalCount} results)</span>
@@ -267,13 +257,13 @@ const MarketplacePage = () => {
           <div className="grid grid-cols-1 gap-3 @xl/sidebar-right:grid-cols-2 @4xl/sidebar-right:grid-cols-3 @5xl/sidebar-right:grid-cols-4">
             {/* :@max-md/sidebar-right */}
 
-            {(isRequestsLoading || isRequestsFetching) &&
+            {isRequestsLoading &&
               Array.from({ length: 12 }, (_, i) => (
                 <SkeletonLoader className="h-[25vh] w-full" key={i} />
               ))}
 
-            {requests.length > 0 ? (
-              requests.map((skillswapRequest, i) => (
+            {displayRequests !== undefined && displayRequests.length > 0 ? (
+              displayRequests.map((skillswapRequest, i) => (
                 <SkillswapRequestCard
                   key={i}
                   skillswapRequest={skillswapRequest}
