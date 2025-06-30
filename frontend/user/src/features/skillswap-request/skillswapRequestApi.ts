@@ -1,6 +1,7 @@
 import type {
   CreateSkillswapRequestPayloadType,
   MarketplacePayloadType,
+  ServerResponse,
   SkillswapRequestCardDataType,
   SkillswapRequestResponse,
 } from "@/lib/types";
@@ -9,7 +10,7 @@ import api from "../api";
 const skillswapRequestApi = api.injectEndpoints({
   endpoints: (builder) => ({
     createSkillswapRequest: builder.mutation<
-      void,
+      ServerResponse,
       CreateSkillswapRequestPayloadType
     >({
       query: (payload) => ({

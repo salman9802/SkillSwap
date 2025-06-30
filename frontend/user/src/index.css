@@ -38,6 +38,15 @@
       transform: rotate(360deg);
     }
   }
+
+  @keyframes ToastProgress {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
 }
 
 @theme {

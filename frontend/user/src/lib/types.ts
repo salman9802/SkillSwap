@@ -1,3 +1,8 @@
+// general
+export type ServerResponse = {
+  message: string;
+};
+
 export type RequestCardDataType = {
   id: number;
   requesterName: string;
