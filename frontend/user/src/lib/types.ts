@@ -121,6 +121,7 @@ export const MarketplaceSort = {
 export type MarketplaceSortKeyType = keyof typeof MarketplaceSort;
 
 export type MarketplacePayloadType = {
+  offset: number;
   date?: string;
   offeredSkills?: string[];
   requestedSkill?: string;

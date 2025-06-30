@@ -52,3 +52,40 @@ export function useSocket() {
 
   return socketRef.current;
 }
+
+export function useThrottleFn(fn: any, delay: number = 750) {
+  const isThrottled = React.useRef(false);
+  // const lastArgs = React.useRef<null | any>(null);
+
+  const throttledFn = React.useCallback(
+    (...args: any) => {
+      // if (lastArgs.current !== null) {
+      //   if (isThrottled.current) lastArgs.current = args;
+      //   return;
+      // }
+
+      if (isThrottled.current) return;
+
+      isThrottled.current = true;
+      fn(...args);
+
+      setTimeout(() => {
+        // if (lastArgs.current) {
+        //   setTimeout(() => {
+        //     fn(...lastArgs.current);
+        //     lastArgs.current = null;
+        //     isThrottled.current = false;
+        //   }, 2000);
+        // } else {
+        //   isThrottled.current = false;
+        // }
+
+        isThrottled.current = false;
+        fn(...args);
+      }, delay);
+    },
+    [fn, delay],
+  );
+
+  return throttledFn;
+}

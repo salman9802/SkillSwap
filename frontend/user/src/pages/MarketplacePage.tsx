@@ -24,17 +24,15 @@ import {
 import { useSkillswapRequestMarketplaceQuery } from "@/features/skillswap-request/skillswapRequestApi";
 import SkeletonLoader from "@/components/utils/SkeletonLoader";
 import { Button } from "@/components/ui/button";
-import { useDebounce } from "@/lib/hooks";
+import { useDebounce, useThrottleFn } from "@/lib/hooks";
 import { Link, useSearchParams } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const MarketplacePage = () => {
   setPageTitle("Skills Marketplace - SkillSwap");
 
   const [sort, setSort] =
     React.useState<MarketplaceSortKeyType>("NEWEST_FIRST");
-  // const [requests, setRequests] = React.useState<
-  //   SkillswapRequestCardDataType[]
-  // >([]);
   const [showFilters, setShowFilters] = React.useState(false); // For mobile
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -54,6 +52,10 @@ const MarketplacePage = () => {
   const [localOfferedSkillQuery, setLocalOfferedSkillQuery] = React.useState(
     offeredSkillQuery ? offeredSkillQuery : "",
   );
+  const [offset, setOffset] = React.useState(0);
+  const [requests, setRequests] = React.useState<
+    SkillswapRequestCardDataType[]
+  >([]);
 
   const debouncedOfferedSkillQuery = useDebounce<string>(
     localOfferedSkillQuery,
@@ -63,6 +65,7 @@ const MarketplacePage = () => {
   let {
     data: skillswapRequests,
     isLoading: isRequestsLoading,
+    isSuccess: isSkillswapMarketplaceSuccess,
     // isFetching: isRequestsFetching,
   } = useSkillswapRequestMarketplaceQuery({
     // ...filters,
@@ -71,26 +74,30 @@ const MarketplacePage = () => {
     requestedSkill,
     date: date?.toISOString(),
     offeredSkillQuery: debouncedOfferedSkillQuery,
+    offset,
   });
 
-  const displayRequests = React.useMemo<
-    SkillswapRequestCardDataType[] | undefined
-  >(() => {
-    if (skillswapRequests === undefined) return [];
-    else {
-      let requests = [...skillswapRequests.requests];
-      if (sort === "OLDEST_FIRST") {
-        requests.sort(
-          (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
-        );
-      } else {
-        requests.sort(
-          (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
-        );
-      }
-      return requests;
+  /** useEffect to sync `skillswapRequests.requests` with `requests` state */
+  React.useEffect(() => {
+    if (skillswapRequests !== undefined) {
+      setRequests((r) => [...r, ...skillswapRequests.requests]);
     }
-  }, [sort, skillswapRequests]);
+  }, [isSkillswapMarketplaceSuccess, offset]);
+
+  /** useEffect for sorting requests */
+  React.useEffect(() => {
+    const sortedRequests = [...requests];
+    if (sort === "OLDEST_FIRST") {
+      sortedRequests.sort(
+        (a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt),
+      );
+    } else {
+      sortedRequests.sort(
+        (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+      );
+    }
+    setRequests(sortedRequests);
+  }, [sort]);
 
   /** useEffect to sync debounced value with state */
   React.useEffect(() => {
@@ -104,6 +111,36 @@ const MarketplacePage = () => {
       return params;
     });
   }, [debouncedOfferedSkillQuery]);
+
+  const isMobile = useIsMobile();
+
+  const handleInfiniteScroll = React.useCallback(() => {
+    const INF_SCROLL_OFFSET_PX = 300;
+    const isNearPageEnd =
+      window.innerHeight + window.pageYOffset >=
+      document.body.offsetHeight - INF_SCROLL_OFFSET_PX;
+
+    console.log(
+      "window.innerHeight + window.pageYOffset",
+      window.innerHeight + window.pageYOffset,
+    );
+    console.log(
+      "document.body.offsetHeight",
+      document.body.offsetHeight - INF_SCROLL_OFFSET_PX,
+    );
+    console.log("isNearPageEnd", isNearPageEnd);
+    if (isNearPageEnd) setOffset((o) => o + 1);
+  }, []);
+
+  const throttledHandleInfiniteScroll = useThrottleFn(handleInfiniteScroll);
+
+  /** useEffect to add event listener for window's `scroll` event for infinite scroll pagination */
+  React.useEffect(() => {
+    window.addEventListener("scroll", throttledHandleInfiniteScroll);
+    return () => {
+      window.removeEventListener("scroll", throttledHandleInfiniteScroll);
+    };
+  }, []);
 
   return (
     <SidebarProvider>
@@ -259,11 +296,11 @@ const MarketplacePage = () => {
 
             {isRequestsLoading &&
               Array.from({ length: 12 }, (_, i) => (
-                <SkeletonLoader className="h-[25vh] w-full" key={i} />
+                <SkeletonLoader className="h-[50vh] w-full" key={i} />
               ))}
 
-            {displayRequests !== undefined && displayRequests.length > 0 ? (
-              displayRequests.map((skillswapRequest, i) => (
+            {requests.length > 0 ? (
+              requests.map((skillswapRequest, i) => (
                 <SkillswapRequestCard
                   key={i}
                   skillswapRequest={skillswapRequest}
@@ -274,6 +311,10 @@ const MarketplacePage = () => {
                 No requests found
               </div>
             )}
+
+            {Array.from({ length: isMobile ? 1 : 4 }, (_, i) => (
+              <SkeletonLoader className="h-[50vh] w-full" key={i} />
+            ))}
           </div>
         </div>
       </div>

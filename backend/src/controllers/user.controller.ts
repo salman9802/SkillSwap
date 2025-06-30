@@ -320,8 +320,9 @@ export const marketplace = async (
   // fetch from db
   const [requests, totalCount] = await Promise.all([
     prisma.skillSwapRequest.findMany({
-      // skip: parsed.offset,
+      skip: parsed.offset,
       // take: parsed.limit,
+      take: 8,
       where,
       select: {
         id: true,
