@@ -300,21 +300,25 @@ const MarketplacePage = () => {
               ))}
 
             {requests.length > 0 ? (
-              requests.map((skillswapRequest, i) => (
-                <SkillswapRequestCard
-                  key={i}
-                  skillswapRequest={skillswapRequest}
-                />
-              ))
+              <>
+                {requests.map((skillswapRequest, i) => (
+                  <SkillswapRequestCard
+                    key={i}
+                    skillswapRequest={skillswapRequest}
+                  />
+                ))}
+                {/* Trailing loaders */}
+                {skillswapRequests &&
+                  requests.length < skillswapRequests?.totalCount &&
+                  Array.from({ length: isMobile ? 1 : 4 }, (_, i) => (
+                    <SkeletonLoader className="h-[50vh] w-full" key={i} />
+                  ))}
+              </>
             ) : (
               <div className="text-lg font-light text-gray-800 md:text-xl lg:text-2xl">
                 No requests found
               </div>
             )}
-
-            {Array.from({ length: isMobile ? 1 : 4 }, (_, i) => (
-              <SkeletonLoader className="h-[50vh] w-full" key={i} />
-            ))}
           </div>
         </div>
       </div>
