@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import Loader from "@/components/utils/Loader";
+import { useToast } from "@/components/utils/toast";
 
 const ReviewDialog: React.FC<{
   skillswapSession: SkillswapSessionResponse;
@@ -47,6 +48,7 @@ const ReviewDialog: React.FC<{
     rating: 4,
     comment: "",
   });
+  const { pushToastMessage } = useToast();
 
   const [createReview, { isLoading }] = useReviewSkillswapSessionMutation();
 
@@ -65,6 +67,10 @@ const ReviewDialog: React.FC<{
       onReviewFinish();
     } catch (error) {
       console.error(error);
+      pushToastMessage({
+        type: "error",
+        message: "Service unavailable",
+      });
     } finally {
       setOpen(false);
     }
@@ -219,6 +225,8 @@ const SessionPageSkeletonLoader: React.FC = () => {
 const SessionPage = () => {
   const { sessionId } = useParams() as { sessionId: string };
 
+  const { pushToastMessage } = useToast();
+
   const {
     data: skillswapSession,
     isLoading,
@@ -249,21 +257,37 @@ const SessionPage = () => {
   /** Reject session when countdown finished and session not scheduled yet, or any party rejects session */
   const handleSessionRejection = async () => {
     try {
-      const res = await rejectSession(sessionId);
+      const res = await rejectSession(sessionId).unwrap();
       console.log(res);
       refetchSession();
+      pushToastMessage({
+        type: "success",
+        message: res.message,
+      });
     } catch (error) {
       console.error(error);
+      pushToastMessage({
+        type: "error",
+        message: "Service unavailable",
+      });
     }
   };
 
   const handleSessionUpdate = async () => {
     try {
-      const res = await updateSession(sessionId);
+      const res = await updateSession(sessionId).unwrap();
       console.log(res);
       refetchSession();
+      pushToastMessage({
+        type: "success",
+        message: res.message,
+      });
     } catch (error) {
       console.error(error);
+      pushToastMessage({
+        type: "error",
+        message: "Service unavailable",
+      });
     }
   };
 

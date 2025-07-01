@@ -12,6 +12,8 @@ import SkeletonLoader from "@/components/utils/SkeletonLoader";
 import DateTimePicker from "@/components/utils/DateTimePicker";
 import { useCreateSkillswapRequestMutation } from "@/features/skillswap-request/skillswapRequestApi";
 import Loader from "@/components/utils/Loader";
+import { useToast } from "@/components/utils/toast";
+import type { ServerResponse } from "@/lib/types";
 
 const NewRequestPage = () => {
   const [newDate, setNewDate] = React.useState<Date>();
@@ -22,6 +24,8 @@ const NewRequestPage = () => {
     requestedSkill: "",
     availability: [],
   });
+
+  const { pushToastMessage } = useToast();
 
   const {
     data: userDetails,
@@ -55,20 +59,27 @@ const NewRequestPage = () => {
   // };
 
   const handlePublishRequest = async () => {
-    if (
-      skillswapRequest.requestedSkill.length === 0 ||
-      skillswapRequest.availability.length === 0 ||
-      skillswapRequest.availability.length > 5
-    ) {
-      alert("Please select requested skill and have availability between 1-5");
-      return;
-    }
+    // if (
+    //   skillswapRequest.requestedSkill.length === 0 ||
+    //   skillswapRequest.availability.length === 0 ||
+    //   skillswapRequest.availability.length > 5
+    // ) {
+    //   alert("Please select requested skill and have availability between 1-5");
+    //   return;
+    // }
 
     try {
       const res = await createSkillswapRequest(skillswapRequest).unwrap();
-      console.log(res);
+      pushToastMessage({
+        type: "success",
+        message: res.message,
+      });
     } catch (error) {
       console.error(error);
+      pushToastMessage({
+        type: "error",
+        message: "Service unavailable",
+      });
     }
 
     setSkillswapRequest({ requestedSkill: "", availability: [] });

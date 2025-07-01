@@ -440,6 +440,7 @@ export const newSkillSwapSession = async (
   const session = await UserService.createSkillSwapSession(parsed);
 
   res.status(STATUS_CODES.OK).json({
+    message: "Session created successfully",
     session,
   });
 };
@@ -649,7 +650,9 @@ export const rejectSkillswapSession = async (
     },
   });
 
-  res.status(STATUS_CODES.OK).send();
+  res.status(STATUS_CODES.OK).json({
+    message: "Session rejected",
+  });
 };
 
 export const reviewSkillswapSession = async (

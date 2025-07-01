@@ -1,6 +1,7 @@
 import type {
   AllSkillswapSessionResponse,
   CreateSkillswapSessionPayload,
+  ServerResponse,
   SkillswapSessionChatResponse,
   SkillswapSessionResponse,
   SkillswapSessionReview,
@@ -10,7 +11,7 @@ import api from "../api";
 const skillswapSessionApi = api.injectEndpoints({
   endpoints: (builder) => ({
     createSkillswapSession: builder.mutation<
-      any,
+      ServerResponse & { session: { id: string } },
       CreateSkillswapSessionPayload
     >({
       query: (payload) => ({
@@ -37,13 +38,13 @@ const skillswapSessionApi = api.injectEndpoints({
       transformResponse: (response: { session: SkillswapSessionResponse }) =>
         response.session,
     }),
-    rejectSkillswapSession: builder.mutation<any, string>({
+    rejectSkillswapSession: builder.mutation<ServerResponse, string>({
       query: (sessionId) => ({
         url: `user/ss-session/${sessionId}/reject`,
         method: "PUT",
       }),
     }),
-    updateSkillswapSession: builder.mutation<any, string>({
+    updateSkillswapSession: builder.mutation<ServerResponse, string>({
       query: (sessionId) => ({
         url: `user/ss-session/${sessionId}`,
         method: "PUT",

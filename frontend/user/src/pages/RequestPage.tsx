@@ -25,6 +25,7 @@ import { IoIosWarning } from "react-icons/io";
 import { useCreateSkillswapSessionMutation } from "@/features/skillswap-session/skillswapSessionApi";
 import Loader from "@/components/utils/Loader";
 import type { StoreState } from "@/features/store";
+import { useToast } from "@/components/utils/toast";
 
 // NOTE: Mock data
 // const requests = requestsJSON as RequestCardDataType[];
@@ -47,6 +48,7 @@ const schedules = [
 ];
 
 const RequestPage = () => {
+  const { pushToastMessage } = useToast();
   const userId = useSelector((store: StoreState) => store.session.user?.id);
 
   const { requestId } = useParams() as { requestId: string };
@@ -113,11 +115,19 @@ const RequestPage = () => {
           scheduleId: session.scheduleId,
         }).unwrap();
 
-        const payload = res as unknown as { session: { id: string } };
-        console.log(payload.session);
-        navigate(`/user/account/sessions/${payload.session.id}`);
+        // const payload = res as unknown as { session: { id: string } };
+        // console.log(payload.session);
+        navigate(`/user/account/sessions/${res.session.id}`);
+        pushToastMessage({
+          type: "success",
+          message: res.message,
+        });
       } catch (error) {
         console.error(error);
+        pushToastMessage({
+          type: "error",
+          message: "Service unavailable",
+        });
       }
     }
   };
