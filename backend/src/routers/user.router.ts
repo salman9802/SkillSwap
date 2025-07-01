@@ -4,6 +4,11 @@ import { errorCatch } from "../lib/error";
 import * as UserController from "../controllers/user.controller";
 import { userHasAccess } from "../middlewares/auth.middleware";
 import { upload } from "../lib/multer";
+import {
+  demoLimitForSkillswapRequest,
+  demoLimitForSkillswapSession,
+  demoLimitForUserAccount,
+} from "../middlewares/demo/demo-limit.middleware";
 
 const userRouter = express.Router();
 
@@ -20,7 +25,10 @@ userRouter.delete(
 // user account routes
 userRouter
   .route("/account")
-  .post(errorCatch(UserController.createUserAccount)) // Creates new user account (registeration)
+  .post(
+    errorCatch(demoLimitForUserAccount),
+    errorCatch(UserController.createUserAccount)
+  ) // Creates new user account (registeration)
   .get(errorCatch(userHasAccess), errorCatch(UserController.userAccountDetails)) // get user account details
   .put(errorCatch(userHasAccess), errorCatch(UserController.updateUser)); // update user
 
@@ -40,6 +48,7 @@ userRouter.get(
 userRouter.post(
   "/new-request",
   errorCatch(userHasAccess),
+  errorCatch(demoLimitForSkillswapRequest),
   errorCatch(UserController.createNewRequest)
 );
 
@@ -58,6 +67,7 @@ userRouter.get(
 userRouter.post(
   "/ss-session",
   errorCatch(userHasAccess),
+  errorCatch(demoLimitForSkillswapSession),
   errorCatch(UserController.newSkillSwapSession)
 );
 

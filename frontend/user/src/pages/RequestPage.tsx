@@ -9,6 +9,7 @@ import type {
   CreateSkillswapSessionPayload,
   NewSkillswapSession,
   RequestCardDataType,
+  ServerResponse,
   SkillswapRequest,
 } from "@/lib/types";
 import requestsJSON from "../../__data/requests.json";
@@ -124,9 +125,10 @@ const RequestPage = () => {
         });
       } catch (error) {
         console.error(error);
+        const res = (error as { data: ServerResponse }).data;
         pushToastMessage({
           type: "error",
-          message: "Service unavailable",
+          message: res.message || "Service unavailable",
         });
       }
     }

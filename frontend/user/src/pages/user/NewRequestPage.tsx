@@ -76,9 +76,10 @@ const NewRequestPage = () => {
       });
     } catch (error) {
       console.error(error);
+      const res = (error as { data: ServerResponse }).data;
       pushToastMessage({
         type: "error",
-        message: "Service unavailable",
+        message: res.message || "Service unavailable",
       });
     }
 
