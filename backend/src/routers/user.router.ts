@@ -9,11 +9,21 @@ import {
   demoLimitForSkillswapSession,
   demoLimitForUserAccount,
 } from "../middlewares/demo/demo-limit.middleware";
+import {
+  createLimiter,
+  loginLimiter,
+  readRateLimiter,
+  registerLimiter,
+} from "../middlewares/rate-limilt";
 
 const userRouter = express.Router();
 
 // Prefix: /api/user
-userRouter.post("/session", errorCatch(UserController.newUserSession)); // Creates new refresh & access token (login)
+userRouter.post(
+  "/session",
+  loginLimiter,
+  errorCatch(UserController.newUserSession)
+); // Creates new refresh & access token (login)
 userRouter.get("/session/access", errorCatch(UserController.newAccessToken)); // Creates new access token (refresh)
 
 userRouter.delete(
@@ -26,6 +36,7 @@ userRouter.delete(
 userRouter
   .route("/account")
   .post(
+    registerLimiter,
     errorCatch(demoLimitForUserAccount),
     errorCatch(UserController.createUserAccount)
   ) // Creates new user account (registeration)
@@ -41,12 +52,14 @@ userRouter.put(
 
 userRouter.get(
   "/dashboard",
+  readRateLimiter,
   errorCatch(userHasAccess),
   errorCatch(UserController.dashboard)
 );
 
 userRouter.post(
   "/new-request",
+  createLimiter,
   errorCatch(userHasAccess),
   errorCatch(demoLimitForSkillswapRequest),
   errorCatch(UserController.createNewRequest)
@@ -54,18 +67,21 @@ userRouter.post(
 
 userRouter.get(
   "/marketplace",
+  readRateLimiter,
   errorCatch(userHasAccess),
   errorCatch(UserController.marketplace)
 );
 
 userRouter.get(
   "/request/:id",
+  readRateLimiter,
   errorCatch(userHasAccess),
   errorCatch(UserController.request)
 );
 
 userRouter.post(
   "/ss-session",
+  createLimiter,
   errorCatch(userHasAccess),
   errorCatch(demoLimitForSkillswapSession),
   errorCatch(UserController.newSkillSwapSession)
@@ -73,12 +89,14 @@ userRouter.post(
 
 userRouter.get(
   "/ss-session",
+  readRateLimiter,
   errorCatch(userHasAccess),
   errorCatch(UserController.skillswapSessions)
 );
 
 userRouter.get(
   "/ss-session/:id",
+  readRateLimiter,
   errorCatch(userHasAccess),
   errorCatch(UserController.skillswapSession)
 );
@@ -97,6 +115,7 @@ userRouter.put(
 
 userRouter.post(
   "/ss-session/:id/review",
+  createLimiter,
   errorCatch(userHasAccess),
   errorCatch(UserController.reviewSkillswapSession)
 );
