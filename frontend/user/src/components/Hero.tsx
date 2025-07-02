@@ -1,6 +1,88 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "./ui/button";
+
+const PuzzlePieceImage: React.FC<
+  React.ImgHTMLAttributes<HTMLImageElement> & {
+    text: string;
+  }
+> = ({ text, className, ...rest }) => {
+  return (
+    <div style={rest.style} className="">
+      <div className={`relative ${className}`}>
+        <img className="size-50 object-contain" {...rest} style={{}} />
+        <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          {text}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+const HeroImage: React.FC = () => {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex gap-4 p-2">
+        {/* <img
+          className="size-40 -rotate-6 object-contain"
+          src="TL-piece.png"
+          alt=""
+        />
+        <img
+          className="size-40 rotate-6 object-contain"
+          src="TR-piece.png"
+          alt=""
+        /> */}
+        <PuzzlePieceImage
+          text="Yoga"
+          style={{
+            animation: "bounce 2s ease-in-out infinite",
+          }}
+          className="repeat-infinite -rotate-6 ease-in-out"
+          src="TL-piece.png"
+        />
+        <PuzzlePieceImage
+          text="Cooking"
+          style={{
+            animation: "bounce 2s ease-in-out infinite",
+          }}
+          className="repeat-infinite rotate-6 delay-100 ease-in-out"
+          src="TR-piece.png"
+        />
+      </div>
+
+      <div className="flex gap-2 p-2">
+        {/* <img
+          className="size-40 -rotate-3 object-contain"
+          src="BL-piece.png"
+          alt=""
+        />
+        <img
+          className="size-40 rotate-3 object-contain"
+          src="BR-piece.png"
+          alt=""
+        /> */}
+        <PuzzlePieceImage
+          text="Guitar"
+          style={{
+            animation: "bounce 2s ease-in-out infinite",
+          }}
+          className="-rotate-3 delay-200 ease-in-out"
+          src="BL-piece.png"
+        />
+        <PuzzlePieceImage
+          text="Programming"
+          style={{
+            animation: "bounce 2s ease-in-out infinite",
+          }}
+          className="repeat-infinite rotate-3 delay-300 ease-in-out"
+          src="BR-piece.png"
+        />
+      </div>
+    </div>
+  );
+};
 
 const Hero = () => {
   return (
@@ -33,8 +115,8 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-        <div className="w-5/6 overflow-hidden md:w-1/2 lg:w-full lg:max-w-lg">
-          <img
+        <div className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
+          {/* <img
             className="scale-150 rounded-full object-center mix-blend-multiply"
             alt="hero"
             src="hero2.avif"
@@ -45,7 +127,8 @@ const Hero = () => {
               WebkitMaskImage:
                 "radial-gradient(circle, white 50%, transparent 100%)",
             }}
-          />
+          /> */}
+          <HeroImage />
         </div>
       </div>
     </section>
