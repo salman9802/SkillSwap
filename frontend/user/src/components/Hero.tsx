@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { Button } from "./ui/button";
+import FloatingPiecesBg from "./FloatingPiecesBg";
 
 const PuzzlePieceImage: React.FC<
   React.ImgHTMLAttributes<HTMLImageElement> & {
@@ -36,18 +37,22 @@ const HeroImage: React.FC = () => {
         /> */}
         <PuzzlePieceImage
           text="Yoga"
-          style={{
-            animation: "bounce 2s ease-in-out infinite",
-          }}
-          className="repeat-infinite -rotate-6 ease-in-out"
+          style={
+            {
+              // animation: "bounce 2s ease-in-out infinite",
+            }
+          }
+          className="-rotate-6 animate-bounce"
           src="TL-piece.png"
         />
         <PuzzlePieceImage
           text="Cooking"
-          style={{
-            animation: "bounce 2s ease-in-out infinite",
-          }}
-          className="repeat-infinite rotate-6 delay-100 ease-in-out"
+          style={
+            {
+              // animation: "bounce 2s ease-in-out infinite",
+            }
+          }
+          className="rotate-6 animate-bounce delay-100"
           src="TR-piece.png"
         />
       </div>
@@ -65,18 +70,22 @@ const HeroImage: React.FC = () => {
         /> */}
         <PuzzlePieceImage
           text="Guitar"
-          style={{
-            animation: "bounce 2s ease-in-out infinite",
-          }}
-          className="-rotate-3 delay-200 ease-in-out"
+          style={
+            {
+              // animation: "bounce 2s ease-in-out infinite",
+            }
+          }
+          className="-rotate-3 animate-bounce delay-200"
           src="BL-piece.png"
         />
         <PuzzlePieceImage
           text="Programming"
-          style={{
-            animation: "bounce 2s ease-in-out infinite",
-          }}
-          className="repeat-infinite rotate-3 delay-300 ease-in-out"
+          style={
+            {
+              // animation: "bounce 2s ease-in-out infinite",
+            }
+          }
+          className="rotate-3 animate-bounce delay-300"
           src="BR-piece.png"
         />
       </div>

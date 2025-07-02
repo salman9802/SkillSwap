@@ -51,7 +51,9 @@
 
 @theme {
   /* --color-primary: var(--color-green-500); */
+
   --animate-shimmer: shimmer 1.5s infinite;
+  --animate-bounce: bounce 2s ease-in-out infinite;
 
   @keyframes shimmer {
     0% {

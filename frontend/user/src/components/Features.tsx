@@ -1,9 +1,24 @@
 import { FEATURES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import FloatingPiecesBg from "./FloatingPiecesBg";
 
 const Features = () => {
   return (
     <section className="text-primary">
+      {/* <FloatingPiecesBg
+        puzzlePieces={[
+          { top: "12%", left: "60%", delay: "1.5s", size: "3.2rem" },
+          { top: "65%", left: "10%", delay: "2.8s", size: "4rem" },
+          { top: "80%", left: "50%", delay: "0.5s", size: "2.8rem" },
+          { top: "45%", left: "75%", delay: "3.2s", size: "3.6rem" },
+          { top: "25%", left: "5%", delay: "4.5s", size: "3rem" },
+          { top: "55%", left: "88%", delay: "2.3s", size: "3.3rem" },
+          { top: "38%", left: "30%", delay: "1.8s", size: "2.7rem" },
+          { top: "68%", left: "65%", delay: "0s", size: "3.9rem" },
+          { top: "15%", left: "45%", delay: "1.2s", size: "3.1rem" },
+          { top: "90%", left: "80%", delay: "3.8s", size: "2.6rem" },
+        ]}
+      /> */}
       <div className="container mx-auto px-5 pt-24">
         {/* Feature */}
         {FEATURES.map((feature, i) => (
