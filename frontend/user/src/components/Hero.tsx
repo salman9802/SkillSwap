@@ -42,7 +42,7 @@ const HeroImage: React.FC = () => {
               // animation: "bounce 2s ease-in-out infinite",
             }
           }
-          className="-rotate-6 animate-bounce"
+          className="animate-bounce [--rotation:-6deg]"
           src="TL-piece.png"
         />
         <PuzzlePieceImage
@@ -52,7 +52,7 @@ const HeroImage: React.FC = () => {
               // animation: "bounce 2s ease-in-out infinite",
             }
           }
-          className="rotate-6 animate-bounce delay-100"
+          className="animate-bounce delay-100 [--rotation:6deg]"
           src="TR-piece.png"
         />
       </div>
@@ -75,7 +75,7 @@ const HeroImage: React.FC = () => {
               // animation: "bounce 2s ease-in-out infinite",
             }
           }
-          className="-rotate-3 animate-bounce delay-200"
+          className="animate-bounce delay-200 [--rotation:-3deg]"
           src="BL-piece.png"
         />
         <PuzzlePieceImage
@@ -85,7 +85,7 @@ const HeroImage: React.FC = () => {
               // animation: "bounce 2s ease-in-out infinite",
             }
           }
-          className="rotate-3 animate-bounce delay-300"
+          className="animate-bounce delay-300 [--rotation:3deg]"
           src="BR-piece.png"
         />
       </div>
