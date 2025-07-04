@@ -1,25 +1,31 @@
+import React from "react";
+
 import { FEATURES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import FloatingPiecesBg from "./FloatingPiecesBg";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const Features = () => {
+  const featuresRef = React.useRef<null | HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.from(featuresRef.current, {
+      y: 100,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: featuresRef.current,
+        // start: "top 50%",
+        start: "top center",
+      },
+
+      duration: 1.8,
+    });
+  }, []);
+
   return (
     <section className="text-primary">
-      {/* <FloatingPiecesBg
-        puzzlePieces={[
-          { top: "12%", left: "60%", delay: "1.5s", size: "3.2rem" },
-          { top: "65%", left: "10%", delay: "2.8s", size: "4rem" },
-          { top: "80%", left: "50%", delay: "0.5s", size: "2.8rem" },
-          { top: "45%", left: "75%", delay: "3.2s", size: "3.6rem" },
-          { top: "25%", left: "5%", delay: "4.5s", size: "3rem" },
-          { top: "55%", left: "88%", delay: "2.3s", size: "3.3rem" },
-          { top: "38%", left: "30%", delay: "1.8s", size: "2.7rem" },
-          { top: "68%", left: "65%", delay: "0s", size: "3.9rem" },
-          { top: "15%", left: "45%", delay: "1.2s", size: "3.1rem" },
-          { top: "90%", left: "80%", delay: "3.8s", size: "2.6rem" },
-        ]}
-      /> */}
-      <div className="container mx-auto px-5 pt-24">
+      <div ref={featuresRef} className="container mx-auto px-5 pt-24">
         {/* Feature */}
         {FEATURES.map((feature, i) => (
           <div

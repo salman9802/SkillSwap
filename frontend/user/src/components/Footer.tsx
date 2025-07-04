@@ -1,8 +1,28 @@
+import React from "react";
+
 import { SOCIALS } from "@/lib/constants";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const Footer = () => {
+  const footerRef = React.useRef<HTMLDivElement | null>(null);
+
+  useGSAP(() => {
+    gsap.from(footerRef.current, {
+      // y: 100,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: footerRef.current,
+        start: "center bottom",
+      },
+
+      duration: 1.8,
+      // delay: 0.2,
+    });
+  }, []);
+
   return (
-    <footer className="text-gray-600">
+    <footer ref={footerRef} className="text-gray-600">
       <div className="container mx-auto flex flex-col items-center px-5 py-8 sm:flex-row">
         {/* <a className="title-font flex items-center justify-center font-medium text-gray-900 md:justify-start"> */}
         <span className="custom-gradient ml-3 text-2xl font-semibold">

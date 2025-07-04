@@ -16,6 +16,13 @@ import SessionPage from "./pages/user/SessionPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { store } from "./features/store";
 
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
+
 const App = () => {
   return (
     <Provider store={store}>

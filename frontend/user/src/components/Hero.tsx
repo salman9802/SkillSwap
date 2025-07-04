@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 
 import { Button } from "./ui/button";
 import FloatingPiecesBg from "./FloatingPiecesBg";
+import { useGSAP } from "@gsap/react";
+import { SplitText } from "gsap/all";
+import gsap from "gsap";
 
 const PuzzlePieceImage: React.FC<
   React.ImgHTMLAttributes<HTMLImageElement> & {
@@ -94,14 +97,53 @@ const HeroImage: React.FC = () => {
 };
 
 const Hero = () => {
+  useGSAP(() => {
+    const heroHeaderSplitText = new SplitText("#hero-header", {
+      type: "chars, words",
+    });
+    const heroParaTextSplit = new SplitText("#hero-para", {
+      type: "lines",
+    });
+
+    gsap.from(heroHeaderSplitText.words, {
+      yPercent: 100,
+      // opacity: 0,
+
+      ease: "expo.out",
+      duration: 1.8,
+      stagger: 0.06,
+    });
+
+    gsap.from(heroParaTextSplit.lines, {
+      yPercent: 100,
+      opacity: 0,
+
+      ease: "expo.out",
+      duration: 1.8,
+      stagger: 0.06,
+      delay: 0.3,
+    });
+
+    gsap.from("#hero-image", {
+      y: 100,
+      opacity: 0,
+
+      duration: 1.5,
+      delay: 0.1,
+    });
+  }, []);
+
   return (
     <section className="text-gray-600">
       <div className="container mx-auto flex flex-col items-center px-5 py-24 md:flex-row">
         <div className="mb-16 flex flex-col items-center text-center md:mb-0 md:w-1/2 md:items-start md:pr-16 md:text-left lg:flex-grow lg:pr-24">
-          <h1 className="title-font mb-4 text-3xl font-medium text-gray-900 sm:text-4xl">
+          <h1
+            id="hero-header"
+            className="title-font mb-4 text-3xl font-medium text-gray-900 sm:text-4xl"
+          >
             Trade Skills, Build Futures.
           </h1>
-          <p className="mb-8 leading-relaxed">
+          <p id="hero-para" className="mb-8 leading-relaxed">
             SkillSwap connects people who want to learn with those who love to
             teach. Whether you're swapping photography tips for coding lessons
             or trading language skills for guitar chords, SkillSwap makes
@@ -124,7 +166,7 @@ const Hero = () => {
             </Link>
           </div>
         </div>
-        <div className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
+        <div id="hero-image" className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
           {/* <img
             className="scale-150 rounded-full object-center mix-blend-multiply"
             alt="hero"
