@@ -7,6 +7,7 @@ const FloatingPiecesBg: React.FC<{
     left: string;
     delay: string;
     size: string;
+    rotate: string;
   }[];
 }> = ({ puzzlePieces }) => {
   return (
@@ -14,16 +15,20 @@ const FloatingPiecesBg: React.FC<{
       {puzzlePieces.map((piece, index) => (
         <IoExtensionPuzzleOutline
           key={index}
-          className={`absolute animate-bounce`}
-          style={{
-            width: piece.size,
-            height: piece.size,
-            top: piece.top,
-            left: piece.left,
-            animationDelay: piece.delay,
-            opacity: 0.2,
-            filter: "blur(1px)",
-          }}
+          className={`animate-bounce [--rotation:${piece.rotate}deg] absolute`}
+          style={
+            {
+              width: piece.size,
+              height: piece.size,
+              top: piece.top,
+              left: piece.left,
+              animationDelay: piece.delay,
+              opacity: 0.2,
+              filter: "blur(1px)",
+              // rotate: piece.rotate,
+              "--rotation": `${piece.rotate}deg`,
+            } as React.CSSProperties
+          }
         />
       ))}
       {/* Replace the SVG below with your own puzzle piece */}

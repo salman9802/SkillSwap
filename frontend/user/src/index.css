@@ -67,10 +67,10 @@
   @keyframes bounce {
     0%,
     100% {
-      transform: translateY(0);
+      transform: rotate(var(--rotation)) translateY(0);
     }
     50% {
-      transform: translateY(-0.5rem);
+      transform: rotate(var(--rotation)) translateY(-0.5rem);
     }
   }
 }
