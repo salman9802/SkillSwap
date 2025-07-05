@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node --env-file=\".env\" dist/index.js",
     "dev": "tsx watch src/",
-    "build": "tsc && npx prisma generate"
+    "build:prisma": "npx prisma generate",
+    "build": "tsc && npm run build:prisma"
   },
   "author": "Salman A Khan",
   "license": "Proprietary",

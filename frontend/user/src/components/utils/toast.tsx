@@ -104,7 +104,7 @@ const ToastContext = React.createContext<null | {
 }>(null);
 
 /** context provider for toast manipulation */
-const ToastProvider = ({ children }: React.PropsWithChildren) => {
+export const ToastProvider = ({ children }: React.PropsWithChildren) => {
   const [messages, setMessages] = React.useState<ToastMessage[]>([]);
 
   const pushMessage = React.useCallback((message: ToastMessage) => {
@@ -140,7 +140,7 @@ const ToastProvider = ({ children }: React.PropsWithChildren) => {
 };
 
 /** hook for context */
-const useToast = () => {
+export const useToast = () => {
   const ctx = React.useContext(ToastContext);
 
   if (ctx === null) {
@@ -149,5 +149,3 @@ const useToast = () => {
 
   return ctx;
 };
-
-export { ToastProvider, useToast };
