@@ -15,7 +15,7 @@ import {
 import { STATUS_CODES } from "../constants/http";
 import * as UserService from "../services/user.service";
 import { appAssert } from "../lib/error";
-import { User, UserSession } from "../generated/prisma";
+import { User, UserSession } from "../../generated/prisma";
 import { setAuthCookies, unsetAuthCookies } from "../lib/cookie";
 import { ENV } from "../constants/env";
 import { AppErrorCodes } from "../constants/error";

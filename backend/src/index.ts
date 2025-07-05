@@ -1,7 +1,11 @@
 import http from "http";
+import path from "path";
+import fs from "fs";
+
+import dotenv from "dotenv";
+dotenv.config();
 
 import express from "express";
-import "dotenv/config";
 import colors from "@colors/colors";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -17,6 +21,31 @@ import { skillswapSessionChatSocket } from "./sockets/user.socket";
 const server = express();
 
 server.use("/uploads", express.static("uploads")); // Serve static files
+
+// Serve frontend (React)
+if (ENV.NODE_ENV === "production") {
+  console.log(colors.cyan("Production environment detected"));
+  const DIST_PATH = path.join(__dirname, ENV.CLIENT_DIST_PATH);
+  if (fs.existsSync(DIST_PATH)) {
+    console.log(colors.cyan(`- Using distribution found at '${DIST_PATH}'`));
+
+    server.use(express.static(DIST_PATH));
+  } else {
+    console.log(
+      colors.red(`- No distribution found! '${DIST_PATH}' does not exists.`)
+    );
+    setImmediate(() => {
+      process.exit(1);
+    });
+  }
+} else {
+  console.log(colors.cyan("Development environment detected"));
+  console.log(colors.cyan("- Manually start client"));
+}
+// server.use(express.static(path.join(__dirname, ENV.CLIENT_DIST_PATH)));
+// server.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, ENV.CLIENT_DIST_PATH, "index.html"));
+// });
 
 // middlewares
 server.use(express.json());

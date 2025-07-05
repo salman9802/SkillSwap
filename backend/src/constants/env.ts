@@ -34,6 +34,7 @@ const envSchema = z.object({
     (val) => (typeof val === "string" ? Number(val) : val),
     z.number().default(8080)
   ),
+  CLIENT_DIST_PATH: z.string().optional().default("./../../frontend/user/dist"),
 });
 
 let env;

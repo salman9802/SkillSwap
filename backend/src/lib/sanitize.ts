@@ -1,4 +1,4 @@
-import { User, UserSession } from "../generated/prisma";
+import { User, UserSession } from "../../generated/prisma";
 
 export type SafeUser = Omit<User, "password" | "createdAt">;
 export type SafeUserSession = Omit<UserSession, "createdAt">;

@@ -6,7 +6,7 @@ import * as UserService from "../services/user.service";
 import { AccessTokenJwtPayload } from "../types/express/auth";
 import prisma from "../db/client";
 import { sanitizeUser } from "../lib/sanitize";
-import { User } from "../generated/prisma";
+import { User } from "../../generated/prisma";
 
 export const socketAuthMiddleware = async (socket: Socket, next: any) => {
   try {

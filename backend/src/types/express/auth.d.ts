@@ -1,6 +1,6 @@
 import { JwtPayload } from "jsonwebtoken";
 
-import { User } from "../../generated/prisma";
+import { User } from "../../../generated/prisma";
 import { SafeUser } from "../../lib/sanitize";
 
 export interface RefreshTokenJwtPayload extends JwtPayload {

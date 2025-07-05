@@ -1,4 +1,4 @@
-import { Prisma } from "../../generated/prisma";
+import { Prisma } from "../../../generated/prisma";
 import { hashPassword } from "../../lib/bcrypt";
 
 /** Prisma middleware to hash password before being saved / updated */

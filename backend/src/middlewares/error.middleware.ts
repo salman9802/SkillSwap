@@ -5,7 +5,7 @@ import { ENV } from "../constants/env";
 import { AppErrorCodes } from "../constants/error";
 import z from "zod";
 import { AppError, prettifyError } from "../lib/error";
-import { Prisma } from "../generated/prisma";
+import { Prisma } from "../../generated/prisma";
 
 export const errorMiddleware: express.ErrorRequestHandler = (
   error: Error,

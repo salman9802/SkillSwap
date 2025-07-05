@@ -6,7 +6,7 @@ import * as UserService from "../services/user.service";
 import prisma from "../db/client";
 import { AccessTokenJwtPayload } from "../types/express/auth";
 import { AppErrorCodes } from "../constants/error";
-import { User, UserSession } from "../generated/prisma";
+import { User, UserSession } from "../../generated/prisma";
 import { sanitizeUser } from "../lib/sanitize";
 
 export const userHasAccess = async (

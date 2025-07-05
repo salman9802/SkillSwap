@@ -3,7 +3,7 @@ import moment from "moment-timezone";
 
 import { ENV } from "../constants/env";
 import prisma from "../db/client";
-import { SkillSwapRequest, User, UserSession } from "../generated/prisma";
+import { SkillSwapRequest, User, UserSession } from "../../generated/prisma";
 import { comparePassword } from "../lib/bcrypt";
 import {
   ExistingUser,
