@@ -4,6 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ENV = void 0;
+const path_1 = __importDefault(require("path"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config({
+    path: path_1.default.join(__dirname, "..", "..", ".env"),
+    // debug: true,
+});
 const safe_1 = __importDefault(require("@colors/colors/safe"));
 const time_1 = __importDefault(require("./time"));
 const zod_1 = __importDefault(require("zod"));

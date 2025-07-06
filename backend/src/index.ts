@@ -2,9 +2,6 @@ import http from "http";
 import path from "path";
 import fs from "fs";
 
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
 import colors from "@colors/colors";
 import cors from "cors";
@@ -30,6 +27,9 @@ if (ENV.NODE_ENV === "production") {
     console.log(colors.cyan(`- Using distribution found at '${DIST_PATH}'`));
 
     server.use(express.static(DIST_PATH));
+    // server.get("/", (req, res) => {
+    //   res.sendFile(path.join(__dirname, ENV.CLIENT_DIST_PATH, "index.html"));
+    // });
   } else {
     console.log(
       colors.red(`- No distribution found! '${DIST_PATH}' does not exists.`)
@@ -55,13 +55,14 @@ server.use(
   cors({
     origin: [ENV.CLIENT_BASE_URL as string],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    // methods: "*",
     credentials: true,
   })
 );
 
-server.get("/", (req, res) => {
-  res.send("Hello world");
-});
+// server.get("/", (req, res) => {
+//   res.send("Hello world");
+// });
 
 // api
 server.use("/api", apiRouter);

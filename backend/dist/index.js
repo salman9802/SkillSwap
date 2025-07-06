@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = __importDefault(require("http"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
 const colors_1 = __importDefault(require("@colors/colors"));
 const cors_1 = __importDefault(require("cors"));
@@ -37,6 +35,9 @@ if (env_1.ENV.NODE_ENV === "production") {
     if (fs_1.default.existsSync(DIST_PATH)) {
         console.log(colors_1.default.cyan(`- Using distribution found at '${DIST_PATH}'`));
         server.use(express_1.default.static(DIST_PATH));
+        // server.get("/", (req, res) => {
+        //   res.sendFile(path.join(__dirname, ENV.CLIENT_DIST_PATH, "index.html"));
+        // });
     }
     else {
         console.log(colors_1.default.red(`- No distribution found! '${DIST_PATH}' does not exists.`));
@@ -60,11 +61,12 @@ server.use((0, cookie_parser_1.default)(env_1.ENV.COOKIE_SECRET));
 server.use((0, cors_1.default)({
     origin: [env_1.ENV.CLIENT_BASE_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    // methods: "*",
     credentials: true,
 }));
-server.get("/", (req, res) => {
-    res.send("Hello world");
-});
+// server.get("/", (req, res) => {
+//   res.send("Hello world");
+// });
 // api
 server.use("/api", routers_1.default);
 // custom error handler
