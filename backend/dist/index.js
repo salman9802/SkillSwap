@@ -28,32 +28,6 @@ const socket_auth_middleware_1 = require("./middlewares/socket-auth.middleware")
 const user_socket_1 = require("./sockets/user.socket");
 const server = (0, express_1.default)();
 server.use("/uploads", express_1.default.static("uploads")); // Serve static files
-// Serve frontend (React)
-if (env_1.ENV.NODE_ENV === "production") {
-    console.log(colors_1.default.cyan("Production environment detected"));
-    const DIST_PATH = path_1.default.join(__dirname, env_1.ENV.CLIENT_DIST_PATH);
-    if (fs_1.default.existsSync(DIST_PATH)) {
-        console.log(colors_1.default.cyan(`- Using distribution found at '${DIST_PATH}'`));
-        server.use(express_1.default.static(DIST_PATH));
-        // server.get("/", (req, res) => {
-        //   res.sendFile(path.join(__dirname, ENV.CLIENT_DIST_PATH, "index.html"));
-        // });
-    }
-    else {
-        console.log(colors_1.default.red(`- No distribution found! '${DIST_PATH}' does not exists.`));
-        setImmediate(() => {
-            process.exit(1);
-        });
-    }
-}
-else {
-    console.log(colors_1.default.red(`Development environment detected (NODE_ENV = ${env_1.ENV.NODE_ENV})`));
-    console.log(colors_1.default.red("- Manually start client"));
-}
-// server.use(express.static(path.join(__dirname, ENV.CLIENT_DIST_PATH)));
-// server.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, ENV.CLIENT_DIST_PATH, "index.html"));
-// });
 // middlewares
 server.use(express_1.default.json());
 server.use(express_1.default.urlencoded({ extended: false }));
@@ -98,3 +72,26 @@ process.on("SIGINT", () => __awaiter(void 0, void 0, void 0, function* () {
     yield client_1.default.$disconnect();
     process.exit(0);
 }));
+// Serve frontend (React)
+if (env_1.ENV.NODE_ENV === "production") {
+    console.log(colors_1.default.cyan("Production environment detected"));
+    const DIST_PATH = path_1.default.join(__dirname, env_1.ENV.CLIENT_DIST_PATH);
+    if (fs_1.default.existsSync(DIST_PATH)) {
+        console.log(colors_1.default.cyan(`- Using distribution found at '${DIST_PATH}'`));
+        server.use(express_1.default.static(DIST_PATH));
+        // Catch-all: send back index.html for any route not handled
+        server.get("*", (req, res) => {
+            res.sendFile(path_1.default.join(DIST_PATH, "index.html"));
+        });
+    }
+    else {
+        console.log(colors_1.default.red(`- No distribution found! '${DIST_PATH}' does not exists.`));
+        setImmediate(() => {
+            process.exit(1);
+        });
+    }
+}
+else {
+    console.log(colors_1.default.red(`Development environment detected (NODE_ENV = ${env_1.ENV.NODE_ENV})`));
+    console.log(colors_1.default.red("- Manually start client"));
+}
