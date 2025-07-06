@@ -9,6 +9,7 @@ type ToastMessageType = "success" | "info" | "error" | "warning";
 
 interface ToastMessage {
   type?: ToastMessageType;
+  index: number;
   message: string;
 }
 
@@ -43,12 +44,12 @@ const Toast: React.FC<{
 
   React.useEffect(() => {
     const timer = setTimeout(() => setFade(true), TOAST_MESSAGE_DURATION_MS);
-    const removeTimer = setTimeout(onRemove, TOAST_MESSAGE_DURATION_MS + 500);
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(removeTimer);
-    };
-  }, [onRemove]);
+    const removeTimer = setTimeout(onRemove, TOAST_MESSAGE_DURATION_MS);
+    // return () => {
+    //   clearTimeout(timer);
+    //   clearTimeout(removeTimer);
+    // };
+  }, []);
 
   return (
     <div
@@ -88,10 +89,10 @@ const ToastContainer: React.FC<{
     <div className="pointer-events-none fixed top-4 right-4 z-[999] flex flex-col gap-3">
       {messages.map((m, i) => (
         <Toast
-          key={i}
+          key={m.index}
           message={m.message}
           type={m.type}
-          onRemove={() => onRemove(i)}
+          onRemove={() => onRemove(m.index)}
         />
       ))}
     </div>
@@ -99,7 +100,7 @@ const ToastContainer: React.FC<{
 };
 
 const ToastContext = React.createContext<null | {
-  pushToastMessage: (message: ToastMessage) => void;
+  pushToastMessage: (message: Omit<ToastMessage, "index">) => void;
   //   removeMessage: (index: number) => void;
 }>(null);
 
@@ -107,17 +108,20 @@ const ToastContext = React.createContext<null | {
 export const ToastProvider = ({ children }: React.PropsWithChildren) => {
   const [messages, setMessages] = React.useState<ToastMessage[]>([]);
 
-  const pushMessage = React.useCallback((message: ToastMessage) => {
-    setMessages((m) => [...m, message]);
-    // setTimeout(() => removeMessage(messages.length), TOAST_MESSAGE_DURATION_MS);
-  }, []);
+  const pushMessage = React.useCallback(
+    (message: Omit<ToastMessage, "index">) => {
+      setMessages((m) => [...m, { index: Date.now(), ...message }]);
+      // setTimeout(() => removeMessage(messages.length), TOAST_MESSAGE_DURATION_MS);
+    },
+    [],
+  );
 
   //   const popMessage = () => {
   //     setMessages((m) => m.slice(1));
   //   };
 
   const removeMessage = (index: number) => {
-    setMessages((m) => m.filter((_, i) => i !== index));
+    setMessages((m) => m.filter((m) => m.index !== index));
   };
 
   return (

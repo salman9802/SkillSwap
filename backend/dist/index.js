@@ -33,8 +33,8 @@ server.use(express_1.default.json());
 server.use(express_1.default.urlencoded({ extended: false }));
 server.use((0, cookie_parser_1.default)(env_1.ENV.COOKIE_SECRET));
 server.use((0, cors_1.default)({
-    // origin: [ENV.CLIENT_BASE_URL as string],
-    origin: "*",
+    origin: [env_1.ENV.CLIENT_BASE_URL],
+    // origin: ["*"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     // methods: "*",
     credentials: true,
