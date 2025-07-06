@@ -80,7 +80,7 @@ if (env_1.ENV.NODE_ENV === "production") {
         console.log(colors_1.default.cyan(`- Using distribution found at '${DIST_PATH}'`));
         server.use(express_1.default.static(DIST_PATH));
         // Catch-all: send back index.html for any route not handled
-        server.get("*", (req, res) => {
+        server.get("*all", (req, res) => {
             res.sendFile(path_1.default.join(DIST_PATH, "index.html"));
         });
     }

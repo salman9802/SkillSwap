@@ -88,7 +88,7 @@ if (ENV.NODE_ENV === "production") {
     server.use(express.static(DIST_PATH));
 
     // Catch-all: send back index.html for any route not handled
-    server.get("*", (req, res) => {
+    server.get("*all", (req, res) => {
       res.sendFile(path.join(DIST_PATH, "index.html"));
     });
   } else {
