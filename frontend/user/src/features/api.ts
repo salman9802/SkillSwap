@@ -15,7 +15,7 @@ import { clearCredentials, updateToken } from "./session/sessionSlice";
 import type { User } from "@/lib/types";
 import { sessionApi } from "./session/sessionApi";
 
-export const SERVER_URL = "http://localhost:80";
+export const SERVER_URL = import.meta.env.PROD ? "" : "http://localhost:80";
 
 /** Inject `accessToken` in header (`Authorization`) */
 const baseQuery = fetchBaseQuery({

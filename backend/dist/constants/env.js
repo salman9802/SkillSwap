@@ -7,7 +7,7 @@ exports.ENV = void 0;
 const path_1 = __importDefault(require("path"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({
-    path: path_1.default.join(__dirname, "..", "..", ".env"),
+    path: path_1.default.join(__dirname, "..", "..", "..", ".env"),
     // debug: true,
 });
 const safe_1 = __importDefault(require("@colors/colors/safe"));

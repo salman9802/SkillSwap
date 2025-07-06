@@ -39,8 +39,10 @@ if (ENV.NODE_ENV === "production") {
     });
   }
 } else {
-  console.log(colors.cyan("Development environment detected"));
-  console.log(colors.cyan("- Manually start client"));
+  console.log(
+    colors.red(`Development environment detected (NODE_ENV = ${ENV.NODE_ENV})`)
+  );
+  console.log(colors.red("- Manually start client"));
 }
 // server.use(express.static(path.join(__dirname, ENV.CLIENT_DIST_PATH)));
 // server.get("*", (req, res) => {

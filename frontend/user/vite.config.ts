@@ -25,3 +25,23 @@ export default defineConfig({
   //   },
   // },
 });
+
+// export default defineConfig(({ mode }) => {
+//   // 👇 Load .env file from parent directory (or wherever it is)
+//   const env = loadEnv(mode, path.resolve(__dirname, "..", ".."));
+
+//   return {
+//     plugins: [react(), tailwindcss()],
+//     resolve: {
+//       alias: {
+//         "@": path.resolve(__dirname, "./src"),
+//       },
+//     },
+//     define: {
+//       // 👇 Expose selected env variables to the client
+//       // 'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),
+//       // API_URL: JSON.stringify(env.VITE_API_URL),
+//       // "import.meta.env.NODE_ENV": JSON.stringify(env.NODE_ENV),
+//     },
+//   };
+// });
