@@ -53,7 +53,8 @@ server.use(express.urlencoded({ extended: false }));
 server.use(cookieParser(ENV.COOKIE_SECRET as string));
 server.use(
   cors({
-    origin: [ENV.CLIENT_BASE_URL as string],
+    // origin: [ENV.CLIENT_BASE_URL as string],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     // methods: "*",
     credentials: true,
