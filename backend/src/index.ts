@@ -43,12 +43,10 @@ server.use("/api", apiRouter);
 // custom error handler
 server.use(errorMiddleware);
 
-server.listen(ENV.PORT, (error) => {
+const HOST = ENV.NODE_ENV !== "production" ? "localhost" : "0.0.0.0";
+server.listen(ENV.PORT, HOST, (error) => {
   if (error) console.error(error);
-  else
-    console.log(
-      colors.blue(`Server started on ${ENV.SERVER_BASE_URL}:${ENV.PORT}`)
-    );
+  else console.log(colors.blue(`Server started on ${HOST}:${ENV.PORT}`));
 });
 
 // Socket implementation

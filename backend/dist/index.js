@@ -46,7 +46,8 @@ server.use((0, cors_1.default)({
 server.use("/api", routers_1.default);
 // custom error handler
 server.use(error_middleware_1.errorMiddleware);
-server.listen(env_1.ENV.PORT, (error) => {
+const HOST = env_1.ENV.NODE_ENV !== "production" ? "localhost" : "0.0.0.0";
+server.listen(env_1.ENV.PORT, HOST, (error) => {
     if (error)
         console.error(error);
     else
