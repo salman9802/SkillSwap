@@ -120,15 +120,15 @@ const MarketplacePage = () => {
       window.innerHeight + window.pageYOffset >=
       document.body.offsetHeight - INF_SCROLL_OFFSET_PX;
 
-    console.log(
-      "window.innerHeight + window.pageYOffset",
-      window.innerHeight + window.pageYOffset,
-    );
-    console.log(
-      "document.body.offsetHeight",
-      document.body.offsetHeight - INF_SCROLL_OFFSET_PX,
-    );
-    console.log("isNearPageEnd", isNearPageEnd);
+    // console.log(
+    //   "window.innerHeight + window.pageYOffset",
+    //   window.innerHeight + window.pageYOffset,
+    // );
+    // console.log(
+    //   "document.body.offsetHeight",
+    //   document.body.offsetHeight - INF_SCROLL_OFFSET_PX,
+    // );
+    // console.log("isNearPageEnd", isNearPageEnd);
     if (isNearPageEnd) setOffset((o) => o + 1);
   }, []);
 
@@ -136,9 +136,11 @@ const MarketplacePage = () => {
 
   /** useEffect to add event listener for window's `scroll` event for infinite scroll pagination */
   React.useEffect(() => {
-    window.addEventListener("scroll", throttledHandleInfiniteScroll);
+    if (skillswapRequests && requests.length < skillswapRequests?.totalCount)
+      window.addEventListener("scroll", throttledHandleInfiniteScroll);
     return () => {
-      window.removeEventListener("scroll", throttledHandleInfiniteScroll);
+      if (skillswapRequests && requests.length < skillswapRequests?.totalCount)
+        window.removeEventListener("scroll", throttledHandleInfiniteScroll);
     };
   }, []);
 
