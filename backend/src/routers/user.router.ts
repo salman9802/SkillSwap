@@ -15,6 +15,8 @@ import {
   readRateLimiter,
   registerLimiter,
 } from "../middlewares/rate-limilt";
+import { requiredCoins } from "../middlewares/user.middleware";
+import { NEW_REQUEST_FEE } from "../constants/user";
 
 const userRouter = express.Router();
 
@@ -62,6 +64,7 @@ userRouter.post(
   createLimiter,
   errorCatch(userHasAccess),
   errorCatch(demoLimitForSkillswapRequest),
+  errorCatch(requiredCoins(NEW_REQUEST_FEE)),
   errorCatch(UserController.createNewRequest)
 );
 
