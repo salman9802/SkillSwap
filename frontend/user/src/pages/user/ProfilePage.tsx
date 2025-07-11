@@ -228,7 +228,7 @@ const ProfilePage = () => {
   };
 
   // console.dir(`locationFields: ${locationFields}`, {depth: null});
-  console.dir(locationFields, { depth: null });
+  // console.dir(locationFields, { depth: null });
   return (
     <div className="container mx-auto flex flex-col gap-20">
       {/* Shared Dialog */}
@@ -756,7 +756,7 @@ const ProfilePage = () => {
               handleOpen(
                 {
                   field: "requestedSkills",
-                  label: "New offered skill",
+                  label: "New requested skill",
                   type: "text",
                 },
                 "",
