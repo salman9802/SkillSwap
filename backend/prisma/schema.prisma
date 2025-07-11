@@ -22,6 +22,8 @@ model User {
   picture         String?
   country         String?
   timezone        String?
+  coins           Int      @default(10)
+  lastLoginDate   DateTime @default(now())
   offeredSkills   String[]
   requestedSkills String[]
   createdAt       DateTime @default(now())

@@ -27,9 +27,14 @@ import { Button } from "@/components/ui/button";
 import { useDebounce, useThrottleFn } from "@/lib/hooks";
 import { Link, useSearchParams } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
+import type { StoreState } from "@/features/store";
+import { useSelector } from "react-redux";
+import { TiHome } from "react-icons/ti";
 
 const MarketplacePage = () => {
   setPageTitle("Skills Marketplace - SkillSwap");
+
+  const user = useSelector((state: StoreState) => state.session.user);
 
   const [sort, setSort] =
     React.useState<MarketplaceSortKeyType>("NEWEST_FIRST");
@@ -198,12 +203,20 @@ const MarketplacePage = () => {
         <div className="flex flex-col justify-center gap-3 px-6 py-3">
           {/* Search by offered skill */}
           <div className="relative mr-auto ml-24 flex w-2/3 items-center gap-1.5 [--pad:8px]">
-            <Link
-              to="/"
-              className="text-primary mr-48 underline hover:no-underline"
-            >
-              Home
-            </Link>
+            <div className="mr-48 flex items-center gap-4">
+              <Link
+                to="/"
+                className="text-primary flex items-center gap-3 underline hover:no-underline"
+              >
+                <TiHome className="size-5" /> Home
+              </Link>
+              {user?.coins && (
+                <div className="flex items-center justify-start">
+                  <img src="/coin.png" className="size-5" alt="" />
+                  <span className="font-bold">{user?.coins}</span>
+                </div>
+              )}
+            </div>
             <Input
               className="pr-[calc(var(--pad)+12px+1px+20px)]"
               placeholder="Search by offered skill..."

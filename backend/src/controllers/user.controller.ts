@@ -127,6 +127,7 @@ export const newAccessToken = async (
       name: true,
       email: true,
       picture: true,
+      coins: true,
     },
   });
 

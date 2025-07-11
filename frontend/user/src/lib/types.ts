@@ -17,6 +17,7 @@ export type User = {
   name: string;
   email: string;
   picture: string | undefined;
+  coins: number;
 };
 
 export type UserDetails = User & {
