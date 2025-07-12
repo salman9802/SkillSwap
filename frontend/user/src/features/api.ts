@@ -12,7 +12,7 @@ import {
   type AppErrorCodeType,
 } from "@/lib/constants";
 import { clearCredentials, updateToken } from "./session/sessionSlice";
-import type { User } from "@/lib/types";
+import type { SessionRefreshReturnType, SessionSlice, User } from "@/lib/types";
 import { sessionApi } from "./session/sessionApi";
 
 export const SERVER_URL = import.meta.env.PROD ? "" : "http://localhost:80";
@@ -60,11 +60,13 @@ const baseQueryWithReauth: BaseQueryFn<
     if (refreshResult.data) {
       // successful refresh
 
-      const data = refreshResult.data as { accessToken: string; user: User };
+      const data = refreshResult.data as SessionRefreshReturnType;
       api.dispatch(updateToken(data));
 
       // retry original query
       result = await baseQuery(args, api, extraOptions);
+
+      // daily login reward
     } else {
       // clear sessionSlice data & make logout request (to remove cookie)
       api.dispatch(clearCredentials());

@@ -77,6 +77,7 @@ export type SessionSlice = {
   accessToken: null | string;
   user: null | User;
   // status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  hasDailyLoginReward: boolean;
 };
 
 export type SessionSetCredentialsPayload = Pick<
@@ -92,6 +93,7 @@ export type SessionLoginReturnType = {
 export type SessionRefreshReturnType = {
   user: User;
   accessToken: string;
+  hasDailyLoginReward: boolean;
 };
 
 // Skillswap request

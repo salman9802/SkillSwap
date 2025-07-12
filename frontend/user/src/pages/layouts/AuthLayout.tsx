@@ -5,6 +5,7 @@ import { useRefreshQuery } from "@/features/session/sessionApi";
 import { setCrenentials } from "@/features/session/sessionSlice";
 import Loader from "@/components/utils/Loader";
 import { useStoreDispatch } from "@/lib/hooks";
+import { useToast } from "@/components/utils/toast";
 
 const AuthLayout = () => {
   const { data, isError, isLoading, isFetching } = useRefreshQuery();
@@ -12,10 +13,23 @@ const AuthLayout = () => {
   //   // This ensures no re-fetching unless needed
   //   refetchOnMountOrArgChange: false,
   // });
+  const { pushToastMessage } = useToast();
+
   const dispatch = useStoreDispatch();
   React.useEffect(() => {
-    if (data) dispatch(setCrenentials(data));
-  }, []);
+    if (data) {
+      dispatch(setCrenentials(data));
+      if (data.hasDailyLoginReward)
+        setTimeout(
+          () =>
+            pushToastMessage({
+              type: "info",
+              message: "Received 1 coin as daily login reward",
+            }),
+          1000,
+        );
+    }
+  }, [data]);
 
   if (!data && isFetching)
     return (

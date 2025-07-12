@@ -1,4 +1,5 @@
 import type {
+  SessionRefreshReturnType,
   SessionSetCredentialsPayload,
   SessionSlice,
   User,
@@ -10,6 +11,7 @@ const initialState: SessionSlice = {
   isAuthenticated: false,
   accessToken: null,
   user: null,
+  hasDailyLoginReward: false,
 };
 
 const sessionSlice = createSlice({
@@ -29,12 +31,10 @@ const sessionSlice = createSlice({
       state.accessToken = null;
       state.isAuthenticated = false;
     },
-    updateToken: (
-      state,
-      action: PayloadAction<{ accessToken: string; user: User }>,
-    ) => {
+    updateToken: (state, action: PayloadAction<SessionRefreshReturnType>) => {
       state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
+      state.hasDailyLoginReward = action.payload.hasDailyLoginReward;
     },
   },
 });

@@ -128,12 +128,20 @@ export const newAccessToken = async (
       email: true,
       picture: true,
       coins: true,
+      lastLoginDate: true,
     },
   });
+
+  appAssert(user !== null, STATUS_CODES.NOT_FOUND);
 
   res.status(STATUS_CODES.OK).json({
     accessToken,
     user,
+    hasDailyLoginReward: await UserService.checkDailyLoginReward({
+      id: user!.id,
+      coins: user!.coins,
+      lastLoginDate: user!.lastLoginDate,
+    }),
   });
 };
 

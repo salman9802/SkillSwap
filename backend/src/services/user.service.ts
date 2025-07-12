@@ -21,6 +21,7 @@ import { appAssert } from "../lib/error";
 import { STATUS_CODES } from "../constants/http";
 import { AppErrorCodes } from "../constants/error";
 import { SafeUser, sanitizeUser } from "../lib/sanitize";
+import { DAILY_LOGIN_REWARD } from "../constants/user";
 
 export const createUser = async (newUser: NewUser) => {
   const user = await prisma.user.create({
@@ -476,4 +477,36 @@ export const createSkillswapSessionReview = async ({
       },
     },
   });
+};
+
+export const checkDailyLoginReward = async (user: {
+  id: string;
+  coins: number;
+  lastLoginDate: Date;
+}) => {
+  await prisma.user.findFirst({
+    where: {
+      id: user.id,
+    },
+    select: {
+      lastLoginDate: true,
+      coins: true,
+    },
+  });
+
+  const hasDailyLoginReward =
+    user?.lastLoginDate.getUTCDate() !== new Date().getUTCDate();
+
+  if (hasDailyLoginReward)
+    await prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        coins: user.coins + DAILY_LOGIN_REWARD,
+        lastLoginDate: new Date(),
+      },
+    });
+
+  return hasDailyLoginReward;
 };
