@@ -47,6 +47,7 @@ const ReviewDialog: React.FC<{
   const [review, setReview] = React.useState({
     rating: 4,
     comment: "",
+    coins: 0,
   });
   const { pushToastMessage } = useToast();
 
@@ -103,39 +104,96 @@ const ReviewDialog: React.FC<{
           {/* form */}
           <div className="my-6 flex flex-col gap-12">
             {/* rating */}
-            <div className="flex items-center gap-3 [&>*]:size-8 [&>*]:cursor-pointer [&>*]:text-yellow-500">
-              {Array.from({ length: review.rating }, (_, i) => (
-                <MdStarRate
-                  onClick={() =>
-                    setReview((prev) => ({ ...prev, rating: i + 1 }))
-                  }
-                  key={i}
-                />
-              ))}
-
-              {Array.from({ length: 5 - review.rating }, (_, i) => (
-                <MdOutlineStarRate
-                  onClick={() =>
-                    setReview((prev) => ({
-                      ...prev,
-                      rating: prev.rating + i + 1,
-                    }))
-                  }
-                  key={i}
-                />
-              ))}
+            <div className="flex flex-col gap-3">
+              <h3 className="text-lg font-semibold">Rating</h3>
+              <div className="flex items-center gap-3 [&>*]:size-8 [&>*]:cursor-pointer [&>*]:text-yellow-500">
+                {Array.from({ length: review.rating }, (_, i) => (
+                  <MdStarRate
+                    onClick={() =>
+                      setReview((prev) => ({ ...prev, rating: i + 1 }))
+                    }
+                    key={i}
+                  />
+                ))}
+                {Array.from({ length: 5 - review.rating }, (_, i) => (
+                  <MdOutlineStarRate
+                    onClick={() =>
+                      setReview((prev) => ({
+                        ...prev,
+                        rating: prev.rating + i + 1,
+                      }))
+                    }
+                    key={i}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* comment */}
-            {/* <div className="" contentEditable={true} /> */}
-            <textarea
-              className="resize-none border border-gray-300 p-3"
-              rows={5}
-              placeholder="Describe your experience..."
-              onChange={(e) => {
-                setReview((prev) => ({ ...prev, comment: e.target.value }));
-              }}
-            />
+            <div className="flex flex-col gap-3">
+              <h3 className="text-lg font-semibold">Comment</h3>
+              <textarea
+                className="resize-none border border-gray-300 p-3"
+                rows={5}
+                placeholder="Describe your experience..."
+                onChange={(e) => {
+                  setReview((prev) => ({ ...prev, comment: e.target.value }));
+                }}
+              />
+            </div>
+
+            {/* give coin */}
+            <div className="flex flex-col">
+              <h3 className="text-lg font-semibold">Give coins</h3>
+              <p className="mb-3 text-sm text-orange-500">
+                This will be deducted from your balance.
+              </p>
+              {/* <input className="px-3 py-1.5" type="text" placeholder="Coin" /> */}
+              <div className="flex items-center justify-start [&>*]:grow">
+                <div className="flex gap-1 [&>*]:grow [&>*]:cursor-pointer">
+                  <input
+                    className="accent-red-500"
+                    type="radio"
+                    name="coins"
+                    id="zero-coins"
+                    onChange={(e) => setReview((r) => ({ ...r, coins: 0 }))}
+                    checked={review.coins === 0}
+                  />
+                  <label htmlFor="zero-coins">0</label>
+                </div>
+                <div className="flex gap-1 [&>*]:grow [&>*]:cursor-pointer">
+                  <input
+                    className="accent-red-500"
+                    type="radio"
+                    name="coins"
+                    id="one-coins"
+                    onChange={(e) =>
+                      e.target.checked
+                        ? setReview((r) => ({ ...r, coins: 1 }))
+                        : setReview((r) => ({ ...r, coins: 0 }))
+                    }
+                    checked={review.coins === 1}
+                  />
+
+                  <label htmlFor="one-coins">1</label>
+                </div>
+                <div className="flex gap-1 [&>*]:grow [&>*]:cursor-pointer">
+                  <input
+                    className="accent-red-500"
+                    type="radio"
+                    name="coins"
+                    id="two-coins"
+                    onChange={(e) =>
+                      e.target.checked
+                        ? setReview((r) => ({ ...r, coins: 2 }))
+                        : setReview((r) => ({ ...r, coins: 0 }))
+                    }
+                    checked={review.coins === 2}
+                  />
+                  <label htmlFor="two-coins">2</label>
+                </div>
+              </div>
+            </div>
           </div>
         </AlertDialogHeader>
         <AlertDialogFooter>

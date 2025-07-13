@@ -234,6 +234,7 @@ export type SkillswapSessionReview = {
   rating: number;
   comment?: string;
   revieweeId: string;
+  coins: number;
 };
 
 export type SkillswapSessionChatResponse = {

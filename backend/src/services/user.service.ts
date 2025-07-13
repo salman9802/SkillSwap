@@ -464,6 +464,19 @@ export const createSkillswapSessionReview = async ({
   sessionId: string;
   reviewerId: string;
 }) => {
+  if (review.coins !== 0) {
+    await prisma.user.update({
+      where: {
+        id: review.revieweeId,
+      },
+      data: {
+        coins: {
+          increment: review.coins,
+        },
+      },
+    });
+  }
+
   return await prisma.skillSwapSession.update({
     where: {
       id: sessionId,
@@ -471,7 +484,10 @@ export const createSkillswapSessionReview = async ({
     data: {
       review: {
         create: {
-          ...review,
+          // ...review,
+          rating: review.rating,
+          revieweeId: review.revieweeId,
+          comment: review.comment,
           reviewerId,
         },
       },

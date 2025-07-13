@@ -130,6 +130,7 @@ export const skillswapSessionReviewSchema = z.object({
   rating: z.number().min(1).max(5),
   comment: z.string().optional(),
   revieweeId: z.string(),
+  coins: z.number(),
 });
 
 export type SkillswapSessionReview = z.infer<
