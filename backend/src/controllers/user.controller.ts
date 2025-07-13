@@ -831,7 +831,6 @@ export const dashboard = async (
       },
     });
 
-  // TODO: sessions completed (graph)
   /* 
   Last week - date=YYYY-mm-dd (start date)
   Last month - (some kind of number)
@@ -962,6 +961,7 @@ export const dashboard = async (
   //   .sort((a, b) => a.date.localeCompare(b.date));
 
   res.status(STATUS_CODES.OK).json({
+    coinBalance: user.coins,
     totalSessionsCompleted,
     totalRequestsCreated,
     totalRequestsCompleted,

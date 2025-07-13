@@ -47,6 +47,7 @@ export type UserUpdatePayload = {
 };
 
 export type UserDashboardResponse = {
+  coinBalance: number;
   totalSessionsCompleted: number;
   totalRequestsCreated: number;
   totalRequestsCompleted: number;

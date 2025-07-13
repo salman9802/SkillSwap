@@ -126,6 +126,25 @@ const DashboardPage = () => {
             ) : (
               <>
                 <CardHeader>
+                  <CardDescription>Coin balance</CardDescription>
+                  <CardTitle className="flex items-center gap-2 text-2xl">
+                    <img src="/coin.png" className="size-5" alt="" />
+                    {data?.coinBalance.toLocaleString("en-IN")}
+                  </CardTitle>
+                </CardHeader>
+                <CardFooter className="text-sm font-medium">
+                  Amount of coins you have. Can be earned through daily login
+                  rewards and sessions.
+                </CardFooter>
+              </>
+            )}
+          </Card>
+          <Card>
+            {isLoading ? (
+              <SkeletonLoader className="size-full h-32" />
+            ) : (
+              <>
+                <CardHeader>
                   <CardDescription>Sessions completed</CardDescription>
                   <CardTitle className="text-2xl">
                     {data?.totalSessionsCompleted.toLocaleString("en-IN")}
