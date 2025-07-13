@@ -8,6 +8,7 @@ import {
   FaTelegramPlane,
 } from "react-icons/fa";
 import { TbArrowsExchange } from "react-icons/tb";
+import { BiSolidCoinStack } from "react-icons/bi";
 import * as ct from "countries-and-timezones";
 
 import { cn } from "./utils";
@@ -17,7 +18,7 @@ export const FEATURES = [
     name: "Skill-for-Skill Exchange",
     icon: <TbArrowsExchange className="size-10 sm:size-16" />,
     description:
-      "No money needed—just knowledge. Trade your expertise in one area to learn something new from someone else.",
+      "No real-world money needed—just knowledge. Trade your expertise in one area to learn something new from someone else.",
     reverse: false,
   },
   {
@@ -33,6 +34,13 @@ export const FEATURES = [
     description:
       "Set your availability and connect with others at times that work for you. Learning fits around your life, not the other way around.",
     reverse: false,
+  },
+  {
+    name: "Gamify your growth",
+    icon: <BiSolidCoinStack className="size-10 sm:size-16" />,
+    description:
+      "Learning new skills just got a lot more fun. With SkillSwap’s gamification features, users earn points, badges, and rewards for sharing knowledge, completing swaps, and hitting learning milestones. Whether you're teaching, learning, or both — SkillSwap turns skill-sharing into a game where everyone levels up.",
+    reverse: true,
   },
 ];
 

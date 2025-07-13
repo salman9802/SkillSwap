@@ -4,6 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @layer components {
+  .ui-placeholder {
+    @apply animate-pulse rounded-xl bg-gray-200;
+  }
+
   /* custom gradient */
   @keyframes gradient-animation {
     0% {

@@ -3,6 +3,7 @@ import Features from ".././components/Features";
 import Footer from ".././components/Footer";
 import Header from ".././components/Header";
 import Hero from ".././components/Hero";
+import Gamification from "@/components/Gamification";
 const HomePage = () => {
   return (
     <div className="w-full">
@@ -54,6 +55,7 @@ const HomePage = () => {
       <Header />
       <Hero />
       <Features />
+      <Gamification />
       <Footer />
     </div>
   );

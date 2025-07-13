@@ -148,7 +148,8 @@ const Hero = () => {
             teach. Whether you're swapping photography tips for coding lessons
             or trading language skills for guitar chords, SkillSwap makes
             learning personal, affordable, and community-driven. Start
-            exchanging knowledge today—no money required, just passion.
+            exchanging knowledge today—no real-world money required, just
+            passion.
           </p>
           <div className="flex justify-center gap-4">
             <Link to="/user/login">

@@ -35,7 +35,7 @@ const Features = () => {
               feature.reverse && "sm:flex-row-reverse",
             )}
           >
-            <div className="bg-primary/10 flex size-20 shrink-0 items-center justify-center rounded-full sm:mr-10 sm:size-32">
+            <div className="bg-primary/10 flex size-20 shrink-0 items-center justify-center rounded-full sm:mx-10 sm:size-32">
               {feature.icon}
               {/* <TbArrowsExchange className="size-10 sm:size-16" /> */}
             </div>
