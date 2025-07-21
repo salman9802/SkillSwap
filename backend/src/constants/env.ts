@@ -19,7 +19,6 @@ const envSchema = z.object({
   COOKIE_SECRET: z.string(),
 
   SERVER_BASE_URL: z.string().optional().default("http://localhost"),
-  CLIENT_BASE_URL: z.string().optional().default("http://localhost:5173"),
   PORT: z.preprocess(
     (val) => (typeof val === "string" ? Number(val) : val),
     z.number().default(80)
