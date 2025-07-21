@@ -77,7 +77,7 @@ process.on("SIGINT", async () => {
 });
 
 // Serve frontend (React)
-if (ENV.NODE_ENV === "production") {
+if (ENV.NODE_ENV === "production" && !ENV.STANDALONE) {
   console.log(colors.cyan("Production environment detected"));
   const DIST_PATH = path.join(__dirname, ENV.CLIENT_DIST_PATH);
   if (fs.existsSync(DIST_PATH)) {

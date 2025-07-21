@@ -43,6 +43,10 @@ const envSchema = z.object({
     z.number().default(8080)
   ),
   CLIENT_DIST_PATH: z.string().optional().default("./../../frontend/user/dist"),
+  STANDALONE: z.preprocess(
+    (val) => (typeof val === "string" ? Boolean(val) : val),
+    z.boolean().optional().default(false)
+  ),
 });
 
 let env;
