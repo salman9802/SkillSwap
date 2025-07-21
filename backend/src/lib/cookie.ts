@@ -7,7 +7,8 @@ const defaultCookieOptions: express.CookieOptions = {
   // but `lax` does require 'same-site' requests (different from 'same-origin')
   //    same-origin = same protocol + domain + port
   //    same-site = same domain, even if different ports
-  sameSite: ENV.NODE_ENV === "production" ? "strict" : "lax",
+  // sameSite: ENV.NODE_ENV === "production" ? "strict" : "lax",
+  sameSite: "none",
   httpOnly: true,
   secure: ENV.NODE_ENV === "production",
   signed: true,
