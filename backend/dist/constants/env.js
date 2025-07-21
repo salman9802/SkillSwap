@@ -20,7 +20,6 @@ const envSchema = zod_1.default.object({
     REFRESH_TOKEN_SECRET: zod_1.default.string(),
     COOKIE_SECRET: zod_1.default.string(),
     SERVER_BASE_URL: zod_1.default.string().optional().default("http://localhost"),
-    CLIENT_BASE_URL: zod_1.default.string().optional().default("http://localhost:5173"),
     PORT: zod_1.default.preprocess((val) => (typeof val === "string" ? Number(val) : val), zod_1.default.number().default(80)),
     ACCESS_TOKEN_INTERVAL: zod_1.default.preprocess((val) => (typeof val === "string" ? Number(val) : val), zod_1.default.number().default(15 * time_1.default.MINUTE)),
     REFRESH_TOKEN_INTERVAL: zod_1.default.preprocess((val) => (typeof val === "string" ? Number(val) : val), zod_1.default.number().default(30 * time_1.default.DAY)),

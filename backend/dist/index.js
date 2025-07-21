@@ -26,6 +26,10 @@ const error_middleware_1 = require("./middlewares/error.middleware");
 const socket_io_1 = require("socket.io");
 const socket_auth_middleware_1 = require("./middlewares/socket-auth.middleware");
 const user_socket_1 = require("./sockets/user.socket");
+const allowedClientOrigins = [
+    "http://localhost:5173",
+    "https://skillswap-1-r1h9.onrender.com",
+];
 const server = (0, express_1.default)();
 server.use("/uploads", express_1.default.static("uploads")); // Serve static files
 // middlewares
@@ -33,7 +37,14 @@ server.use(express_1.default.json());
 server.use(express_1.default.urlencoded({ extended: false }));
 server.use((0, cookie_parser_1.default)(env_1.ENV.COOKIE_SECRET));
 server.use((0, cors_1.default)({
-    origin: [env_1.ENV.CLIENT_BASE_URL],
+    origin: (origin, cb) => {
+        // allow requests with no origin (like curl or mobile apps)
+        if (!origin)
+            return cb(null, true);
+        if (allowedClientOrigins.includes(origin))
+            return cb(null, true);
+        return cb(new Error("Blocked by CORS"));
+    },
     // origin: ["*"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     // methods: "*",
@@ -59,7 +70,14 @@ server.listen(env_1.ENV.PORT, HOST, (error) => {
 const socketHttpServer = http_1.default.createServer(server);
 const io = new socket_io_1.Server(socketHttpServer, {
     cors: {
-        origin: env_1.ENV.CLIENT_BASE_URL,
+        origin: (origin, cb) => {
+            // allow requests with no origin (like curl or mobile apps)
+            if (!origin)
+                return cb(null, true);
+            if (allowedClientOrigins.includes(origin))
+                return cb(null, true);
+            return cb(new Error("Blocked by CORS"));
+        },
         credentials: true,
     },
 });
