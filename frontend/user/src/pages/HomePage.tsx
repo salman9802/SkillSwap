@@ -4,6 +4,7 @@ import Footer from ".././components/Footer";
 import Header from ".././components/Header";
 import Hero from ".././components/Hero";
 import Gamification from "@/components/Gamification";
+import DemoAnnouncement from "@/components/DemoAnnouncement";
 const HomePage = () => {
   return (
     <div className="w-full">
@@ -52,6 +53,7 @@ const HomePage = () => {
           // { top: "125%", left: "60%", delay: "1.5s", size: "3.5rem" , rotate: "290"},
         ]}
       />
+      <DemoAnnouncement />
       <Header />
       <Hero />
       <Features />

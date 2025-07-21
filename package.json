@@ -7,8 +7,9 @@
     "install:server": "cd backend && npm install --legacy-peer-deps",
     "install:all": "npm run install:client && npm run install:server",
     "build:prisma": "cd backend && npm run build:prisma",
+    "build:client": "npm run build --prefix frontend/user",
     "build:server": "npm run build --prefix backend",
-    "build:all": "npm run build --prefix frontend/user && npm run build:server",
+    "build:all": "npm run build:client && npm run build:server",
     "prod": "node backend/dist/index.js"
   },
   "devDependencies": {

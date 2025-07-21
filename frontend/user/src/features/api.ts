@@ -15,7 +15,11 @@ import { clearCredentials, updateToken } from "./session/sessionSlice";
 import type { SessionRefreshReturnType, SessionSlice, User } from "@/lib/types";
 import { sessionApi } from "./session/sessionApi";
 
-export const SERVER_URL = import.meta.env.PROD ? "" : "http://localhost:80";
+export const SERVER_URL = import.meta.env.PROD
+  ? import.meta.env.VITE_STANDALONE
+    ? "https://skillswap-server-2qwp.onrender.com"
+    : ""
+  : "http://localhost:80";
 
 /** Inject `accessToken` in header (`Authorization`) */
 const baseQuery = fetchBaseQuery({
