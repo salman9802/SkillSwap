@@ -33,9 +33,11 @@ server.use(
   })
 );
 
-// server.get("/", (req, res) => {
-//   res.send("Hello world");
-// });
+server.get("/keep-alive", (req, res) => {
+  const date = new Date();
+  console.log(`Alive at ${date.toDateString()} ${date.toTimeString()}`);
+  res.send("Alive");
+});
 
 // api
 server.use("/api", apiRouter);
