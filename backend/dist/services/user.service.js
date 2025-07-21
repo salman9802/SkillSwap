@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSkillswapSessionReview = exports.updateSkillSwapSessionStatus = exports.createSkillSwapSession = exports.acceptAndCloseRequest = exports.newRequest = exports.updateUserDetails = exports.deleteUserSession = exports.validateAccessToken = exports.validateRefreshToken = exports.validateSession = exports.createAccessAndRefreshTokens = exports.createAccessToken = exports.validateUser = exports.createUserSession = exports.createUser = void 0;
+exports.checkDailyLoginReward = exports.createSkillswapSessionReview = exports.updateSkillSwapSessionStatus = exports.createSkillSwapSession = exports.acceptAndCloseRequest = exports.newRequest = exports.updateUserDetails = exports.deleteUserSession = exports.validateAccessToken = exports.validateRefreshToken = exports.validateSession = exports.createAccessAndRefreshTokens = exports.createAccessToken = exports.validateUser = exports.createUserSession = exports.createUser = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const env_1 = require("../constants/env");
 const client_1 = __importDefault(require("../db/client"));
@@ -21,6 +21,7 @@ const error_1 = require("../lib/error");
 const http_1 = require("../constants/http");
 const error_2 = require("../constants/error");
 const sanitize_1 = require("../lib/sanitize");
+const user_1 = require("../constants/user");
 const createUser = (newUser) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield client_1.default.user.create({
         data: newUser,
@@ -356,15 +357,57 @@ const updateSkillSwapSessionStatus = (_a) => __awaiter(void 0, [_a], void 0, fun
 });
 exports.updateSkillSwapSessionStatus = updateSkillSwapSessionStatus;
 const createSkillswapSessionReview = (_a) => __awaiter(void 0, [_a], void 0, function* ({ review, sessionId, reviewerId, }) {
+    if (review.coins !== 0) {
+        yield client_1.default.user.update({
+            where: {
+                id: review.revieweeId,
+            },
+            data: {
+                coins: {
+                    increment: review.coins,
+                },
+            },
+        });
+    }
     return yield client_1.default.skillSwapSession.update({
         where: {
             id: sessionId,
         },
         data: {
             review: {
-                create: Object.assign(Object.assign({}, review), { reviewerId }),
+                create: {
+                    // ...review,
+                    rating: review.rating,
+                    revieweeId: review.revieweeId,
+                    comment: review.comment,
+                    reviewerId,
+                },
             },
         },
     });
 });
 exports.createSkillswapSessionReview = createSkillswapSessionReview;
+const checkDailyLoginReward = (user) => __awaiter(void 0, void 0, void 0, function* () {
+    yield client_1.default.user.findFirst({
+        where: {
+            id: user.id,
+        },
+        select: {
+            lastLoginDate: true,
+            coins: true,
+        },
+    });
+    const hasDailyLoginReward = (user === null || user === void 0 ? void 0 : user.lastLoginDate.getUTCDate()) !== new Date().getUTCDate();
+    if (hasDailyLoginReward)
+        yield client_1.default.user.update({
+            where: {
+                id: user.id,
+            },
+            data: {
+                coins: user.coins + user_1.DAILY_LOGIN_REWARD,
+                lastLoginDate: new Date(),
+            },
+        });
+    return hasDailyLoginReward;
+});
+exports.checkDailyLoginReward = checkDailyLoginReward;

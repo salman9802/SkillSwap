@@ -51,7 +51,7 @@ server.listen(env_1.ENV.PORT, HOST, (error) => {
     if (error)
         console.error(error);
     else
-        console.log(colors_1.default.blue(`Server started on ${env_1.ENV.SERVER_BASE_URL}:${env_1.ENV.PORT}`));
+        console.log(colors_1.default.blue(`Server started on ${HOST}:${env_1.ENV.PORT}`));
 });
 // Socket implementation
 const socketHttpServer = http_1.default.createServer(server);
@@ -74,7 +74,7 @@ process.on("SIGINT", () => __awaiter(void 0, void 0, void 0, function* () {
     process.exit(0);
 }));
 // Serve frontend (React)
-if (env_1.ENV.NODE_ENV === "production") {
+if (env_1.ENV.NODE_ENV === "production" && !env_1.ENV.STANDALONE) {
     console.log(colors_1.default.cyan("Production environment detected"));
     const DIST_PATH = path_1.default.join(__dirname, env_1.ENV.CLIENT_DIST_PATH);
     if (fs_1.default.existsSync(DIST_PATH)) {

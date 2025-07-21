@@ -29,6 +29,7 @@ const envSchema = zod_1.default.object({
     REFRESH_TOKEN_COOKIE: zod_1.default.string().optional().default("refssresh"),
     SOCKET_PORT: zod_1.default.preprocess((val) => (typeof val === "string" ? Number(val) : val), zod_1.default.number().default(8080)),
     CLIENT_DIST_PATH: zod_1.default.string().optional().default("./../../frontend/user/dist"),
+    STANDALONE: zod_1.default.preprocess((val) => (typeof val === "string" ? Boolean(val) : val), zod_1.default.boolean().optional().default(false)),
 });
 let env;
 try {

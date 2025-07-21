@@ -109,11 +109,19 @@ const newAccessToken = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             name: true,
             email: true,
             picture: true,
+            coins: true,
+            lastLoginDate: true,
         },
     });
+    (0, error_1.appAssert)(user !== null, http_1.STATUS_CODES.NOT_FOUND);
     res.status(http_1.STATUS_CODES.OK).json({
         accessToken,
         user,
+        hasDailyLoginReward: yield UserService.checkDailyLoginReward({
+            id: user.id,
+            coins: user.coins,
+            lastLoginDate: user.lastLoginDate,
+        }),
     });
 });
 exports.newAccessToken = newAccessToken;
@@ -628,7 +636,6 @@ const dashboard = (req, res, next) => __awaiter(void 0, void 0, void 0, function
             senderId: user.id,
         },
     });
-    // TODO: sessions completed (graph)
     /*
     Last week - date=YYYY-mm-dd (start date)
     Last month - (some kind of number)
@@ -737,6 +744,7 @@ const dashboard = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     //   .map(([date, count]) => ({ date, count }))
     //   .sort((a, b) => a.date.localeCompare(b.date));
     res.status(http_1.STATUS_CODES.OK).json({
+        coinBalance: user.coins,
         totalSessionsCompleted,
         totalRequestsCreated,
         totalRequestsCompleted,

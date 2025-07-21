@@ -43,6 +43,8 @@ const auth_middleware_1 = require("../middlewares/auth.middleware");
 const multer_1 = require("../lib/multer");
 const demo_limit_middleware_1 = require("../middlewares/demo/demo-limit.middleware");
 const rate_limilt_1 = require("../middlewares/rate-limilt");
+const user_middleware_1 = require("../middlewares/user.middleware");
+const user_1 = require("../constants/user");
 const userRouter = express_1.default.Router();
 // Prefix: /api/user
 userRouter.post("/session", rate_limilt_1.loginLimiter, (0, error_1.errorCatch)(UserController.newUserSession)); // Creates new refresh & access token (login)
@@ -56,7 +58,7 @@ userRouter
     .put((0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.updateUser)); // update user
 userRouter.put("/upload-picture", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(multer_1.upload.single("picture")), (0, error_1.errorCatch)(UserController.updateUserPicture)); // update user picture
 userRouter.get("/dashboard", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.dashboard));
-userRouter.post("/new-request", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForSkillswapRequest), (0, error_1.errorCatch)(UserController.createNewRequest));
+userRouter.post("/new-request", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForSkillswapRequest), (0, error_1.errorCatch)((0, user_middleware_1.requiredCoins)(user_1.NEW_REQUEST_FEE)), (0, error_1.errorCatch)(UserController.createNewRequest));
 userRouter.get("/marketplace", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.marketplace));
 userRouter.get("/request/:id", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.request));
 userRouter.post("/ss-session", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForSkillswapSession), (0, error_1.errorCatch)(UserController.newSkillSwapSession));
