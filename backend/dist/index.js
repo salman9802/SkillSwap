@@ -94,8 +94,8 @@ process.on("SIGINT", () => __awaiter(void 0, void 0, void 0, function* () {
     process.exit(0);
 }));
 // Serve frontend (React)
-if (env_1.ENV.NODE_ENV === "production" && !env_1.ENV.STANDALONE) {
-    console.log(colors_1.default.cyan("Production environment detected"));
+if (!env_1.ENV.STANDALONE) {
+    console.log(colors_1.default.cyan("'STANDALONE' config not found detected."));
     const DIST_PATH = path_1.default.join(__dirname, env_1.ENV.CLIENT_DIST_PATH);
     if (fs_1.default.existsSync(DIST_PATH)) {
         console.log(colors_1.default.cyan(`- Using distribution found at '${DIST_PATH}'`));
@@ -113,6 +113,6 @@ if (env_1.ENV.NODE_ENV === "production" && !env_1.ENV.STANDALONE) {
     }
 }
 else {
-    console.log(colors_1.default.red(`Development environment detected (NODE_ENV = ${env_1.ENV.NODE_ENV})`));
-    console.log(colors_1.default.red("- Manually start client"));
+    console.log(colors_1.default.red(`'STANDALONE' config detected`));
+    console.log(colors_1.default.red("- Separate client required"));
 }
