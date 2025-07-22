@@ -536,7 +536,7 @@ const ProfilePage = () => {
           {/* Country */}
           <div className="flex w-full flex-col md:flex-row">
             <div className="flex-[1] font-medium text-gray-800">Country</div>
-            <div className="flex flex-[2] items-center">
+            <div className="flex flex-[2] flex-col items-center md:flex-row">
               <div className="grow">
                 {isLoadingDetails ? (
                   <SkeletonLoader className="h-lh w-full" />
@@ -583,7 +583,7 @@ const ProfilePage = () => {
           {/* Timezone */}
           <div className="flex w-full flex-col md:flex-row">
             <div className="flex-[1] font-medium text-gray-800">Timezone</div>
-            <div className="flex flex-[2] items-center">
+            <div className="flex flex-[2] flex-col items-center md:flex-row">
               <div className="grow">
                 {isLoadingDetails ? (
                   <SkeletonLoader className="h-lh w-full" />

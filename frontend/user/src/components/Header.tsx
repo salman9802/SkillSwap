@@ -182,14 +182,16 @@ const Header = () => {
           </Link>
         </div>
       </div>
+
+      {/* Popup */}
       <div
         className={cn(
-          "absolute top-full flex w-full flex-col items-start gap-2 bg-gray-50 px-2 py-3 transition-all duration-200",
+          "absolute top-full mb-1 flex w-full items-start gap-2 bg-gray-50 px-2 py-3 transition-all duration-200",
           isHamburgerOpen && "scale-100 opacity-100",
           !isHamburgerOpen && "pointer-events-none scale-95 opacity-0",
         )}
       >
-        <Link to="user/register">
+        {/* <Link to="user/register">
           <Button className="cursor-pointer">Create an account</Button>
         </Link>
         <Link to="/user/login">
@@ -201,7 +203,65 @@ const Header = () => {
           <Button className="cursor-pointer" variant="ghost">
             Visit Marketplace
           </Button>
-        </Link>
+        </Link> */}
+
+        {isLoading || isFetching ? (
+          <Loader className="size-5" />
+        ) : !data || !isAuthenticated ? (
+          <>
+            <Link to="/user/register">
+              <Button className="cursor-pointer">Create an account</Button>
+            </Link>
+            <Link to="/user/login">
+              <Button className="cursor-pointer" variant="primary-outline">
+                Log in
+              </Button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Button
+              onClick={async () => {
+                try {
+                  const res = await logout().unwrap();
+                  console.log(res);
+                  dispatch(clearCredentials());
+                  navigate("/", { replace: true });
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+              disabled={logoutLoading}
+              className="text-primary hover:text-primary cursor-pointer"
+              variant="ghost"
+            >
+              {logoutLoading ? (
+                <Loader className="mx-auto size-5" />
+              ) : (
+                "Log out"
+              )}
+            </Button>
+            <Link to="/user/account">
+              <Button
+                variant="outline"
+                className="flex h-auto cursor-pointer items-center justify-between gap-4 px-4 py-2"
+              >
+                <Avatar>
+                  <AvatarImage
+                    src={user?.picture}
+                    alt={`@${data?.user?.name}`}
+                  />
+                  <AvatarFallback className="uppercase">
+                    {getInitials(data?.user?.name)}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="text-gray-800 capitalize">
+                  {data?.user?.name || "Guest"}
+                </span>
+              </Button>
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );

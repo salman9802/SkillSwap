@@ -54,10 +54,12 @@ const HomePage = () => {
         ]}
       />
       <DemoAnnouncement />
-      <Header />
-      <Hero />
-      <Features />
-      <Gamification />
+      <div className="px-2">
+        <Header />
+        <Hero />
+        <Features />
+        <Gamification />
+      </div>
       <Footer />
     </div>
   );

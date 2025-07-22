@@ -135,7 +135,7 @@ const Hero = () => {
 
   return (
     <section className="text-gray-600">
-      <div className="container mx-auto flex flex-col items-center px-5 py-24 md:flex-row">
+      <div className="mx-auto flex flex-col items-center md:container md:flex-row md:px-5 md:py-24">
         <div className="mb-16 flex flex-col items-center text-center md:mb-0 md:w-1/2 md:items-start md:pr-16 md:text-left lg:flex-grow lg:pr-24">
           <h1
             id="hero-header"
@@ -151,7 +151,7 @@ const Hero = () => {
             exchanging knowledge today—no real-world money required, just
             passion.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col justify-center gap-4 md:flex-row">
             <Link to="/user/login">
               <Button className="cursor-pointer px-12 py-6 text-lg">
                 Join now

@@ -29,20 +29,20 @@ const Gamification = () => {
           <img src="/coin.png" alt="coin" className="size-10" /> Swap coins —
           Power your learning
         </h1>
-        <p className="w-[40ch]">
+        <p className="md:w-[40ch]">
           Swap Coins are at the heart of how you create and join sessions on the
           platform.
         </p>
         <div className="flex flex-col gap-3 pl-12">
-          <p className="w-[50ch]">
+          <p className="md:w-[50ch]">
             <span className="font-semibold">📅 Earn Daily: </span>Log in each
             day to collect free coins.
           </p>
-          <p className="w-[50ch]">
+          <p className="md:w-[50ch]">
             <span className="font-semibold">🔄 Join sessions</span>
             Gain coins by participating in sessions.
           </p>
-          <p className="w-[50ch]">
+          <p className="md:w-[50ch]">
             <span className="font-semibold">💡 Create sessions: </span>
             Can't find appropriate session? Create your own session based on
             your preference.

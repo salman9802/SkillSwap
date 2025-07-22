@@ -241,7 +241,7 @@ const NewRequestPage = () => {
             </div>
           ))}
 
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3 md:flex-row">
             <DateTimePicker
               date={newDate}
               onValueChange={(date) => setNewDate(date)}
@@ -252,7 +252,7 @@ const NewRequestPage = () => {
               variant="link"
               onClick={handleAddAvailability}
               disabled={newDate === undefined}
-              className="cursor-pointer font-bold"
+              className="w-fit cursor-pointer font-bold"
             >
               + Add date & time
             </Button>
