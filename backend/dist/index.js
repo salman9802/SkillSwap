@@ -29,6 +29,12 @@ const user_socket_1 = require("./sockets/user.socket");
 const allowedClientOrigins = [
     "http://localhost:5173",
     "https://skillswap-1-r1h9.onrender.com",
+    // "https://console.cron-job.org",
+    "116.203.129.16",
+    "116.203.134.67",
+    "23.88.105.37",
+    "128.140.8.200",
+    "91.99.23.109",
 ];
 const server = (0, express_1.default)();
 server.use("/uploads", express_1.default.static("uploads")); // Serve static files
