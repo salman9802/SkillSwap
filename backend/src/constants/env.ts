@@ -3,7 +3,7 @@ import path from "path";
 import dotenv from "dotenv";
 dotenv.config({
   path: path.join(__dirname, "..", "..", "..", ".env"),
-  // debug: true,
+  debug: true,
 });
 
 import colors from "@colors/colors/safe";
@@ -12,7 +12,7 @@ import TIME from "./time";
 import z from "zod";
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(["development", "production"]),
+  NODE_ENV: z.enum(["development", "production", "test"]),
   DATABASE_URL: z.string(),
   ACCESS_TOKEN_SECRET: z.string(),
   REFRESH_TOKEN_SECRET: z.string(),
