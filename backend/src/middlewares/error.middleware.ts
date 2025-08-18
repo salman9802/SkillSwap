@@ -130,7 +130,7 @@ export const errorMiddleware: express.ErrorRequestHandler = (
         return;
 
       default:
-        // Server-related error.
+        // Server-related error. (default)
         res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
           message: "Something went wrong",
           code: AppErrorCodes.SERVER_ERROR,

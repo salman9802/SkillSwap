@@ -48,7 +48,12 @@ export const appAssert = (
   httpStatusCode: StatusCodeType,
   message?: string,
   appErrorCode: AppErrorCodeType = AppErrorCodes.APP_ERROR
-) => assert(condition, new AppError(httpStatusCode, message, appErrorCode));
+  // ) => assert(condition, new AppError(httpStatusCode, message, appErrorCode));
+) => {
+  if (!condition) {
+    throw new AppError(httpStatusCode, message, appErrorCode);
+  }
+};
 
 export const prettifyError = (error: string) =>
   ENV.NODE_ENV !== "production"

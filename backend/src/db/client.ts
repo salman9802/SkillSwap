@@ -1,6 +1,6 @@
 import { PrismaClient } from "../../generated/prisma/client";
 
-import { hashPassword } from "../lib/bcrypt";
+// import { hashPassword } from "../lib/bcrypt";
 import { hashPasswordMiddleware } from "../middlewares/prisma/hashPassword";
 
 const prisma = new PrismaClient();
@@ -35,3 +35,10 @@ const prisma = new PrismaClient();
 prisma.$use(hashPasswordMiddleware);
 
 export default prisma;
+
+export const createPrismaClient = () => {
+  const prisma = new PrismaClient();
+  prisma.$use(hashPasswordMiddleware);
+
+  return prisma;
+};

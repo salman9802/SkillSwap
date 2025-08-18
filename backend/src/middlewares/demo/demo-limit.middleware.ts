@@ -2,10 +2,7 @@ import express from "express";
 import { appAssert } from "../../lib/error";
 import prisma from "../../db/client";
 import { STATUS_CODES } from "../../constants/http";
-
-// resource limits
-const DEMO_LIMIT = 10;
-const USER_ACCOUNT_LIMIT = 100;
+import { ServerConfig } from "../../config/config";
 
 export const demoLimitForSkillswapSession = async (
   req: express.Request,
@@ -30,7 +27,7 @@ export const demoLimitForSkillswapSession = async (
   });
 
   appAssert(
-    createdSessionCount <= DEMO_LIMIT,
+    createdSessionCount <= ServerConfig.getConfig().DEMO_LIMIT,
     STATUS_CODES.TOO_MANY_REQUEST,
     "You've reached the demo limit."
   );
@@ -52,7 +49,7 @@ export const demoLimitForSkillswapRequest = async (
   });
 
   appAssert(
-    createdRequestCount <= DEMO_LIMIT,
+    createdRequestCount <= ServerConfig.getConfig().DEMO_LIMIT,
     STATUS_CODES.TOO_MANY_REQUEST,
     "You've reached the demo limit."
   );
@@ -67,8 +64,29 @@ export const demoLimitForUserAccount = async (
 ) => {
   const createdUserAccountCount = await prisma.user.count({});
 
+  // console.log("*".repeat(50));
+  // console.log("createdUserAccountCount", createdUserAccountCount);
+  // console.log(
+  //   "getConfig().USER_ACCOUNT_LIMIT",
+  //   getConfig().USER_ACCOUNT_LIMIT
+  // );
+  console.log("*".repeat(50));
+  console.log(
+    `${createdUserAccountCount} <= ${
+      ServerConfig.getConfig().USER_ACCOUNT_LIMIT
+    } :`,
+    createdUserAccountCount <= ServerConfig.getConfig().USER_ACCOUNT_LIMIT
+  );
+  console.log("*".repeat(50));
+  const condition =
+    createdUserAccountCount <= ServerConfig.getConfig().USER_ACCOUNT_LIMIT;
+  console.log("createdUserAccountCount", createdUserAccountCount);
+  console.log(
+    "ServerConfig.getConfig().USER_ACCOUNT_LIMIT",
+    ServerConfig.getConfig().USER_ACCOUNT_LIMIT
+  );
   appAssert(
-    createdUserAccountCount <= USER_ACCOUNT_LIMIT,
+    condition,
     STATUS_CODES.TOO_MANY_REQUEST,
     "Demo limit reached! Cannot create account. Please contact developer."
   );
