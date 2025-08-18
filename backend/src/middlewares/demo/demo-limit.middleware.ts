@@ -64,29 +64,8 @@ export const demoLimitForUserAccount = async (
 ) => {
   const createdUserAccountCount = await prisma.user.count({});
 
-  // console.log("*".repeat(50));
-  // console.log("createdUserAccountCount", createdUserAccountCount);
-  // console.log(
-  //   "getConfig().USER_ACCOUNT_LIMIT",
-  //   getConfig().USER_ACCOUNT_LIMIT
-  // );
-  console.log("*".repeat(50));
-  console.log(
-    `${createdUserAccountCount} <= ${
-      ServerConfig.getConfig().USER_ACCOUNT_LIMIT
-    } :`,
-    createdUserAccountCount <= ServerConfig.getConfig().USER_ACCOUNT_LIMIT
-  );
-  console.log("*".repeat(50));
-  const condition =
-    createdUserAccountCount <= ServerConfig.getConfig().USER_ACCOUNT_LIMIT;
-  console.log("createdUserAccountCount", createdUserAccountCount);
-  console.log(
-    "ServerConfig.getConfig().USER_ACCOUNT_LIMIT",
-    ServerConfig.getConfig().USER_ACCOUNT_LIMIT
-  );
   appAssert(
-    condition,
+    createdUserAccountCount <= ServerConfig.getConfig().USER_ACCOUNT_LIMIT,
     STATUS_CODES.TOO_MANY_REQUEST,
     "Demo limit reached! Cannot create account. Please contact developer."
   );

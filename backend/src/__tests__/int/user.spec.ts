@@ -19,29 +19,10 @@ import { createPrismaClient } from "../../db/client";
 import { createExpressApp } from "../../server";
 import * as rateLimiters from "../../middlewares/rate-limilt";
 import { STATUS_CODES } from "../../constants/http";
-// import * as configModule from "../../config/config";
 import { ServerConfig } from "../../config/config";
+import { AppErrorCodes } from "../../constants/error";
 
 jest.mock("../../middlewares/rate-limilt");
-// jest.mock("../../config/config");
-// jest.mock("../../config/config", () => ({
-//   getConfig: () => ({
-//     allowedClientOrigins: [
-//       "http://localhost:5173",
-//       "https://skillswap-1-r1h9.onrender.com",
-//       // "https://console.cron-job.org",
-//       "116.203.129.16",
-//       "116.203.134.67",
-//       "23.88.105.37",
-//       "128.140.8.200",
-//       "91.99.23.109",
-//     ],
-//     rateLimits: {
-//       DEMO_LIMIT: 10,
-//       USER_ACCOUNT_LIMIT: -1,
-//     },
-//   }),
-// }));
 
 describe("User Account", () => {
   const prismaClient = createPrismaClient();
@@ -98,46 +79,30 @@ describe("User Account", () => {
 
       ServerConfig.override("USER_ACCOUNT_LIMIT", -1);
 
-      // const actualConfig = jest
-      //   .requireActual("../../config/config")
-      //   .getConfig();
-      // jest.spyOn(configModule, "getConfig").mockReturnValueOnce({
-      //   ...actualConfig,
-      //   rateLimits: {
-      //     ...actualConfig.rateLimits,
-      //     USER_ACCOUNT_LIMIT: -1,
-      //   },
-      // });
-      // jest.doMock("../../config/config", () => {
-      //   const actual = jest.requireActual("../../config/config");
-      //   return {
-      //     ...actual,
-      //     getConfig: () => ({
-      //       ...actual.getConfig(),
-      //       rateLimits: {
-      //         ...actual.getConfig().rateLimits,
-      //         USER_ACCOUNT_LIMIT: -1,
-      //       },
-      //     }),
-      //   };
-      // });
+      const res = await request(createExpressApp())
+        .post("/api/user/account")
+        .send(newUserStub);
 
-      // configModule.overrideConfig({
-      //   rateLimits: {
-      //     USER_ACCOUNT_LIMIT: -1,
-      //   },
-      // });
+      expect(res.statusCode).toBe(STATUS_CODES.TOO_MANY_REQUEST);
+      expect(res.body.code).toEqual(AppErrorCodes.APP_ERROR);
+      expect(res.body.message).toEqual(
+        "Demo limit reached! Cannot create account. Please contact developer."
+      );
+    });
+
+    it("should create account", async () => {
+      ServerConfig.override("USER_ACCOUNT_LIMIT", 1);
 
       const res = await request(createExpressApp())
         .post("/api/user/account")
         .send(newUserStub);
-      // console.log(res.headers);
-      console.log(res.body);
 
-      expect(res.statusCode).toBe(STATUS_CODES.TOO_MANY_REQUEST);
-      // expect(res.statusCode).toBe(STATUS_CODES.NOT_FOUND);
+      expect(res.statusCode).toBe(STATUS_CODES.CREATED);
+      expect(res.body.user).toBeDefined();
+      expect(res.body.user.name).toEqual(newUserStub.name);
+      expect(res.body.user.email).toEqual(newUserStub.email);
+      expect(res.body.accessToken).toBeDefined();
     });
-    it.todo("should create account");
   });
 });
 
