@@ -133,3 +133,18 @@ enum ScheduleStatus {
   CLOSED
   CANCELLED
 }
+
+model Admin {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  password    String
+  deactivated Boolean @default(false)
+  deleted     Boolean @default(false)
+
+  role AdminRole @default(ADMIN)
+}
+
+enum AdminRole {
+  SUPERADMIN
+  ADMIN
+}
