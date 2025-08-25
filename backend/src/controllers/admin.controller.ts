@@ -1,9 +1,16 @@
 import express from "express";
-import { createAdminPayloadSchema } from "../schemas/admin.schema";
+import {
+  adminLoginPayloadSchema,
+  createAdminPayloadSchema,
+} from "../schemas/admin.schema";
 import adminService from "../services/admin.service";
 import { STATUS_CODES } from "../constants/http";
 import { sanitizeAdmin } from "../lib/sanitize";
 import { appAssert } from "../lib/error";
+import { ADMIN } from "../constants/admin";
+import { AppErrorCodes } from "../constants/error";
+import prisma from "../db/client";
+import { RefreshTokenJwtPayload } from "../types/express/auth";
 
 export class AdminController {
   static async createAccount(
@@ -11,15 +18,21 @@ export class AdminController {
     res: express.Response,
     next: express.NextFunction
   ) {
-    // validate paylaod
-    const payload = createAdminPayloadSchema.parse(req.body);
+    const payload = createAdminPayloadSchema.parse({ ...req.body });
 
-    // invoke service to create admin
     const createdAdmin = await adminService.createAccount(payload);
+    const session = await adminService.createOrUpdateSession(createdAdmin.id);
 
-    res.status(STATUS_CODES.CREATED).json({
-      admin: sanitizeAdmin(createdAdmin),
-    });
+    const { accessToken, refreshToken } =
+      adminService.createAccessAndRefreshToken(session);
+
+    adminService
+      .setAuthCookies(res, refreshToken)
+      .status(STATUS_CODES.CREATED)
+      .json({
+        admin: sanitizeAdmin(createdAdmin),
+        accessToken,
+      });
   }
 
   static async getAdmins(
@@ -90,5 +103,90 @@ export class AdminController {
     res.status(STATUS_CODES.OK).json({
       result,
     });
+  }
+
+  static async login(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const payload = adminLoginPayloadSchema.parse({ ...req.body });
+
+    // find admin
+    const admin = await prisma.admin.findFirst({
+      where: {
+        name: payload.name,
+      },
+      select: {
+        id: true,
+      },
+    });
+    appAssert(admin !== null, STATUS_CODES.BAD_REQUEST, "Invalid credentials");
+
+    // create session
+    const session = await adminService.createOrUpdateSession(admin!.id);
+
+    // create tokens
+    const { accessToken, refreshToken } =
+      adminService.createAccessAndRefreshToken(session);
+
+    // set tokens as cookie
+    adminService
+      .setAuthCookies(res, refreshToken)
+      .status(STATUS_CODES.CREATED)
+      .json({
+        accessToken,
+      });
+  }
+
+  static async logout(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const admin = req.admin!;
+
+    await adminService.deleteSession(admin.id);
+
+    adminService.unsetAuthCookies(res).status(STATUS_CODES.OK).end();
+  }
+
+  static async getAuth(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const refreshToken = req.signedCookies[ADMIN.REFRESH_TOKEN_COOKIE];
+    appAssert(refreshToken, STATUS_CODES.UNAUTHORIZED, "Token not found");
+
+    const refreshTokenPayload = adminService.validateRefreshToken(refreshToken);
+    appAssert(
+      refreshTokenPayload !== false,
+      STATUS_CODES.UNAUTHORIZED,
+      "Refresh token expired",
+      AppErrorCodes.REFRESH_TOKEN_EXPIRED
+    );
+    appAssert(
+      refreshTokenPayload !== null,
+      STATUS_CODES.INTERNAL_SERVER_ERROR,
+      "Something went wrong",
+      AppErrorCodes.SERVER_ERROR
+    );
+
+    const session = await prisma.adminSession.findFirst({
+      where: {
+        id: (refreshToken as RefreshTokenJwtPayload).id,
+      },
+    });
+    appAssert(session !== null, STATUS_CODES.UNAUTHORIZED);
+
+    const accessToken = adminService.createAccessToken(session!);
+
+    adminService
+      .setAuthCookies(res, refreshToken)
+      .status(STATUS_CODES.CREATED)
+      .json({
+        accessToken,
+      });
   }
 }

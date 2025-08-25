@@ -11,3 +11,10 @@ export const createAdminPayloadSchema = z.object({
 });
 
 export type CreateAdminPayload = z.infer<typeof createAdminPayloadSchema>;
+
+export const adminLoginPayloadSchema = z.object({
+  name: z.string(),
+  password: z.string(),
+});
+
+export type AdminLoginPayload = z.infer<typeof adminLoginPayloadSchema>;

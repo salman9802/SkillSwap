@@ -136,15 +136,28 @@ enum ScheduleStatus {
 
 model Admin {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
+  name        String  @unique
   password    String
   deactivated Boolean @default(false)
   deleted     Boolean @default(false)
 
-  role AdminRole @default(ADMIN)
+  role     AdminRole     @default(ADMIN)
+  sessions AdminSession?
+
+  @@map("admins")
 }
 
 enum AdminRole {
   SUPERADMIN
   ADMIN
+}
+
+model AdminSession {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  adminId   String   @unique @db.ObjectId
+  admin     Admin    @relation(fields: [adminId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@map("admin_sessions")
 }

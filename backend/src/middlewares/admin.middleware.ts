@@ -7,6 +7,7 @@ import adminService from "../services/admin.service";
 import { AdminAccessTokenJwtPayload } from "../types/express/admin";
 import prisma from "../db/client";
 import { sanitizeAdmin } from "../lib/sanitize";
+import { AppErrorCodes } from "../constants/error";
 
 export const requireAuth = async (
   req: express.Request,
@@ -16,12 +17,22 @@ export const requireAuth = async (
   const accessToken = req.headers.authorization?.split(" ")[1];
   appAssert(accessToken, STATUS_CODES.UNAUTHORIZED, "Invalid token");
 
-  const accessPayload = adminService.validateAccessToken(
-    accessToken!
-  ) as AdminAccessTokenJwtPayload;
+  const accessPayload = adminService.validateAccessToken(accessToken!);
+  appAssert(
+    accessPayload !== false,
+    STATUS_CODES.UNAUTHORIZED,
+    "Access token expired",
+    AppErrorCodes.ACCESS_TOKEN_EXPIRED
+  );
+  appAssert(
+    accessPayload !== null,
+    STATUS_CODES.INTERNAL_SERVER_ERROR,
+    "Session does not exists",
+    AppErrorCodes.SERVER_ERROR
+  );
   const admin = await prisma.admin.findFirst({
     where: {
-      id: accessPayload.aid,
+      id: (accessPayload as AdminAccessTokenJwtPayload).aid,
     },
   });
   appAssert(admin, STATUS_CODES.UNAUTHORIZED, "Unauthorized access");

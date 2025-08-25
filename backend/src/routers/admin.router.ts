@@ -1,37 +1,53 @@
 import express from "express";
 import { AdminController } from "../controllers/admin.controller";
 import { requireAuth, requireRole } from "../middlewares/admin.middleware";
+import { errorCatch } from "../lib/error";
 
 const adminRouter = express.Router();
 
 adminRouter.post(
   "/",
-  requireAuth,
-  requireRole(["SUPERADMIN"]),
-  AdminController.createAccount
+  // errorCatch(requireAuth),
+  // errorCatch(requireRole(["SUPERADMIN"])),
+  errorCatch(AdminController.createAccount)
 );
-adminRouter.get("/", requireAuth, AdminController.getAdmins);
+adminRouter.get(
+  "/",
+  errorCatch(requireAuth),
+  errorCatch(AdminController.getAdmins)
+);
 adminRouter.put(
   "/deactivate/:adminId",
-  requireAuth,
-  AdminController.deactivateAccount
+  errorCatch(requireAuth),
+  errorCatch(AdminController.deactivateAccount)
 );
 adminRouter.put(
   "/reactivate/:adminId",
-  requireAuth,
-  AdminController.reactivateAccount
+  errorCatch(requireAuth),
+  errorCatch(AdminController.reactivateAccount)
 );
 adminRouter.delete(
   "/:adminId",
-  requireAuth,
-  requireRole(["SUPERADMIN"]),
-  AdminController.deleteAccount
+  errorCatch(requireAuth),
+  errorCatch(requireRole(["SUPERADMIN"])),
+  errorCatch(AdminController.deleteAccount)
 );
 adminRouter.put(
   "/override-password/:userId",
-  requireAuth,
-  requireRole(["SUPERADMIN"]),
-  AdminController.overrideUserPassword
+  errorCatch(requireAuth),
+  errorCatch(requireRole(["SUPERADMIN"])),
+  errorCatch(AdminController.overrideUserPassword)
+);
+adminRouter.post("/auth/login", errorCatch(AdminController.login));
+adminRouter.get(
+  "/auth",
+  errorCatch(requireAuth),
+  errorCatch(AdminController.getAuth)
+);
+adminRouter.delete(
+  "/auth/logout",
+  errorCatch(requireAuth),
+  errorCatch(AdminController.logout)
 );
 
 export default adminRouter;
