@@ -1,6 +1,8 @@
 import express from "express";
+
 import {
   adminLoginPayloadSchema,
+  adminLogQueryParams,
   createAdminPayloadSchema,
 } from "../schemas/admin.schema";
 import adminService from "../services/admin.service";
@@ -11,6 +13,7 @@ import { ADMIN } from "../constants/admin";
 import { AppErrorCodes } from "../constants/error";
 import prisma from "../db/client";
 import { RefreshTokenJwtPayload } from "../types/express/auth";
+import { MonitoringService } from "../services/monitoring.service";
 
 export class AdminController {
   static async createAccount(
@@ -188,5 +191,35 @@ export class AdminController {
       .json({
         accessToken,
       });
+  }
+
+  static streamSystemMetrics(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+
+    const interval = setInterval(() => {
+      res.write(JSON.stringify(MonitoringService.getSystemMetrics()));
+    }, 1000); // send every 1s
+
+    req.on("close", () => clearInterval(interval));
+  }
+
+  static async getLogs(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const params = adminLogQueryParams.parse(req.params);
+
+    const logs = await adminService.getLogs(params);
+
+    res.status(STATUS_CODES.OK).json({
+      logs,
+    });
   }
 }

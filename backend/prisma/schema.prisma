@@ -143,6 +143,7 @@ model Admin {
 
   role     AdminRole     @default(ADMIN)
   sessions AdminSession?
+  logs     AdminLog[]
 
   @@map("admins")
 }
@@ -160,4 +161,40 @@ model AdminSession {
   expiresAt DateTime
 
   @@map("admin_sessions")
+}
+
+model ResponseLog {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  method         String
+  route          String
+  statusCode     Int
+  responseTimeMs Float
+  timestamp      DateTime @default(now())
+  userAgent      String?
+  ip             String[]
+
+  @@map("response_logs")
+}
+
+model AdminLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  type      String
+  route     String
+  metadata  Json?
+  timestamp DateTime @default(now())
+  adminId   String?  @db.ObjectId
+
+  admin Admin? @relation(fields: [adminId], references: [id])
+
+  @@map("admin_logs")
+}
+
+model SystemMetric {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  cpuUsage    Int // %
+  memoryUsage Int // MB
+  uptime      BigInt // seconds
+  timestamp   DateTime
+
+  @@map("system_metrics")
 }

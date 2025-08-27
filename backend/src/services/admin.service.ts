@@ -5,7 +5,10 @@ import jwt from "jsonwebtoken";
 
 import prisma from "../db/client";
 import { SafeAdmin, sanitizeAdmin } from "../lib/sanitize";
-import { CreateAdminPayload } from "../schemas/admin.schema";
+import {
+  AdminLogQueryParams,
+  CreateAdminPayload,
+} from "../schemas/admin.schema";
 import {
   AdminAccessTokenJwtPayload,
   AdminRefreshTokenJwtPayload,
@@ -196,6 +199,13 @@ class AdminService {
       if (error instanceof jwt.TokenExpiredError) return false;
       else return null;
     }
+  };
+
+  getLogs = async (params: AdminLogQueryParams) => {
+    return await prisma.adminLog.findMany({
+      skip: params.offset,
+      take: params.limit,
+    });
   };
 }
 
