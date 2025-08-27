@@ -2,7 +2,7 @@ import express from "express";
 
 import {
   adminLoginPayloadSchema,
-  adminLogQueryParams,
+  logQueryParams,
   createAdminPayloadSchema,
 } from "../schemas/admin.schema";
 import adminService from "../services/admin.service";
@@ -214,9 +214,23 @@ export class AdminController {
     res: express.Response,
     next: express.NextFunction
   ) {
-    const params = adminLogQueryParams.parse(req.params);
+    const params = logQueryParams.parse(req.params);
 
     const logs = await adminService.getLogs(params);
+
+    res.status(STATUS_CODES.OK).json({
+      logs,
+    });
+  }
+
+  static async getUserLogs(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const params = logQueryParams.parse(req.params);
+
+    const logs = await adminService.getUserLogs(params);
 
     res.status(STATUS_CODES.OK).json({
       logs,

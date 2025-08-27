@@ -34,6 +34,7 @@ model User {
   chatMessages              SkillSwapSessionChatMessage[]
   asReviewer                Review[]                      @relation("ReviewerRelation")
   asReviewee                Review[]                      @relation("RevieweeRelation")
+  logs                      UserLog[]
 
   @@map("users")
 }
@@ -176,6 +177,16 @@ model ResponseLog {
   @@map("response_logs")
 }
 
+model SystemMetric {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  cpuUsage    Int // %
+  memoryUsage Int // MB
+  uptime      BigInt // seconds
+  timestamp   DateTime
+
+  @@map("system_metrics")
+}
+
 model AdminLog {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   type      String
@@ -189,12 +200,15 @@ model AdminLog {
   @@map("admin_logs")
 }
 
-model SystemMetric {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  cpuUsage    Int // %
-  memoryUsage Int // MB
-  uptime      BigInt // seconds
-  timestamp   DateTime
+model UserLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  type      String
+  route     String
+  metadata  Json?
+  timestamp DateTime @default(now())
+  userId    String?  @db.ObjectId
 
-  @@map("system_metrics")
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("user_logs")
 }

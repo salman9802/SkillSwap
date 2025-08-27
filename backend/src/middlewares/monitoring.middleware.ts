@@ -44,3 +44,22 @@ export const adminMonitoring =
 
     next();
   };
+
+export const userMonitoring =
+  (
+    log: Partial<Omit<Prisma.UserLogCreateManyInput, "type">> &
+      Pick<Prisma.UserLogCreateManyInput, "type"> // Combines partial of type other than required and only required type
+  ) =>
+  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const user = req.user;
+
+    res.on("finish", () => {
+      MonitoringService.recordUserLog({
+        ...{ userId: user?.id || null, type: "unknown" },
+        route: req.route?.path || req.originalUrl || req.path || "/unknown",
+        ...log,
+      });
+    });
+
+    next();
+  };

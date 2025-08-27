@@ -5,10 +5,7 @@ import jwt from "jsonwebtoken";
 
 import prisma from "../db/client";
 import { SafeAdmin, sanitizeAdmin } from "../lib/sanitize";
-import {
-  AdminLogQueryParams,
-  CreateAdminPayload,
-} from "../schemas/admin.schema";
+import { LogQueryParams, CreateAdminPayload } from "../schemas/admin.schema";
 import {
   AdminAccessTokenJwtPayload,
   AdminRefreshTokenJwtPayload,
@@ -201,8 +198,15 @@ class AdminService {
     }
   };
 
-  getLogs = async (params: AdminLogQueryParams) => {
+  getLogs = async (params: LogQueryParams) => {
     return await prisma.adminLog.findMany({
+      skip: params.offset,
+      take: params.limit,
+    });
+  };
+
+  getUserLogs = async (params: LogQueryParams) => {
+    return await prisma.userLog.findMany({
       skip: params.offset,
       take: params.limit,
     });

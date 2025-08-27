@@ -17,8 +17,8 @@ export const adminLoginPayloadSchema = z.object({
 });
 export type AdminLoginPayload = z.infer<typeof adminLoginPayloadSchema>;
 
-export const adminLogQueryParams = z.object({
+export const logQueryParams = z.object({
   limit: z.number().optional().default(50),
   offset: z.number().optional().default(0),
 });
-export type AdminLogQueryParams = z.infer<typeof adminLogQueryParams>;
+export type LogQueryParams = z.infer<typeof logQueryParams>;

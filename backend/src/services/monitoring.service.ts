@@ -10,6 +10,8 @@ export class MonitoringService {
   static RES_FLUSH_INTERVAL = 10000; // 10s
   static ADMIN_BUFFER_SIZE = 100;
   static ADMIN_FLUSH_INTERVAL = 10000; // 10s
+  static USER_BUFFER_SIZE = 100;
+  static USER_FLUSH_INTERVAL = 10000; // 10s
 
   static responseLogBatchQueue = new BatchQueue(
     async (logs: Prisma.ResponseLogCreateManyInput[]) => {
@@ -25,6 +27,13 @@ export class MonitoringService {
     this.ADMIN_BUFFER_SIZE,
     this.ADMIN_FLUSH_INTERVAL
   );
+  static userLogBatchQueue = new BatchQueue(
+    async (logs: Prisma.UserLogCreateManyInput[]) => {
+      await prisma.userLog.createMany({ data: logs });
+    },
+    this.USER_BUFFER_SIZE,
+    this.USER_FLUSH_INTERVAL
+  );
 
   //   static SYSTEM_METRIC_INTERVAL = 10000; // 10s
   //   static systemMetricIntervalId: NodeJS.Timeout;
@@ -37,6 +46,10 @@ export class MonitoringService {
 
   static recordAdminLog(adminLog: Prisma.AdminLogCreateManyInput) {
     this.adminLogBatchQueue.push(adminLog);
+  }
+
+  static recordUserLog(userLog: Prisma.UserLogCreateManyInput) {
+    this.userLogBatchQueue.push(userLog);
   }
 
   static getSystemMetrics() {
