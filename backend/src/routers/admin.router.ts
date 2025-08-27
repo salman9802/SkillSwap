@@ -66,7 +66,6 @@ adminRouter.post(
 );
 adminRouter.get(
   "/auth",
-  errorCatch(requireAuth),
   adminMonitoring({
     type: "admin.auth",
   }),
