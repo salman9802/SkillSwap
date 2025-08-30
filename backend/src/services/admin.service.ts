@@ -248,6 +248,37 @@ class AdminService {
 
     return adminLogs;
   };
+
+  getUserLogsInCSV = async (query: ExportLogSchema["query"]) => {
+    const userLogs = await prisma.userLog.findMany({
+      where: {
+        AND: [
+          { timestamp: { gte: query.startDate } },
+          { timestamp: { lte: query.endDate } },
+        ],
+      },
+    });
+
+    if (userLogs.length === 0) return "";
+
+    const header = Object.keys(userLogs[0]).join(",") + "\n";
+    const rows = userLogs.map((log) => Object.values(log).join(",")).join("\n");
+
+    return header + rows;
+  };
+
+  getUserLogsInJSON = async (query: ExportLogSchema["query"]) => {
+    const userLogs = await prisma.userLog.findMany({
+      where: {
+        AND: [
+          { timestamp: { gte: query.startDate } },
+          { timestamp: { lte: query.endDate } },
+        ],
+      },
+    });
+
+    return userLogs;
+  };
 }
 
 export default new AdminService();

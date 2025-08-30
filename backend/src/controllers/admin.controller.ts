@@ -261,4 +261,28 @@ export class AdminController {
 
     res.status(STATUS_CODES.OK).send(logs);
   }
+
+  static async exportUserLogs(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const query = req.validated?.query as ExportLogSchema["query"];
+
+    let logs;
+    if (query.format === "CSV") {
+      logs = await adminService.getUserLogsInCSV(query);
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", `attachment; filename="export.csv"`);
+    } else {
+      logs = await adminService.getUserLogsInJSON(query);
+      res.setHeader("Content-Type", "application/json");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="export.json"`
+      );
+    }
+
+    res.status(STATUS_CODES.OK).send(logs);
+  }
 }
