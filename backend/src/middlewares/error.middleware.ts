@@ -132,7 +132,7 @@ export const errorMiddleware: express.ErrorRequestHandler = (
       default:
         // Server-related error. (default)
         res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-          message: "Something went wrong",
+          message: error.message || "Something went wrong",
           code: AppErrorCodes.SERVER_ERROR,
           stack: errorStack,
         });
@@ -142,7 +142,7 @@ export const errorMiddleware: express.ErrorRequestHandler = (
 
   // Server-related error. (default)
   res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-    message: "Something went wrong",
+    message: error.message || "Something went wrong",
     code: AppErrorCodes.SERVER_ERROR,
     stack: errorStack,
   });

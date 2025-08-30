@@ -5,7 +5,11 @@ import jwt from "jsonwebtoken";
 
 import prisma from "../db/client";
 import { SafeAdmin, sanitizeAdmin } from "../lib/sanitize";
-import { LogQueryParams, CreateAdminPayload } from "../schemas/admin.schema";
+import {
+  LogQueryParams,
+  CreateAdminPayload,
+  ExportLogSchema,
+} from "../schemas/admin.schema";
 import {
   AdminAccessTokenJwtPayload,
   AdminRefreshTokenJwtPayload,
@@ -210,6 +214,39 @@ class AdminService {
       skip: params.offset,
       take: params.limit,
     });
+  };
+
+  getLogsInCSV = async (query: ExportLogSchema["query"]) => {
+    const adminLogs = await prisma.adminLog.findMany({
+      where: {
+        AND: [
+          { timestamp: { gte: query.startDate } },
+          { timestamp: { lte: query.endDate } },
+        ],
+      },
+    });
+
+    if (adminLogs.length === 0) return "";
+
+    const header = Object.keys(adminLogs[0]).join(",") + "\n";
+    const rows = adminLogs
+      .map((log) => Object.values(log).join(","))
+      .join("\n");
+
+    return header + rows;
+  };
+
+  getLogsInJSON = async (query: ExportLogSchema["query"]) => {
+    const adminLogs = await prisma.adminLog.findMany({
+      where: {
+        AND: [
+          { timestamp: { gte: query.startDate } },
+          { timestamp: { lte: query.endDate } },
+        ],
+      },
+    });
+
+    return adminLogs;
   };
 }
 

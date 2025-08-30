@@ -3,6 +3,8 @@ import { AdminController } from "../controllers/admin.controller";
 import { requireAuth, requireRole } from "../middlewares/admin.middleware";
 import { errorCatch } from "../lib/error";
 import { adminMonitoring } from "../middlewares/monitoring.middleware";
+import { validateRequest } from "../middlewares/validator.middleware";
+import { exportLogSchema } from "../schemas/admin.schema";
 
 const adminRouter = express.Router();
 
@@ -103,6 +105,16 @@ adminRouter.get(
     type: "admin.user-logs",
   }),
   errorCatch(AdminController.getUserLogs)
+);
+adminRouter.get(
+  "/logs/export",
+  errorCatch(requireAuth),
+  errorCatch(requireRole(["SUPERADMIN"])),
+  adminMonitoring({
+    type: "admin.export-logs",
+  }),
+  validateRequest(exportLogSchema),
+  errorCatch(AdminController.exportLogs)
 );
 
 export default adminRouter;

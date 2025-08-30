@@ -46,7 +46,11 @@ export const requireRole =
   (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const admin = req.admin!;
 
-    appAssert(roles.includes(admin.role), STATUS_CODES.FORBIDDEN);
+    appAssert(
+      roles.includes(admin.role),
+      STATUS_CODES.FORBIDDEN,
+      "Unauthorized"
+    );
 
     next();
   };

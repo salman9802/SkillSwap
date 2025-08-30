@@ -22,3 +22,17 @@ export const logQueryParams = z.object({
   offset: z.number().optional().default(0),
 });
 export type LogQueryParams = z.infer<typeof logQueryParams>;
+
+export const exportLogSchema = z.object({
+  query: z.object({
+    format: z.enum(["JSON", "CSV"]).default("JSON"),
+    startDate: z.date().default(() => {
+      // 1w ago
+      const now = new Date();
+      now.setDate(now.getDate() - 7);
+      return now;
+    }),
+    endDate: z.date().default(() => new Date()), // now
+  }),
+});
+export type ExportLogSchema = z.infer<typeof exportLogSchema>;

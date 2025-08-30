@@ -4,6 +4,7 @@ import {
   adminLoginPayloadSchema,
   logQueryParams,
   createAdminPayloadSchema,
+  ExportLogSchema,
 } from "../schemas/admin.schema";
 import adminService from "../services/admin.service";
 import { STATUS_CODES } from "../constants/http";
@@ -235,5 +236,29 @@ export class AdminController {
     res.status(STATUS_CODES.OK).json({
       logs,
     });
+  }
+
+  static async exportLogs(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const query = req.validated?.query as ExportLogSchema["query"];
+
+    let logs;
+    if (query.format === "CSV") {
+      logs = await adminService.getLogsInCSV(query);
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", `attachment; filename="export.csv"`);
+    } else {
+      logs = await adminService.getLogsInJSON(query);
+      res.setHeader("Content-Type", "application/json");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="export.json"`
+      );
+    }
+
+    res.status(STATUS_CODES.OK).send(logs);
   }
 }
