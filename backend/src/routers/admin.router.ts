@@ -134,5 +134,13 @@ adminRouter.get(
   }),
   errorCatch(AdminController.logReport)
 );
+adminRouter.get(
+  "/user-logs/report",
+  errorCatch(requireAuth),
+  adminMonitoring({
+    type: "admin.user-log-report",
+  }),
+  errorCatch(AdminController.userLogReport)
+);
 
 export default adminRouter;

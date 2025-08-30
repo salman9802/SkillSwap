@@ -351,6 +351,49 @@ class AdminService {
       routeLogs,
     };
   };
+
+  userLogReport = async () => {
+    const typeLogs: Record<string, number> = {};
+    (
+      await prisma.userLog.groupBy({
+        by: ["type"],
+        _count: {
+          // _all: true,
+          type: true,
+        },
+        orderBy: {
+          _count: {
+            type: "desc",
+          },
+        },
+      })
+    ).forEach((o) => {
+      typeLogs[o.type] = o._count.type;
+    });
+
+    const routeLogs: Record<string, number> = {};
+    (
+      await prisma.userLog.groupBy({
+        by: ["route"],
+        _count: {
+          // _all: true,
+          route: true,
+        },
+        orderBy: {
+          _count: {
+            route: "desc",
+          },
+        },
+      })
+    ).forEach((o) => {
+      routeLogs[o.route] = o._count.route;
+    });
+
+    return {
+      typeLogs,
+      routeLogs,
+    };
+  };
 }
 
 export default new AdminService();

@@ -297,4 +297,16 @@ export class AdminController {
       result,
     });
   }
+
+  static async userLogReport(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const result = await adminService.userLogReport();
+
+    res.status(STATUS_CODES.OK).json({
+      result,
+    });
+  }
 }
