@@ -125,5 +125,14 @@ adminRouter.get(
   validateRequest(exportLogSchema),
   errorCatch(AdminController.exportUserLogs)
 );
+adminRouter.get(
+  "/logs/report",
+  errorCatch(requireAuth),
+  errorCatch(requireRole(["SUPERADMIN"])),
+  adminMonitoring({
+    type: "admin.log-report",
+  }),
+  errorCatch(AdminController.logReport)
+);
 
 export default adminRouter;

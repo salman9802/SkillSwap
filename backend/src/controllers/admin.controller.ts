@@ -285,4 +285,16 @@ export class AdminController {
 
     res.status(STATUS_CODES.OK).send(logs);
   }
+
+  static async logReport(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const result = await adminService.logReport();
+
+    res.status(STATUS_CODES.OK).json({
+      result,
+    });
+  }
 }

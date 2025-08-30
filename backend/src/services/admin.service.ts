@@ -279,6 +279,78 @@ class AdminService {
 
     return userLogs;
   };
+
+  logReport = async () => {
+    const typeLogs: Record<string, number> = {};
+    (
+      await prisma.adminLog.groupBy({
+        by: ["type"],
+        _count: {
+          // _all: true,
+          type: true,
+        },
+        orderBy: {
+          _count: {
+            type: "desc",
+          },
+        },
+      })
+    ).forEach((o) => {
+      typeLogs[o.type] = o._count.type;
+    });
+
+    // timeline of events
+    // Get logs grouped by hour (or convert date string to your granularity)
+    // const timeline = await prisma.adminLog.groupBy({
+    //   by: ["timestamp"],
+    //   _count: { _all: true },
+    //   orderBy: { timestamp: "asc" },
+    // });
+    // Use JS/TS code to group by hour or day as needed
+
+    // Fetch only login and auth events, sorted by time
+    // const authLogs = await prisma.adminLog.findMany({
+    //   where: {
+    //     OR: [{ type: "admin.auth" }, { type: "admin.login" }],
+    //   },
+    //   orderBy: { timestamp: "desc" },
+    // });
+
+    const routeLogs: Record<string, number> = {};
+    (
+      await prisma.adminLog.groupBy({
+        by: ["route"],
+        _count: {
+          // _all: true,
+          route: true,
+        },
+        orderBy: {
+          _count: {
+            route: "desc",
+          },
+        },
+      })
+    ).forEach((o) => {
+      routeLogs[o.route] = o._count.route;
+    });
+    // Output: [{ route: '/logs', _count: { _all: 16 } }, ...]
+
+    /*
+    // Find time windows with > N log entries (example: per minute)
+    const burstWindows = await prisma.log.groupBy({
+      by: [{ timestamp: true }], // Group by minute if desired
+      _count: { _all: true },
+      having: { _count: { _all: { gt: 10 } } }, // N = 10 as threshold
+      orderBy: { timestamp: 'asc' }
+    });
+    */
+
+    return {
+      typeLogs,
+      // authLogs,
+      routeLogs,
+    };
+  };
 }
 
 export default new AdminService();
