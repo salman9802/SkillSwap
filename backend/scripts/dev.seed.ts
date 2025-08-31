@@ -1,9 +1,12 @@
 import path from "path";
 
 import dotenv from "dotenv";
-dotenv.config({
-  path: path.join(__dirname, "..", "..", ".env"),
-});
+
+if (process.env.NODE_ENV !== "test") {
+  dotenv.config({
+    path: path.join(__dirname, "..", "..", ".env"),
+  });
+}
 
 import { PrismaClient } from "../generated/prisma/client";
 
