@@ -16,11 +16,13 @@ declare global {
     interface Request {
       admin?: SafeAdmin;
       validated?: {
+        // validated request
         headers?: any;
         params?: any;
         query?: any;
         body?: any;
       };
+      metatdata?: any; // monitoring log metadata
     }
   }
 }

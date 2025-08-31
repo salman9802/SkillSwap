@@ -49,7 +49,12 @@ class AdminService {
 
   deactivateAccount = async (adminId: string) => {
     return await prisma.admin.update({
-      where: { id: adminId },
+      where: {
+        id: adminId,
+        NOT: {
+          role: "SUPERADMIN",
+        },
+      },
       data: {
         deactivated: true,
       },
@@ -61,7 +66,12 @@ class AdminService {
 
   reactivateAccount = async (adminId: string) => {
     return await prisma.admin.update({
-      where: { id: adminId },
+      where: {
+        id: adminId,
+        NOT: {
+          role: "SUPERADMIN",
+        },
+      },
       data: {
         deactivated: false,
       },

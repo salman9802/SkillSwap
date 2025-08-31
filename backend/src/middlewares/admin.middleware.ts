@@ -37,6 +37,13 @@ export const requireAuth = async (
   });
   appAssert(admin, STATUS_CODES.UNAUTHORIZED, "Unauthorized access");
 
+  if (admin?.deactivated) req.metatdata.deactivatedAccount = true;
+  appAssert(
+    !admin?.deactivated,
+    STATUS_CODES.FORBIDDEN,
+    "This account is not active. Please contact administrator."
+  );
+
   req.admin = sanitizeAdmin(admin!);
   next();
 };

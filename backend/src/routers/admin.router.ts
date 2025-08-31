@@ -29,7 +29,7 @@ adminRouter.put(
   "/deactivate/:adminId",
   errorCatch(requireAuth),
   adminMonitoring({
-    type: "admin.fetchOne",
+    type: "admin.deactivate",
   }),
   errorCatch(AdminController.deactivateAccount)
 );

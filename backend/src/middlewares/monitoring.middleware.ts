@@ -38,6 +38,7 @@ export const adminMonitoring =
       MonitoringService.recordAdminLog({
         ...{ adminId: admin?.id || null, type: "unknown" },
         route: req.route?.path || req.originalUrl || req.path || "/unknown",
+        metadata: req.metatdata,
         ...log,
       });
     });
