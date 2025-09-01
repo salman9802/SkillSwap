@@ -182,4 +182,77 @@ describe("Admin", () => {
       expect(res.body.result.id).toBeDefined();
     });
   });
+
+  describe("User management", () => {
+    beforeEach(async () => {
+      await prisma.$transaction([
+        prisma.userSession.deleteMany(),
+        prisma.user.deleteMany(),
+      ]);
+    });
+
+    test("Roles other than 'SUPERADMIN' cannot override user password", async () => {
+      const mockAdmin = {
+        name: "Test",
+        password: "test123",
+      };
+      const mockUser = {
+        email: "test@test.test",
+        name: "testuser",
+        password: "testuser123",
+      };
+
+      const newUserRes = await request(app)
+        .post("/api/user/account")
+        .send(mockUser);
+      expect(newUserRes.statusCode).toBe(STATUS_CODES.CREATED);
+      expect(newUserRes.body).toEqual(
+        expect.objectContaining({
+          accessToken: expect.any(String),
+          user: expect.any(Object),
+        })
+      );
+
+      const superAdminRes = await request(app)
+        .post("/api/admin/auth/login")
+        .send(superadmin);
+      const newAdminRes = await request(app)
+        .post("/api/admin")
+        .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`)
+        .send(mockAdmin);
+
+      const res = await request(app)
+        .put(`/api/admin/override-password/${mockUser}`)
+        .set("Authorization", `Bearer ${newAdminRes.body.accessToken}`);
+      expect(res.statusCode).toBe(STATUS_CODES.FORBIDDEN);
+      expect(res.body.message).toEqual("Unauthorized");
+    });
+
+    test("'SUPERADMIN' can override user password", async () => {
+      const mockUser = {
+        email: "test@test.test",
+        name: "testuser",
+        password: "testuser123",
+      };
+
+      const newUserRes = await request(app)
+        .post("/api/user/account")
+        .send(mockUser);
+      expect(newUserRes.statusCode).toBe(STATUS_CODES.CREATED);
+      expect(newUserRes.body).toEqual(
+        expect.objectContaining({
+          accessToken: expect.any(String),
+          user: expect.any(Object),
+        })
+      );
+
+      const superAdminRes = await request(app)
+        .post("/api/admin/auth/login")
+        .send(superadmin);
+
+      const res = await request(app)
+        .put(`/api/admin/override-password/${mockUser}`)
+        .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`);
+    });
+  });
 });
