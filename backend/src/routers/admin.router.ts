@@ -34,10 +34,10 @@ adminRouter.put(
   errorCatch(AdminController.deactivateAccount)
 );
 adminRouter.put(
-  "/reactivate/:adminId",
+  "/activate/:adminId",
   errorCatch(requireAuth),
   adminMonitoring({
-    type: "admin.reactivate",
+    type: "admin.activate",
   }),
   errorCatch(AdminController.reactivateAccount)
 );

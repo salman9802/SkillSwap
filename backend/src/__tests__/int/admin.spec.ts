@@ -7,7 +7,6 @@ dotenv.config({
 });
 import { execSync } from "child_process";
 
-import express from "express";
 import request from "supertest";
 import { createPrismaClient } from "../../db/client";
 import { createExpressApp } from "../../server";
@@ -253,6 +252,69 @@ describe("Admin", () => {
       const res = await request(app)
         .put(`/api/admin/override-password/${mockUser}`)
         .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`);
+    });
+  });
+
+  describe("Admin management", () => {
+    test("Roles other than 'SUPERADMIN' can activate/deactivate accounts", async () => {
+      const mockAdmin1 = {
+        name: "Test",
+        password: "test123",
+      };
+      const mockAdmin2 = {
+        name: "Test2",
+        password: "test1234",
+      };
+
+      const superAdminRes = await request(app)
+        .post("/api/admin/auth/login")
+        .send(superadmin);
+      const newAdminRes1 = await request(app)
+        .post("/api/admin")
+        .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`)
+        .send(mockAdmin1);
+      const newAdminRes2 = await request(app)
+        .post("/api/admin")
+        .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`)
+        .send(mockAdmin2);
+
+      const res1 = await request(app)
+        .put(`/api/admin/deactivate/${newAdminRes2.body.admin.id}`)
+        .set("Authorization", `Bearer ${newAdminRes1.body.accessToken}`);
+      expect(res1.statusCode).toBe(STATUS_CODES.OK);
+      expect(res1.body.result).toBeDefined();
+      const res2 = await request(app)
+        .put(`/api/admin/activate/${newAdminRes2.body.admin.id}`)
+        .set("Authorization", `Bearer ${newAdminRes1.body.accessToken}`);
+      expect(res2.statusCode).toBe(STATUS_CODES.OK);
+      expect(res2.body.result).toBeDefined();
+    });
+
+    test("'SUPERADMIN' can activate/deactivate accounts", async () => {
+      const mockAdmin = {
+        name: "Test",
+        password: "test123",
+      };
+
+      const superAdminRes = await request(app)
+        .post("/api/admin/auth/login")
+        .send(superadmin);
+      const newAdminRes = await request(app)
+        .post("/api/admin")
+        .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`)
+        .send(mockAdmin);
+
+      const res1 = await request(app)
+        .put(`/api/admin/deactivate/${newAdminRes.body.admin.id}`)
+        .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`);
+      expect(res1.statusCode).toBe(STATUS_CODES.OK);
+      expect(res1.body.result).toBeDefined();
+
+      const res2 = await request(app)
+        .put(`/api/admin/activate/${newAdminRes.body.admin.id}`)
+        .set("Authorization", `Bearer ${superAdminRes.body.accessToken}`);
+      expect(res2.statusCode).toBe(STATUS_CODES.OK);
+      expect(res2.body.result).toBeDefined();
     });
   });
 });
