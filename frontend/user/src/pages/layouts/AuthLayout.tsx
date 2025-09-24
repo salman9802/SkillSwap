@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 import { useRefreshQuery } from "@/features/session/sessionApi";
 import { setCrenentials } from "@/features/session/sessionSlice";
@@ -8,6 +8,7 @@ import { useStoreDispatch } from "@/lib/hooks";
 import { useToast } from "@/components/utils/toast";
 
 const AuthLayout = () => {
+  const location = useLocation();
   const { data, isError, isLoading, isFetching } = useRefreshQuery();
   //   undefined, {
   //   // This ensures no re-fetching unless needed
@@ -17,10 +18,11 @@ const AuthLayout = () => {
 
   const dispatch = useStoreDispatch();
   React.useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
     if (data) {
       dispatch(setCrenentials(data));
       if (data.hasDailyLoginReward)
-        setTimeout(
+        timeoutId = setTimeout(
           () =>
             pushToastMessage({
               type: "info",
@@ -29,6 +31,9 @@ const AuthLayout = () => {
           1000,
         );
     }
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [data]);
 
   if (!data && isFetching)
@@ -38,7 +43,10 @@ const AuthLayout = () => {
       </div>
     );
 
-  if (!data && isError) return <Navigate to="/" replace={true} />;
+  if (!data && isError)
+    return (
+      <Navigate to="/user/login" replace={true} state={{ from: location }} />
+    );
 
   return <Outlet />;
 };

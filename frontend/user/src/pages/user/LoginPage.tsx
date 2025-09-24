@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import { LoginForm } from "@/components/user/LoginForm";
 import type { StoreState } from "@/features/store";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "@/features/session/sessionApi";
 import { useStoreDispatch } from "@/lib/hooks";
 import { isFetchBaseQueryError } from "@/lib/utils";
@@ -13,10 +13,13 @@ import type { LoginFormFields } from "@/lib/schemas";
 const LoginPage = () => {
   const [rootError, setRootError] = React.useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated } = useSelector((state: StoreState) => state.session);
 
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useStoreDispatch();
+
+  const to = location.state?.from?.pathname || "/"; // default to home
 
   const onFormSubmit = async (formFields: LoginFormFields) => {
     // reset error
@@ -30,7 +33,7 @@ const LoginPage = () => {
           accessToken: res.accessToken,
         }),
       );
-      navigate("/user");
+      navigate(to, { replace: true });
     } catch (error: any) {
       if (isFetchBaseQueryError(error)) {
         const { message } = error.data as { message: string };
