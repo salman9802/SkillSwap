@@ -26,12 +26,15 @@ const Features = () => {
   return (
     <section className="text-primary">
       <div ref={featuresRef} className="container mx-auto px-5 pt-24">
+        <h1 className="fonts-semibold border-primary mb-12 w-fit border-b pb-3 text-2xl text-black md:text-3xl lg:text-5xl">
+          Why Skillswap?
+        </h1>
         {/* Feature */}
         {FEATURES.map((feature, i) => (
           <div
             key={i}
             className={cn(
-              "mx-auto mb-10 flex flex-col items-center border-b border-gray-200 pb-10 sm:flex-row lg:w-3/5",
+              "mx-auto mb-10 flex flex-col items-center border-b border-gray-200 pb-10 sm:flex-row",
               feature.reverse && "sm:flex-row-reverse",
             )}
           >

@@ -2,6 +2,7 @@ import React from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { Button } from "./ui/button";
 
 const Gamification = () => {
   const gamificationSectionRef = React.useRef<null | HTMLElement>(null);
@@ -48,6 +49,9 @@ const Gamification = () => {
             your preference.
           </p>
         </div>
+        <Button className="mx-auto w-fit cursor-pointer px-12 py-6">
+          Start Swapping Today!
+        </Button>
       </div>
       {/* image */}
       {/* <img src="/gamification.png" alt="gamification" className="" /> */}
