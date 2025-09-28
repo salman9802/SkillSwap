@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
+import AccountDropdown from "./AccountDropdown";
 
 const NavBar = () => {
   const activeClasses = ({ isActive }: { isActive: boolean }) =>
@@ -9,6 +10,9 @@ const NavBar = () => {
   return (
     <nav className="flex h-full flex-col gap-3 px-6 py-12">
       <div className="flex flex-col">
+        <div className="py-3">
+          <AccountDropdown />
+        </div>
         <p className="text-gray-800 uppercase">General Admin</p>
         <NavLink className={activeClasses} to="/dashboard">
           Dashboard & Analytics

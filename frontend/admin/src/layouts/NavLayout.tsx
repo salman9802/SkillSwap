@@ -3,7 +3,7 @@ import React from "react";
 import { Outlet } from "react-router";
 import { RxHamburgerMenu } from "react-icons/rx";
 
-import NavBar from "@src/components/NavBar";
+import NavBar from "@src/components/admin/NavBar";
 import { IoClose } from "react-icons/io5";
 
 const NavLayout = () => {
