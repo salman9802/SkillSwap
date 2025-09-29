@@ -9,13 +9,13 @@ type LoginFormProps = {
 };
 
 const LoginForm = ({ onSubmit }: LoginFormProps) => {
-  const [email, setEmail] = React.useState("");
+  const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit({
-      email,
+      name,
       password,
     });
   };
@@ -26,9 +26,9 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
         Admin Login
       </h1>
       <Input
-        name="email"
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
+        name="name"
+        placeholder="Name"
+        onChange={(e) => setName(e.target.value)}
       />
       <Input
         name="password"
