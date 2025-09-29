@@ -1,8 +1,10 @@
 import { createBrowserRouter, Navigate, Outlet } from "react-router";
+
 import Root from "./root";
 import Login from "./login/login";
 import NavLayout from "@src/layouts/NavLayout";
 import Dashboard from "./dashboard/dashboard";
+import AdminManagement from "./admin-management/admin-management";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +28,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "manage-admin",
-            element: "manage admin",
+            Component: AdminManagement,
           },
           {
             path: "user-log",
