@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate, Outlet } from "react-router";
 import Root from "./root";
 import Login from "./login/login";
 import NavLayout from "@src/layouts/NavLayout";
+import Dashboard from "./dashboard/dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "dashboard",
-            element: "dashboard",
+            Component: Dashboard,
           },
           {
             path: "manage-admin",
