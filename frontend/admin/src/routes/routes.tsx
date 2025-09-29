@@ -5,6 +5,7 @@ import Login from "./login/login";
 import NavLayout from "@src/layouts/NavLayout";
 import Dashboard from "./dashboard/dashboard";
 import AdminManagement from "./admin-management/admin-management";
+import UserManagement from "./user-management/user-management";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
           {
             path: "manage-admin",
             Component: AdminManagement,
+          },
+          {
+            path: "manage-user",
+            Component: UserManagement,
           },
           {
             path: "user-log",

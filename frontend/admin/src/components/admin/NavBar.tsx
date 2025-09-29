@@ -28,6 +28,13 @@ const NavBar = ({ onNavigate }: NavBarProps) => {
         >
           Mange Admins
         </NavLink>
+        <NavLink
+          onClick={onNavigate}
+          className={activeClasses}
+          to="/manage-user"
+        >
+          Manage Users
+        </NavLink>
         <NavLink onClick={onNavigate} className={activeClasses} to="/user-log">
           User Logs
         </NavLink>
