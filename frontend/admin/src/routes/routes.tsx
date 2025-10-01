@@ -6,6 +6,7 @@ import NavLayout from "@src/layouts/NavLayout";
 import Dashboard from "./dashboard/dashboard";
 import AdminManagement from "./admin-management/admin-management";
 import UserManagement from "./user-management/user-management";
+import AdminReport from "./admin-report/admin-report";
 
 export const router = createBrowserRouter([
   {
@@ -52,7 +53,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "admin-report",
-                element: "admin report",
+                Component: AdminReport,
               },
             ],
           },
