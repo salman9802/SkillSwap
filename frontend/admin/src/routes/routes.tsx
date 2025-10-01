@@ -7,6 +7,7 @@ import Dashboard from "./dashboard/dashboard";
 import AdminManagement from "./admin-management/admin-management";
 import UserManagement from "./user-management/user-management";
 import AdminReport from "./admin-report/admin-report";
+import UserReport from "./user-report/user-report";
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +43,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "user-report",
-            element: "user report",
+            Component: UserReport,
           },
           {
             element: <Outlet />, // advanced access auth layout
