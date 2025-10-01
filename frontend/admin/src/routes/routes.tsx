@@ -8,6 +8,7 @@ import AdminManagement from "./admin-management/admin-management";
 import UserManagement from "./user-management/user-management";
 import AdminReport from "./admin-report/admin-report";
 import UserReport from "./user-report/user-report";
+import { AdminLog } from "./admin-log/admin-log";
 
 export const router = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: "admin-log",
-                element: "admin log",
+                Component: AdminLog,
               },
               {
                 path: "admin-report",
