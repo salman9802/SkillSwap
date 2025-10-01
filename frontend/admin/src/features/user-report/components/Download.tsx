@@ -26,6 +26,7 @@ export const Download = ({ reportType, reportData }: DownloadProps) => {
   return (
     <div>
       <Button
+        variant="invert-secondary"
         onClick={handleClick}
         className="flex items-center gap-3 text-gray-600"
       >
