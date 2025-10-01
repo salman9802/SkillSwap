@@ -32,7 +32,7 @@ const NavLayout = () => {
           onClick={() => setIsNavOpen((prev) => !prev)}
           className="absolute top-3 right-3 lg:hidden"
         >
-          <IoClose className="size-5" />
+          <IoClose className="size-5 cursor-pointer" />
         </button>
       </div>
       {/* Overlay */}
@@ -46,7 +46,7 @@ const NavLayout = () => {
           onClick={() => setIsNavOpen((prev) => !prev)}
           className="mt-6 ml-6 lg:hidden"
         >
-          <RxHamburgerMenu className="size-5" />
+          <RxHamburgerMenu className="size-5 cursor-pointer" />
         </button>
 
         <Outlet />

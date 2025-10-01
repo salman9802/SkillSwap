@@ -216,6 +216,9 @@ class AdminService {
     return await prisma.adminLog.findMany({
       skip: params.offset,
       take: params.limit,
+      orderBy: {
+        timestamp: "desc",
+      },
     });
   };
 

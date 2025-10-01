@@ -22,7 +22,7 @@ const AccountDropdown = () => {
         className="flex cursor-pointer items-center justify-center gap-3 p-3 text-lg font-semibold md:text-xl"
         onClick={handleClick}
       >
-        <span>test@gmail.com</span>
+        <span>John Doe</span>
         <RiArrowDropDownLine
           className={`size-5 transition-transform duration-150 ${open ? "rotate-180" : "rotate-0"}`}
         />
