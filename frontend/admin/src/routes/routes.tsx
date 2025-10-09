@@ -1,6 +1,5 @@
 import { createBrowserRouter, Navigate, Outlet } from "react-router";
 
-import Root from "./root";
 import Login from "./login/login";
 import NavLayout from "@src/layouts/NavLayout";
 import Dashboard from "./dashboard/dashboard";
@@ -10,6 +9,7 @@ import AdminReport from "./admin-report/admin-report";
 import UserReport from "./user-report/user-report";
 import { AdminLog } from "./admin-log/admin-log";
 import { UserLog } from "./user-log/user-log";
+import { RootErrorBoundary } from "./root";
 
 export const router = createBrowserRouter([
   {
@@ -18,9 +18,9 @@ export const router = createBrowserRouter([
   },
   {
     element: <Outlet />, // basic auth
+    ErrorBoundary: RootErrorBoundary,
     children: [
       {
-        path: "/",
         Component: NavLayout,
         children: [
           {
