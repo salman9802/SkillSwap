@@ -8,7 +8,7 @@ type LoginFormProps = {
   onSubmit: (credentials: LoginCredentials) => any;
 };
 
-const LoginForm = ({ onSubmit }: LoginFormProps) => {
+export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -26,11 +26,15 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
         Admin Login
       </h1>
       <Input
+        autoComplete="off"
+        className="w-full"
         name="name"
         placeholder="Name"
         onChange={(e) => setName(e.target.value)}
       />
       <Input
+        autoComplete="off"
+        className="w-full"
         name="password"
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
@@ -39,5 +43,3 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
     </form>
   );
 };
-
-export default LoginForm;
