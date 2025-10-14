@@ -1,13 +1,7 @@
 import type { StateCreator } from "zustand";
-import type { AuthState } from "./types";
-import type { Store } from "@src/store/appStore";
+import type { AuthStore } from "./types";
 import { api } from "@src/api/client";
-
-export type AuthStore = AuthState & {
-  login: ({ adminId, name, accessToken }: Required<AuthState>) => any;
-  logout: () => any;
-  refresh: () => any;
-};
+import type { Store } from "@src/types";
 
 export const createAuthSlice: StateCreator<AuthStore, [], [], AuthStore> = (
   set,
@@ -16,13 +10,13 @@ export const createAuthSlice: StateCreator<AuthStore, [], [], AuthStore> = (
   name: undefined,
   accessToken: undefined,
 
-  login: ({ adminId, name, accessToken }) =>
+  setCredentials: ({ adminId, name, accessToken }) =>
     set({ adminId, name, accessToken }),
-  logout: () =>
+  unsetCredentials: () =>
     set({ adminId: undefined, name: undefined, accessToken: undefined }),
 
   // TODO: set returned accessToken (normal axios request)
-  refresh: async () => {
+  refreshTokens: async () => {
     // const res = await api.post("/whatever")
     // return res.data.newAccessToken;
   },

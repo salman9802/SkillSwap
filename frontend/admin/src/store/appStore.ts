@@ -1,8 +1,7 @@
 import { create } from "zustand";
 
-import { createAuthSlice, type AuthStore } from "@src/features/auth";
-
-export type Store = AuthStore;
+import { createAuthSlice } from "@src/features/auth/store";
+import type { Store } from "@src/types";
 
 export const useStore = create<Store>((...args) => ({
   ...createAuthSlice(...args),

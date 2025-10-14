@@ -8,3 +8,9 @@ export type AuthState = {
   name?: string;
   accessToken?: string;
 };
+
+export type AuthStore = AuthState & {
+  setCredentials: ({ adminId, name, accessToken }: Required<AuthState>) => any;
+  unsetCredentials: () => any;
+  refreshTokens: () => any;
+};

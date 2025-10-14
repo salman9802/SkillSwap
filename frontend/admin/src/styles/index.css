@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+  /* --color-primary: var(--color-green-500); */
+
+  --animate-shrink: shrink 1.5s infinite;
+
+  @keyframes shrink {
+    0% {
+      height: 10%;
+    }
+    100% {
+      height: 100%;
+    }
+  }
+}

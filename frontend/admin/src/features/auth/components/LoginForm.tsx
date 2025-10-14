@@ -6,9 +6,15 @@ import type { LoginCredentials } from "../types";
 
 type LoginFormProps = {
   onSubmit: (credentials: LoginCredentials) => any;
+  isSubmitting: boolean;
+  error: any;
 };
 
-export const LoginForm = ({ onSubmit }: LoginFormProps) => {
+export const LoginForm = ({
+  onSubmit,
+  isSubmitting,
+  error,
+}: LoginFormProps) => {
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -25,6 +31,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
       <h1 className="mb-3 text-center text-2xl font-semibold md:text-3xl">
         Admin Login
       </h1>
+      {error && <p className="text-sm text-red-500">{error}</p>}
       <Input
         autoComplete="off"
         className="w-full"
@@ -39,7 +46,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
         placeholder="Password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button>Login</Button>
+      <Button>{isSubmitting ? "Loading..." : "Login"}</Button>
     </form>
   );
 };

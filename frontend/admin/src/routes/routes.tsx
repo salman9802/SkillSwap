@@ -9,54 +9,64 @@ import AdminReport from "./admin-report/admin-report";
 import UserReport from "./user-report/user-report";
 import { AdminLog } from "./admin-log/admin-log";
 import { UserLog } from "./user-log/user-log";
-import { RootErrorBoundary } from "./root";
+import { Root, RootErrorBoundary } from "./root";
+import { BasicAuth } from "@src/features/auth/components/BasicAuth";
+import { loginLoader } from "./login/login.loader";
+import { loginAction } from "./login/login.action";
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
-    Component: Login,
-  },
-  {
-    element: <Outlet />, // basic auth
-    ErrorBoundary: RootErrorBoundary,
+    Component: Root,
     children: [
       {
-        Component: NavLayout,
+        path: "/login",
+        Component: Login,
+        loader: loginLoader,
+        action: loginAction,
+      },
+      {
+        element: <BasicAuth />, // basic auth
+        ErrorBoundary: RootErrorBoundary,
         children: [
           {
-            index: true,
-            element: <Navigate to="dashboard" replace />,
-          },
-          {
-            path: "dashboard",
-            Component: Dashboard,
-          },
-          {
-            path: "manage-admin",
-            Component: AdminManagement,
-          },
-          {
-            path: "manage-user",
-            Component: UserManagement,
-          },
-          {
-            path: "user-log",
-            Component: UserLog,
-          },
-          {
-            path: "user-report",
-            Component: UserReport,
-          },
-          {
-            element: <Outlet />, // advanced access auth layout
+            Component: NavLayout,
             children: [
               {
-                path: "admin-log",
-                Component: AdminLog,
+                index: true,
+                element: <Navigate to="dashboard" replace />,
               },
               {
-                path: "admin-report",
-                Component: AdminReport,
+                path: "dashboard",
+                Component: Dashboard,
+              },
+              {
+                path: "manage-admin",
+                Component: AdminManagement,
+              },
+              {
+                path: "manage-user",
+                Component: UserManagement,
+              },
+              {
+                path: "user-log",
+                Component: UserLog,
+              },
+              {
+                path: "user-report",
+                Component: UserReport,
+              },
+              {
+                element: <Outlet />, // advanced access auth layout
+                children: [
+                  {
+                    path: "admin-log",
+                    Component: AdminLog,
+                  },
+                  {
+                    path: "admin-report",
+                    Component: AdminReport,
+                  },
+                ],
               },
             ],
           },

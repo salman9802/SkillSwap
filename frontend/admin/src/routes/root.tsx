@@ -1,8 +1,29 @@
-import { isRouteErrorResponse, Link, useRouteError } from "react-router";
+import {
+  isRouteErrorResponse,
+  Link,
+  Outlet,
+  useNavigation,
+  useRouteError,
+} from "react-router";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { GlobalLoader } from "@src/components/feedback/GlobalLoader";
 
 export const Root = () => {
-  return <div className="h-screen">{/* Root */}</div>;
+  const navigation = useNavigation();
+  const isNavigating = Boolean(navigation.location);
+  // const isNavigating = true;
+
+  return (
+    <div className="min-h-screen">
+      {isNavigating ? (
+        <div className="flex min-h-screen w-full items-center justify-center">
+          <GlobalLoader />
+        </div>
+      ) : (
+        <Outlet />
+      )}
+    </div>
+  );
 };
 
 export function RootErrorBoundary() {
