@@ -1,5 +1,5 @@
 import type { StateCreator } from "zustand";
-import type { AuthStore } from "./types";
+import type { AuthState, AuthStore } from "./types";
 import { api } from "@src/api/client";
 import type { Store } from "@src/types";
 
@@ -9,9 +9,9 @@ export const createAuthSlice: StateCreator<AuthStore, [], [], AuthStore> = (
   adminId: undefined,
   name: undefined,
   accessToken: undefined,
+  isSuperAdmin: false,
 
-  setCredentials: ({ adminId, name, accessToken }) =>
-    set({ adminId, name, accessToken }),
+  setCredentials: (authState: AuthState) => set({ ...authState }),
   unsetCredentials: () =>
     set({ adminId: undefined, name: undefined, accessToken: undefined }),
 
@@ -26,4 +26,5 @@ export const authSelector = (store: Store) => ({
   adminId: store.adminId,
   name: store.name,
   accessToken: store.accessToken,
+  isSuperAdmin: store.isSuperAdmin,
 });

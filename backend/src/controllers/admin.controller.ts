@@ -124,6 +124,7 @@ export class AdminController {
       select: {
         id: true,
         name: true,
+        role: true,
       },
     });
     appAssert(admin !== null, STATUS_CODES.BAD_REQUEST, "Invalid credentials");
@@ -143,6 +144,7 @@ export class AdminController {
         accessToken,
         adminId: admin!.id,
         name: admin!.name,
+        isSuperAdmin: admin!.role === "SUPERADMIN",
       });
   }
 

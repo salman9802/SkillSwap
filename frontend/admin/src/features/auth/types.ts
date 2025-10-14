@@ -7,6 +7,7 @@ export type AuthState = {
   adminId?: string;
   name?: string;
   accessToken?: string;
+  isSuperAdmin: boolean;
 };
 
 export type AuthStore = AuthState & {
