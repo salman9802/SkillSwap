@@ -15,16 +15,16 @@ export const createAuthSlice: StateCreator<AuthStore, [], [], AuthStore> = (
   unsetCredentials: () =>
     set({ adminId: undefined, name: undefined, accessToken: undefined }),
 
-  // TODO: set returned accessToken (normal axios request)
   refreshTokens: async () => {
-    // const res = await api.post("/whatever")
-    // return res.data.newAccessToken;
+    const res = await api.get("/auth", { withCredentials: true });
+    console.log("res.data", res.data);
+    set({ ...res.data });
   },
 });
 
-export const authSelector = (store: Store) => ({
-  adminId: store.adminId,
-  name: store.name,
-  accessToken: store.accessToken,
-  isSuperAdmin: store.isSuperAdmin,
-});
+// export const authSelector = (store: Store) => ({
+//   adminId: store.adminId,
+//   name: store.name,
+//   accessToken: store.accessToken,
+//   isSuperAdmin: store.isSuperAdmin,
+// });

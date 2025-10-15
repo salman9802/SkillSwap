@@ -189,6 +189,17 @@ export class AdminController {
     });
     appAssert(session !== null, STATUS_CODES.UNAUTHORIZED);
 
+    const admin = await prisma.admin.findFirst({
+      where: {
+        id: session!.adminId,
+      },
+      select: {
+        id: true,
+        name: true,
+        role: true,
+      },
+    });
+
     const accessToken = adminService.createAccessToken(session!);
 
     adminService
@@ -196,6 +207,9 @@ export class AdminController {
       .status(STATUS_CODES.CREATED)
       .json({
         accessToken,
+        adminId: admin!.id,
+        name: admin!.name,
+        isSuperAdmin: admin!.role === "SUPERADMIN",
       });
   }
 

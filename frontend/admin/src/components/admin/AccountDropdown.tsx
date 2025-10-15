@@ -5,6 +5,7 @@ import { BsPersonAdd } from "react-icons/bs";
 import { CiSettings } from "react-icons/ci";
 import Button from "../ui/Button";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { logout } from "@src/features/auth/services";
 
 const AccountDropdown = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -72,7 +73,9 @@ const AccountDropdown = () => {
           <ListItemIcon>
             <BiLogOut fontSize="small" className="text-red-500" />
           </ListItemIcon>
-          <span className="text-red-500">Logout</span>
+          <div onClick={logout} className="text-red-500">
+            Logout
+          </div>
         </MenuItem>
       </Menu>
     </>

@@ -179,7 +179,7 @@ class AdminService {
     //    same-origin = same protocol + domain + port
     //    same-site = same domain, even if different ports
     // sameSite: ENV.NODE_ENV === "production" ? "strict" : "lax",
-    sameSite: "none",
+    sameSite: ENV.NODE_ENV === "production" ? "lax" : "none",
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
     signed: true,

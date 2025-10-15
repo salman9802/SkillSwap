@@ -13,10 +13,12 @@ import { Root, RootErrorBoundary } from "./root";
 import { BasicAuth } from "@src/features/auth/components/BasicAuth";
 import { loginLoader } from "./login/login.loader";
 import { loginAction } from "./login/login.action";
+import { basicAuthLoader } from "./root.loader";
 
 export const router = createBrowserRouter([
   {
     Component: Root,
+    ErrorBoundary: RootErrorBoundary,
     children: [
       {
         path: "/login",
@@ -26,7 +28,7 @@ export const router = createBrowserRouter([
       },
       {
         element: <BasicAuth />, // basic auth
-        ErrorBoundary: RootErrorBoundary,
+        loader: basicAuthLoader,
         children: [
           {
             Component: NavLayout,
