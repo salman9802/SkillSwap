@@ -223,7 +223,9 @@ export class AdminController {
     res.setHeader("Connection", "keep-alive");
 
     const interval = setInterval(() => {
-      res.write(JSON.stringify(MonitoringService.getSystemMetrics()));
+      res.write(
+        `data: ${JSON.stringify(MonitoringService.getSystemMetrics())}\n\n`
+      );
     }, 1000); // send every 1s
 
     req.on("close", () => clearInterval(interval));

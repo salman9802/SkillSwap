@@ -179,25 +179,33 @@ class AdminService {
     //    same-origin = same protocol + domain + port
     //    same-site = same domain, even if different ports
     // sameSite: ENV.NODE_ENV === "production" ? "strict" : "lax",
-    sameSite: ENV.NODE_ENV === "production" ? "lax" : "none",
+    sameSite: ENV.NODE_ENV !== "production" ? "lax" : "none",
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
     signed: true,
   });
 
-  setAuthCookies = (res: express.Response, refreshToken: string) =>
-    res.cookie(ADMIN.REFRESH_TOKEN_COOKIE, refreshToken, {
-      ...this.defaultCookieOptions(),
-      path: ADMIN.COOKIE_PATH,
-      expires: new Date(Date.now() + ADMIN.REFRESH_TOKEN_INTERVAL),
+  setAuthCookies = (res: express.Response, refreshToken: string) => {
+    ADMIN.COOKIE_PATHS.map((path) => {
+      res.cookie(ADMIN.REFRESH_TOKEN_COOKIE, refreshToken, {
+        ...this.defaultCookieOptions(),
+        path: path,
+        expires: new Date(Date.now() + ADMIN.REFRESH_TOKEN_INTERVAL),
+      });
     });
+    return res;
+  };
 
-  unsetAuthCookies = (res: express.Response) =>
-    res.clearCookie(ADMIN.REFRESH_TOKEN_COOKIE, {
-      ...this.defaultCookieOptions(),
-      path: ADMIN.COOKIE_PATH,
-      expires: new Date(Date.now() + ADMIN.REFRESH_TOKEN_INTERVAL),
+  unsetAuthCookies = (res: express.Response) => {
+    ADMIN.COOKIE_PATHS.map((path) => {
+      res.clearCookie(ADMIN.REFRESH_TOKEN_COOKIE, {
+        ...this.defaultCookieOptions(),
+        path: path,
+        expires: new Date(Date.now() + ADMIN.REFRESH_TOKEN_INTERVAL),
+      });
     });
+    return res;
+  };
 
   validateRefreshToken = (refreshToken: string) => {
     try {

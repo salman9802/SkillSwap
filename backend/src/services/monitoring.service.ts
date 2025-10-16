@@ -54,6 +54,12 @@ export class MonitoringService {
   }
 
   static getSystemMetrics() {
+    /* If you have N cores, then:
+        A load of N means 100% utilization (all cores fully busy on average).
+        A load below N means CPU is not fully loaded.
+        A load above N means more processes are waiting — the system is overloaded.
+    */
+
     const load = os.loadavg()[0]; // 1-min avg
     const cores = os.cpus().length; // number of cores
     let cpuCondition: CpuCondition = "CRITICAL";

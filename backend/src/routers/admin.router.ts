@@ -1,6 +1,10 @@
 import express from "express";
 import { AdminController } from "../controllers/admin.controller";
-import { requireAuth, requireRole } from "../middlewares/admin.middleware";
+import {
+  requireAuth,
+  requireRefreshToken,
+  requireRole,
+} from "../middlewares/admin.middleware";
 import { errorCatch } from "../lib/error";
 import { adminMonitoring } from "../middlewares/monitoring.middleware";
 import { validateRequest } from "../middlewares/validator.middleware";
@@ -83,7 +87,7 @@ adminRouter.delete(
 );
 adminRouter.get(
   "/system-metrics",
-  errorCatch(requireAuth),
+  errorCatch(requireRefreshToken),
   adminMonitoring({
     type: "admin.system-metrics",
   }),

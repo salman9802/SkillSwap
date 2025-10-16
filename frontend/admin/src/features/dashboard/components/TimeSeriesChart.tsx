@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import type { SystemMetric, TimeSeriesChartDataPoint } from "../types";
 
 ChartJS.register(
   CategoryScale,
@@ -65,9 +66,13 @@ export const options = {
 //   ],
 // };
 
-export const TimeSeriesChart = () => {
+type TimeSeriesChartProps = {
+  metric: SystemMetric | undefined;
+};
+
+export const TimeSeriesChart = ({ metric }: TimeSeriesChartProps) => {
   const [dataPoints, setDataPoints] = React.useState<
-    { cpu: number; mem: number }[]
+    TimeSeriesChartDataPoint[]
   >([]);
   const [labels, setLabels] = React.useState<string[]>([]);
 
@@ -81,8 +86,8 @@ export const TimeSeriesChart = () => {
         const updated = [
           ...prev,
           {
-            cpu: Math.floor(Math.random() * 100),
-            mem: Math.floor(Math.random() * 100),
+            cpu: metric?.cpuLoadPercent || 0,
+            mem: metric?.memoryUsage || 0,
           },
         ];
         return updated.slice(-10); // keep only last 10 values

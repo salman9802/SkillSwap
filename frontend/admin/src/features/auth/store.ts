@@ -17,7 +17,6 @@ export const createAuthSlice: StateCreator<AuthStore, [], [], AuthStore> = (
 
   refreshTokens: async () => {
     const res = await api.get("/auth", { withCredentials: true });
-    console.log("res.data", res.data);
     set({ ...res.data });
   },
 });

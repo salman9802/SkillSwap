@@ -8,6 +8,7 @@ import { AdminAccessTokenJwtPayload } from "../types/express/admin";
 import prisma from "../db/client";
 import { sanitizeAdmin } from "../lib/sanitize";
 import { AppErrorCodes } from "../constants/error";
+import { ADMIN } from "../constants/admin";
 
 export const requireAuth = async (
   req: express.Request,
@@ -45,6 +46,31 @@ export const requireAuth = async (
   );
 
   req.admin = sanitizeAdmin(admin!);
+  next();
+};
+
+export const requireRefreshToken = (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
+  const refreshToken = req.signedCookies[ADMIN.REFRESH_TOKEN_COOKIE];
+  appAssert(refreshToken, STATUS_CODES.UNAUTHORIZED, "Token not found");
+
+  const refreshTokenPayload = adminService.validateRefreshToken(refreshToken);
+  appAssert(
+    refreshTokenPayload !== false,
+    STATUS_CODES.UNAUTHORIZED,
+    "Refresh token expired",
+    AppErrorCodes.REFRESH_TOKEN_EXPIRED
+  );
+  appAssert(
+    refreshTokenPayload !== null,
+    STATUS_CODES.INTERNAL_SERVER_ERROR,
+    "Something went wrong",
+    AppErrorCodes.SERVER_ERROR
+  );
+
   next();
 };
 
