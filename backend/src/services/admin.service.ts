@@ -4,7 +4,12 @@ import express from "express";
 import jwt from "jsonwebtoken";
 
 import prisma from "../db/client";
-import { SafeAdmin, sanitizeAdmin } from "../lib/sanitize";
+import {
+  SafeAdmin,
+  SafeUser,
+  sanitizeAdmin,
+  sanitizeUser,
+} from "../lib/sanitize";
 import {
   LogQueryParams,
   CreateAdminPayload,
@@ -45,6 +50,10 @@ class AdminService {
     return (await prisma.admin.findMany())
       .map((admin) => sanitizeAdmin(admin))
       .filter((admin) => admin.role !== "SUPERADMIN");
+  };
+
+  getUsers = async (): Promise<SafeUser[]> => {
+    return (await prisma.user.findMany()).map((user) => sanitizeUser(user));
   };
 
   deactivateAccount = async (adminId: string) => {

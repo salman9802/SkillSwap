@@ -51,6 +51,17 @@ export class AdminController {
     });
   }
 
+  static async getUsers(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const users = await adminService.getUsers();
+    res.status(STATUS_CODES.OK).json({
+      users,
+    });
+  }
+
   static async deactivateAccount(
     req: express.Request,
     res: express.Response,

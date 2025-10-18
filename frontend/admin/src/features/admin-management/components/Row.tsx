@@ -142,12 +142,12 @@ export const Row = ({ admin }: RowProps) => {
             </ListItemIcon>
             <span>Change password</span>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          {/* <MenuItem onClick={handleClose}>
             <ListItemIcon>
               <MdDelete fontSize="small" className="text-red-500" />
             </ListItemIcon>
             <span className="text-red-500">Delete account</span>
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </div>
       {/* <div className="flex min-h-screen items-center justify-center"> */}

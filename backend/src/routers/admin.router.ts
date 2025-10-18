@@ -29,6 +29,14 @@ adminRouter.get(
   }),
   errorCatch(AdminController.getAdmins)
 );
+adminRouter.get(
+  "/users",
+  errorCatch(requireAuth),
+  adminMonitoring({
+    type: "admin.fetchAllUsers",
+  }),
+  errorCatch(AdminController.getUsers)
+);
 adminRouter.put(
   "/deactivate/:adminId",
   errorCatch(requireAuth),
