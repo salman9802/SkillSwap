@@ -15,6 +15,7 @@ import { AppErrorCodes } from "../constants/error";
 import prisma from "../db/client";
 import { RefreshTokenJwtPayload } from "../types/express/auth";
 import { MonitoringService } from "../services/monitoring.service";
+import { comparePassword, hashPassword } from "../lib/bcrypt";
 
 export class AdminController {
   static async createAccount(
@@ -95,6 +96,23 @@ export class AdminController {
     });
   }
 
+  static async overrideAdminPassword(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const { adminId } = req.params;
+
+    const result = await adminService.overrideAdminPassword(
+      adminId,
+      req.body.newPassword
+    );
+
+    res.status(STATUS_CODES.OK).json({
+      result,
+    });
+  }
+
   static async overrideUserPassword(
     req: express.Request,
     res: express.Response,
@@ -102,7 +120,10 @@ export class AdminController {
   ) {
     const { userId } = req.params;
 
-    const result = await adminService.overrideUserPassword(userId);
+    const result = await adminService.overrideUserPassword(
+      userId,
+      req.body.newPassword
+    );
 
     res.status(STATUS_CODES.OK).json({
       result,
@@ -125,9 +146,20 @@ export class AdminController {
         id: true,
         name: true,
         role: true,
+        password: true,
       },
     });
     appAssert(admin !== null, STATUS_CODES.BAD_REQUEST, "Invalid credentials");
+
+    const hasValidPassword = await comparePassword(
+      payload.password,
+      admin!.password
+    );
+    appAssert(
+      hasValidPassword,
+      STATUS_CODES.UNAUTHORIZED,
+      "Invalid credentials"
+    );
 
     // create session
     const session = await adminService.createOrUpdateSession(admin!.id);

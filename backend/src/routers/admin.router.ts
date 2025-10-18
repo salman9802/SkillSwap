@@ -55,6 +55,15 @@ adminRouter.delete(
   errorCatch(AdminController.deleteAccount)
 );
 adminRouter.put(
+  "/override-admin-password/:adminId",
+  errorCatch(requireAuth),
+  errorCatch(requireRole(["SUPERADMIN"])),
+  adminMonitoring({
+    type: "admin.override-admin-password",
+  }),
+  errorCatch(AdminController.overrideAdminPassword)
+);
+adminRouter.put(
   "/override-password/:userId",
   errorCatch(requireAuth),
   errorCatch(requireRole(["SUPERADMIN"])),

@@ -93,6 +93,18 @@ class AdminService {
     });
   };
 
+  overrideAdminPassword = async (adminId: string, password = "password@1") => {
+    return await prisma.admin.update({
+      where: { id: adminId },
+      data: {
+        password: password,
+      },
+      select: {
+        id: true,
+      },
+    });
+  };
+
   overrideUserPassword = async (userId: string, password = "password@1") => {
     return await prisma.user.update({
       where: { id: userId },

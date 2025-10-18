@@ -5,9 +5,9 @@ dotenv.config({
   path: path.join(__dirname, "..", "..", ".env"),
 });
 
-import { PrismaClient } from "../generated/prisma/client";
+import prisma from "../src/db/client";
 
-const prismaClient = new PrismaClient();
+const prismaClient = prisma;
 
 async function main() {
   await prismaClient.$connect();
@@ -18,7 +18,7 @@ async function main() {
     return;
   }
 
-  const admins = prismaClient.$transaction([
+  const admins = await prismaClient.$transaction([
     prismaClient.admin.create({
       data: {
         name: "John",

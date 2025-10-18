@@ -6,6 +6,7 @@ import { CiSettings } from "react-icons/ci";
 import Button from "../ui/Button";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { logout } from "@src/features/auth/services";
+import { useStore } from "@src/store/appStore";
 
 const AccountDropdown = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -17,13 +18,15 @@ const AccountDropdown = () => {
     setAnchorEl(null);
   };
 
+  const name = useStore((s) => s.name);
+
   return (
     <>
       <button
-        className="flex cursor-pointer items-center justify-center gap-3 p-3 text-lg font-semibold md:text-xl"
+        className="flex min-w-1/2 cursor-pointer items-center justify-center gap-3 p-3 text-lg font-semibold md:text-xl"
         onClick={handleClick}
       >
-        <span>John Doe</span>
+        <span>{name}</span>
         <RiArrowDropDownLine
           className={`size-5 transition-transform duration-150 ${open ? "rotate-180" : "rotate-0"}`}
         />

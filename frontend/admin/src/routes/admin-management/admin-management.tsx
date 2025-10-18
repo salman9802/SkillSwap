@@ -2,9 +2,24 @@ import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 import Input from "@src/components/ui/Input";
-import { Row, RowHeader } from "@src/features/admin-management";
+import {
+  Row,
+  RowHeader,
+  useFetchAdminsQuery,
+} from "@src/features/admin-management";
+import { GlobalLoader } from "@src/components/feedback/GlobalLoader";
 
 const AdminManagement = () => {
+  const { data: admins, isError, isLoading } = useFetchAdminsQuery();
+
+  if (isLoading)
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <GlobalLoader />
+      </div>
+    );
+  if (isError || !admins) throw new Error("Couldn't load admins");
+
   return (
     <div className="flex flex-col gap-12 p-6 py-12 lg:mx-auto lg:w-3/4">
       <div className="">
@@ -41,8 +56,11 @@ const AdminManagement = () => {
           </span>
         </div> */}
         <RowHeader />
-        {Array.from({ length: 10 }, (_, k) => (
+        {/* {Array.from({ length: 10 }, (_, k) => (
           <Row key={k} />
+        ))} */}
+        {admins.map((admin, k) => (
+          <Row key={k} admin={admin} />
         ))}
       </div>
     </div>

@@ -8,9 +8,11 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 
-import { PrismaClient } from "../generated/prisma/client";
+// import { PrismaClient } from "../generated/prisma/client";
 
-const prismaClient = new PrismaClient();
+import prisma from "../src/db/client";
+
+const prismaClient = prisma;
 
 async function main() {
   await prismaClient.$connect();

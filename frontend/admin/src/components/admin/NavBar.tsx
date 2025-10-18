@@ -8,7 +8,7 @@ type NavBarProps = {
 
 const NavBar = ({ onNavigate }: NavBarProps) => {
   const activeClasses = ({ isActive }: { isActive: boolean }) =>
-    "p-3 text-lg hover:bg-gray-100 md:text-xl " +
+    "p-3 hover:bg-gray-100 md:text-lg " +
     (isActive ? "bg-gray-100" : "bg-none");
 
   return (

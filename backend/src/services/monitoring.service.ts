@@ -16,21 +16,21 @@ export class MonitoringService {
 
   static responseLogBatchQueue = new BatchQueue(
     async (logs: Prisma.ResponseLogCreateManyInput[]) => {
-      await prisma.responseLog.createMany({ data: logs });
+      if (logs.length > 0) await prisma.responseLog.createMany({ data: logs });
     },
     this.RES_BUFFER_SIZE,
     this.RES_FLUSH_INTERVAL
   );
   static adminLogBatchQueue = new BatchQueue(
     async (logs: Prisma.AdminLogCreateManyInput[]) => {
-      await prisma.adminLog.createMany({ data: logs });
+      if (logs.length > 0) await prisma.adminLog.createMany({ data: logs });
     },
     this.ADMIN_BUFFER_SIZE,
     this.ADMIN_FLUSH_INTERVAL
   );
   static userLogBatchQueue = new BatchQueue(
     async (logs: Prisma.UserLogCreateManyInput[]) => {
-      await prisma.userLog.createMany({ data: logs });
+      if (logs.length > 0) await prisma.userLog.createMany({ data: logs });
     },
     this.USER_BUFFER_SIZE,
     this.USER_FLUSH_INTERVAL
