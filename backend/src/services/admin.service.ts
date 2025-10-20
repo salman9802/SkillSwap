@@ -241,14 +241,35 @@ class AdminService {
     }
   };
 
-  getLogs = async (params: LogQueryParams) => {
-    return await prisma.adminLog.findMany({
-      skip: params.offset,
-      take: params.limit,
-      orderBy: {
-        timestamp: "desc",
-      },
-    });
+  getLogs = async (req: express.Request) => {
+    const [logs, total] = await Promise.all([
+      prisma.adminLog.findMany({
+        skip: req.pagination!.skip,
+        take: req.pagination!.limit,
+        orderBy: {
+          timestamp: "desc",
+        },
+        select: {
+          id: true,
+          type: true,
+          route: true,
+          metadata: true,
+          timestamp: true,
+          adminId: true,
+          admin: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      }),
+      prisma.adminLog.count({
+        skip: req.pagination!.skip,
+        take: req.pagination!.limit,
+      }),
+    ]);
+
+    return { logs, total };
   };
 
   getUserLogs = async (params: LogQueryParams) => {

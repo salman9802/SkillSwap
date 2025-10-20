@@ -1,15 +1,25 @@
 import React from "react";
 
-import { Pagination, PaginationItem } from "@mui/material";
+import { Pagination, PaginationItem, Stack } from "@mui/material";
 import {
   IoArrowBackCircleOutline,
   IoArrowForwardCircleOutline,
 } from "react-icons/io5";
 
-export const ListPagination = () => {
+type ListPaginationProps = {
+  page: number;
+  setPage: (page: number) => any;
+  total: number;
+};
+
+export const ListPagination = ({
+  page,
+  setPage,
+  total,
+}: ListPaginationProps) => {
   return (
     <div className="mx-auto">
-      <Pagination
+      {/* <Pagination
         count={10}
         renderItem={(item) => (
           <PaginationItem
@@ -20,6 +30,15 @@ export const ListPagination = () => {
             {...item}
           />
         )}
+      /> */}
+      <Pagination
+        defaultPage={1}
+        page={page}
+        onChange={(e, page) => {
+          setPage(page);
+        }}
+        count={total}
+        shape="rounded"
       />
     </div>
   );

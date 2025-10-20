@@ -9,6 +9,7 @@ import { errorCatch } from "../lib/error";
 import { adminMonitoring } from "../middlewares/monitoring.middleware";
 import { validateRequest } from "../middlewares/validator.middleware";
 import { exportLogSchema } from "../schemas/admin.schema";
+import { pagination } from "../middlewares/pagination.middleware";
 
 const adminRouter = express.Router();
 
@@ -117,6 +118,7 @@ adminRouter.get(
   adminMonitoring({
     type: "admin.logs",
   }),
+  pagination(),
   errorCatch(AdminController.getLogs)
 );
 adminRouter.get(

@@ -279,13 +279,11 @@ export class AdminController {
     res: express.Response,
     next: express.NextFunction
   ) {
-    const params = logQueryParams.parse(req.params);
+    // const params = logQueryParams.parse(req.params);
 
-    const logs = await adminService.getLogs(params);
+    const result = await adminService.getLogs(req);
 
-    res.status(STATUS_CODES.OK).json({
-      logs,
-    });
+    res.status(STATUS_CODES.OK).json(result);
   }
 
   static async getUserLogs(
