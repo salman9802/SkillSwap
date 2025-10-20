@@ -363,8 +363,6 @@ export class AdminController {
   ) {
     const result = await adminService.userLogReport();
 
-    res.status(STATUS_CODES.OK).json({
-      result,
-    });
+    res.status(STATUS_CODES.OK).json(result);
   }
 }
