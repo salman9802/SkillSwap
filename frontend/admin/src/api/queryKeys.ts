@@ -2,6 +2,7 @@ export const queryKeys = {
   // Admin
   fetchAdmins: () => ["admins"],
   fetchAdminLogs: (page: number) => ["admin-logs", page],
+  fetchAdminReport: () => ["admin-report"],
 
   // User
   fetchUsers: () => ["users"],
