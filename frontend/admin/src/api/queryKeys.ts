@@ -5,6 +5,7 @@ export const queryKeys = {
 
   // User
   fetchUsers: () => ["users"],
+  fetchUserLogs: (page: number) => ["user-logs", page],
 };
 
 export const mutationKeys = {

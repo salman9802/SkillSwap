@@ -272,11 +272,35 @@ class AdminService {
     return { logs, total };
   };
 
-  getUserLogs = async (params: LogQueryParams) => {
-    return await prisma.userLog.findMany({
-      skip: params.offset,
-      take: params.limit,
-    });
+  getUserLogs = async (req: express.Request) => {
+    const [logs, total] = await Promise.all([
+      prisma.userLog.findMany({
+        skip: req.pagination!.skip,
+        take: req.pagination!.limit,
+        orderBy: {
+          timestamp: "desc",
+        },
+        select: {
+          id: true,
+          type: true,
+          route: true,
+          metadata: true,
+          timestamp: true,
+          userId: true,
+          user: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      }),
+      prisma.userLog.count({
+        skip: req.pagination!.skip,
+        take: req.pagination!.limit,
+      }),
+    ]);
+
+    return { logs, total };
   };
 
   getLogsInCSV = async (query: ExportLogSchema["query"]) => {

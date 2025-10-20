@@ -127,6 +127,7 @@ adminRouter.get(
   adminMonitoring({
     type: "admin.user-logs",
   }),
+  pagination(),
   errorCatch(AdminController.getUserLogs)
 );
 adminRouter.get(
