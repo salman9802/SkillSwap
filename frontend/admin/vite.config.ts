@@ -1,3 +1,5 @@
+/// <reference types="vitest/config" />
+
 import path from "path";
 
 import { defineConfig, loadEnv } from "vite";
@@ -35,6 +37,15 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       ...computedEnv,
+    },
+    test: {
+      environment: "jsdom",
+      globals: true,
+      include: [
+        "src/**/*.test.{js,jsx,ts,tsx}",
+        "src/**/*.spec.{js,jsx,ts,tsx}",
+      ],
+      setupFiles: ["src/__tests__/vitest-setup.ts"],
     },
   };
 });

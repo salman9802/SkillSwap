@@ -33,6 +33,7 @@ export const LoginForm = ({
       </h1>
       {error && <p className="text-sm text-red-500">{error}</p>}
       <Input
+        data-testid="name-input"
         autoComplete="off"
         className="w-full"
         name="name"
@@ -40,6 +41,7 @@ export const LoginForm = ({
         onChange={(e) => setName(e.target.value)}
       />
       <Input
+        data-testid="password-input"
         autoComplete="off"
         className="w-full"
         name="password"
