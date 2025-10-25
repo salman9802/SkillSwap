@@ -10,7 +10,10 @@ type AccordionListProps = {
 
 export const AccordionList = ({ logs }: AccordionListProps) => {
   return (
-    <div className="flex flex-col gap-3 border border-gray-300 p-6 text-gray-600 lg:gap-6">
+    <div
+      data-testid="admin-log-list-item"
+      className="flex flex-col gap-3 border border-gray-300 p-6 text-gray-600 lg:gap-6"
+    >
       <ListHeader />
 
       {/* {Array.from({ length: 10 }, (_, k) => ( */}

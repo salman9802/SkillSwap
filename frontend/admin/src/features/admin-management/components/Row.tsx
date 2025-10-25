@@ -61,9 +61,14 @@ export const Row = ({ admin }: RowProps) => {
   return (
     <>
       <div className="flex items-center justify-between gap-6">
-        <input className="flex-1 text-left accent-black" type="checkbox" />
+        <input
+          data-testid="manage-admin-checkbox"
+          className="flex-1 text-left accent-black"
+          type="checkbox"
+        />
         <span className="flex-1 text-left">{admin.name}</span>
         <div
+          data-testid="manage-admin-action"
           onClick={handleClick}
           className="flex flex-1 cursor-pointer items-center gap-3 text-left text-gray-700"
         >

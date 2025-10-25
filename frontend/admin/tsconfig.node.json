@@ -5,7 +5,7 @@
     "target": "ES2023",
     "lib": ["ES2023"],
     "module": "ESNext",
-    "types": ["node", "vitest/globals"],
+    "types": ["node", "vitest/globals", "cypress", "@testing-library/cypress"],
     "skipLibCheck": true,
 
     /* Bundler mode */

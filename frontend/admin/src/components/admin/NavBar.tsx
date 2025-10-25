@@ -29,7 +29,7 @@ const NavBar = ({ onNavigate }: NavBarProps) => {
           className={activeClasses}
           to="/manage-admin"
         >
-          Mange Admins
+          Manage Admins
         </NavLink>
         <NavLink
           onClick={onNavigate}

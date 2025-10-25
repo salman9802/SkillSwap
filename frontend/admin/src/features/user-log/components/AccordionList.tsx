@@ -10,7 +10,10 @@ type AccordionListProps = {
 
 export const AccordionList = ({ logs }: AccordionListProps) => {
   return (
-    <div className="flex flex-col gap-3 border border-gray-300 p-6 text-gray-600 lg:gap-6">
+    <div
+      data-testid="user-log-list-item"
+      className="flex flex-col gap-3 border border-gray-300 p-6 text-gray-600 lg:gap-6"
+    >
       {logs.length === 0 ? (
         <div className="text-center text-xl font-light text-gray-800">
           No logs found
