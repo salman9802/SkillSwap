@@ -16,7 +16,7 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     const eventSource = new EventSource(
-      `${import.meta.env.VITE_ADMIN_API_URL}/system-metrics`,
+      `${import.meta.env.VITE_ADMIN_API_URL}/api/admin/system-metrics`,
       { withCredentials: true },
     );
 

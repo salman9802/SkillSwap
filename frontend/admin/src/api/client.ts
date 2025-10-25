@@ -1,9 +1,10 @@
 import axios from "axios";
 import { attahTokenInterceptors } from "./interceptors";
 
-const baseURL = import.meta.env.PROD
-  ? import.meta.env.VITE_ADMIN_API_URL
-  : "http://localhost";
+const baseURL =
+  (import.meta.env.PROD
+    ? import.meta.env.VITE_ADMIN_API_URL
+    : "http://localhost") + "/api/admin";
 
 export const api = axios.create({
   baseURL,
