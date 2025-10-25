@@ -34,6 +34,7 @@ model User {
   chatMessages              SkillSwapSessionChatMessage[]
   asReviewer                Review[]                      @relation("ReviewerRelation")
   asReviewee                Review[]                      @relation("RevieweeRelation")
+  logs                      UserLog[]
 
   @@map("users")
 }
@@ -132,4 +133,82 @@ enum ScheduleStatus {
   FINISHED
   CLOSED
   CANCELLED
+}
+
+model Admin {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  name        String  @unique
+  password    String
+  deactivated Boolean @default(false)
+  deleted     Boolean @default(false)
+
+  role     AdminRole     @default(ADMIN)
+  sessions AdminSession?
+  logs     AdminLog[]
+
+  @@map("admins")
+}
+
+enum AdminRole {
+  SUPERADMIN
+  ADMIN
+}
+
+model AdminSession {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  adminId   String   @unique @db.ObjectId
+  admin     Admin    @relation(fields: [adminId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@map("admin_sessions")
+}
+
+model ResponseLog {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  method         String
+  route          String
+  statusCode     Int
+  responseTimeMs Float
+  timestamp      DateTime @default(now())
+  userAgent      String?
+  ip             String[]
+
+  @@map("response_logs")
+}
+
+model SystemMetric {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  cpuUsage    Int // %
+  memoryUsage Int // MB
+  uptime      BigInt // seconds
+  timestamp   DateTime
+
+  @@map("system_metrics")
+}
+
+model AdminLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  type      String
+  route     String
+  metadata  Json?
+  timestamp DateTime @default(now())
+  adminId   String?  @db.ObjectId
+
+  admin Admin? @relation(fields: [adminId], references: [id])
+
+  @@map("admin_logs")
+}
+
+model UserLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  type      String
+  route     String
+  metadata  Json?
+  timestamp DateTime @default(now())
+  userId    String?  @db.ObjectId
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("user_logs")
 }

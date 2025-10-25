@@ -12,6 +12,7 @@ import { ServerConfig } from "./config/config";
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./middlewares/socket-auth.middleware";
 import { skillswapSessionChatSocket } from "./sockets/user.socket";
+import { responseMonitoring } from "./middlewares/monitoring.middleware";
 
 /** creates express app with middlewares & routes */
 export const createExpressApp = () => {
@@ -40,6 +41,8 @@ export const createExpressApp = () => {
       credentials: true,
     })
   );
+
+  app.use(responseMonitoring);
 
   app.get("/keep-alive", (req, res) => {
     const date = new Date();

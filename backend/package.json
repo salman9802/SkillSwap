@@ -6,8 +6,11 @@
   "scripts": {
     "start": "node --env-file=\".env\" dist/index.js",
     "dev": "tsx watch src/",
-    "build:prisma": "npx prisma generate",
-    "build": "tsc && npm run build:prisma",
+    "prisma:generate": "npx prisma generate",
+    "prisma:migrate": "npx prisma db push --env-file ../.env",
+    "build": "tsc && npm run prisma:generate",
+    "seed:dev": "tsx scripts/dev.seed.ts",
+    "seed:prod": "tsx scripts/prod.seed.ts",
     "test:unit": "jest __tests__/unit",
     "test:int": "jest __tests__/int"
   },

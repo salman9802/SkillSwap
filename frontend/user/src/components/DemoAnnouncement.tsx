@@ -6,9 +6,9 @@ const DemoAnnouncement = () => {
 
   return (
     <div
-      className={`${open ? "flex" : "hidden"} relative w-full items-center justify-center gap-3 bg-orange-100 px-3 py-6 text-sm text-orange-800 md:px-12 md:text-base`}
+      className={`${open ? "flex" : "hidden"} w-full items-center justify-center gap-3 bg-orange-100 px-12 py-6 text-orange-800 md:text-xl`}
     >
-      <p>
+      <p className="md:ml-auto">
         {/* This is a demo version. The servers would only be available between{" "} */}
         {/* <span className="underline">13:00 - 21:00 IST</span>. */}
         {/* This project is currently hosted on a free-tier server, which may occasionally result in slower response times or brief loading delays because of cold starts, typically 30-90 seconds. */}

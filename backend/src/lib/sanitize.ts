@@ -1,7 +1,8 @@
-import { User, UserSession } from "../../generated/prisma";
+import { Admin, User, UserSession } from "../../generated/prisma";
 
 export type SafeUser = Omit<User, "password" | "createdAt">;
 export type SafeUserSession = Omit<UserSession, "createdAt">;
+export type SafeAdmin = Omit<Admin, "password">;
 
 /** Takes an object and list of keys to remove and returns a clean object */
 export function sanitize<T extends Record<string, any>>(
@@ -21,4 +22,8 @@ export function sanitizeUser(user: User): SafeUser {
 
 export function sanitizeSession(userSession: UserSession): SafeUserSession {
   return sanitize(userSession, ["createdAt"]) as SafeUserSession;
+}
+
+export function sanitizeAdmin(admin: Admin): SafeAdmin {
+  return sanitize(admin, ["password"]) as SafeAdmin;
 }

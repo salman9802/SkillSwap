@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", // Set the base URL to the root
+    "paths": {
+      "@shared-types/*": ["./shared-types/*"]
+    }
+  },
+  "include": ["shared-types"]
+}

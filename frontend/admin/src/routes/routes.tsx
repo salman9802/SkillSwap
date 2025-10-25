@@ -1,0 +1,79 @@
+import { createBrowserRouter, Navigate, Outlet } from "react-router";
+
+import Login from "./login/login";
+import NavLayout from "@src/layouts/NavLayout";
+import Dashboard from "./dashboard/dashboard";
+import AdminManagement from "./admin-management/admin-management";
+import UserManagement from "./user-management/user-management";
+import AdminReport from "./admin-report/admin-report";
+import UserReport from "./user-report/user-report";
+import { AdminLog } from "./admin-log/admin-log";
+import { UserLog } from "./user-log/user-log";
+import { Root, RootErrorBoundary } from "./root";
+import { BasicAuth } from "@src/features/auth/components/BasicAuth";
+import { loginLoader } from "./login/login.loader";
+import { loginAction } from "./login/login.action";
+import { basicAuthLoader } from "./root.loader";
+
+export const router = createBrowserRouter([
+  {
+    Component: Root,
+    ErrorBoundary: RootErrorBoundary,
+    children: [
+      {
+        path: "/login",
+        Component: Login,
+        loader: loginLoader,
+        action: loginAction,
+      },
+      {
+        element: <BasicAuth />, // basic auth
+        loader: basicAuthLoader,
+        children: [
+          {
+            Component: NavLayout,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="dashboard" replace />,
+              },
+              {
+                path: "dashboard",
+                Component: Dashboard,
+              },
+              {
+                path: "manage-admin",
+                Component: AdminManagement,
+              },
+              {
+                path: "manage-user",
+                Component: UserManagement,
+              },
+              {
+                path: "user-log",
+                Component: UserLog,
+              },
+              {
+                path: "user-report",
+                Component: UserReport,
+              },
+              {
+                element: <Outlet />, // advanced access auth layout
+                children: [
+                  {
+                    path: "admin-log",
+                    Component: AdminLog,
+                  },
+                  {
+                    path: "admin-report",
+                    Component: AdminReport,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+]);
