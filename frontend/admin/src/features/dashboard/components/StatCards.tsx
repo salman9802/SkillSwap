@@ -1,4 +1,3 @@
-import React from "react";
 import type { SystemMetric } from "../types";
 import { formatUptime, styleCpuStatCard, styleMemoryStatCard } from "../utils";
 

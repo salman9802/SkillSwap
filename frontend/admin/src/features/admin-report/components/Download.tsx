@@ -4,7 +4,7 @@ import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { TbFileTypeCsv, TbFileTypePdf } from "react-icons/tb";
 import type { ReportData, ReportType } from "../types";
-import { downloadAsPDF, downloadCSVData } from "@src/utils/download";
+import { downloadCSVData } from "@src/utils/download";
 
 type DownloadProps = {
   reportType: ReportType;

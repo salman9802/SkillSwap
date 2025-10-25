@@ -1,6 +1,6 @@
 import { ListItemIcon, Menu, MenuItem, Modal } from "@mui/material";
 import React from "react";
-import { MdDelete, MdOutlinePassword } from "react-icons/md";
+import { MdOutlinePassword } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { TbLock, TbLockOpen } from "react-icons/tb";
 import { ChangePassword } from "./ChangePassword";

@@ -1,7 +1,6 @@
 import type { StateCreator } from "zustand";
 import type { AuthState, AuthStore } from "./types";
 import { api } from "@src/api/client";
-import type { Store } from "@src/types";
 
 export const createAuthSlice: StateCreator<AuthStore, [], [], AuthStore> = (
   set,

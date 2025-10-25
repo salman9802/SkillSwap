@@ -1,10 +1,4 @@
-import React from "react";
-
-import { Pagination, PaginationItem, Stack } from "@mui/material";
-import {
-  IoArrowBackCircleOutline,
-  IoArrowForwardCircleOutline,
-} from "react-icons/io5";
+import { Pagination } from "@mui/material";
 
 type ListPaginationProps = {
   page: number;
@@ -34,7 +28,7 @@ export const ListPagination = ({
       <Pagination
         defaultPage={1}
         page={page}
-        onChange={(e, page) => {
+        onChange={(_, page) => {
           setPage(page);
         }}
         count={total}

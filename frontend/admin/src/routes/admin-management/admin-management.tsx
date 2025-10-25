@@ -1,6 +1,3 @@
-import React from "react";
-import { RiArrowDropDownLine } from "react-icons/ri";
-
 import Input from "@src/components/ui/Input";
 import {
   Row,

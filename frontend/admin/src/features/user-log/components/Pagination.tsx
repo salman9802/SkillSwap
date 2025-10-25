@@ -1,10 +1,4 @@
-import React from "react";
-
-import { Pagination, PaginationItem } from "@mui/material";
-import {
-  IoArrowBackCircleOutline,
-  IoArrowForwardCircleOutline,
-} from "react-icons/io5";
+import { Pagination } from "@mui/material";
 
 type ListPaginationProps = {
   page: number;

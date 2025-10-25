@@ -1,5 +1,3 @@
-import React from "react";
-
 import { LoginForm } from "@src/features/auth";
 import type { LoginCredentials } from "@src/features/auth";
 import { useActionData, useNavigation, useSubmit } from "react-router";

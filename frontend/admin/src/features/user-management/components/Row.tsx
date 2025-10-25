@@ -1,16 +1,9 @@
 import React from "react";
 import { ListItemIcon, Menu, MenuItem, Modal } from "@mui/material";
-import { MdDelete, MdOutlinePassword } from "react-icons/md";
+import { MdOutlinePassword } from "react-icons/md";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { TbLock, TbLockOpen } from "react-icons/tb";
 
-import { queryClient } from "@src/api/queryClient";
-import { queryKeys } from "@src/api/queryKeys";
-import {
-  useActivateAccountMutation,
-  useChangePassword,
-  useDeactivateAccountMutation,
-} from "../hooks";
+import { useChangePassword } from "../hooks";
 import type { User } from "../types";
 import { ChangePassword } from "./ChangePassword";
 

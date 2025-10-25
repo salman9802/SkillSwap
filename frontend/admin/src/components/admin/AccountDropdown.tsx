@@ -1,10 +1,8 @@
-import { Avatar, Divider, ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { BiLogOut } from "react-icons/bi";
-import { BsPersonAdd } from "react-icons/bs";
-import { CiSettings } from "react-icons/ci";
-import Button from "../ui/Button";
+import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import { RiArrowDropDownLine } from "react-icons/ri";
+
 import { logout } from "@src/features/auth/services";
 import { useStore } from "@src/store/appStore";
 

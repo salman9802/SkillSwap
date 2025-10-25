@@ -1,4 +1,3 @@
-import React from "react";
 import type { ReportData, ReportType } from "../types";
 
 type ReportTableProps = {

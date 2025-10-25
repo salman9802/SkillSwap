@@ -5,7 +5,7 @@ import {
   ArcElement,
   Tooltip,
   Legend,
-  type ChartOptions,
+  // type ChartOptions,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import type { SystemMetric } from "../types";
@@ -73,32 +73,32 @@ ChartJS.register(centerTextPlugin);
 //   },
 // ];
 
-const doughnutOptions: ChartOptions<"doughnut"> = {
-  cutout: "50%", // 👈 percentage of the radius cut out (thickness = 50%)
-  plugins: {
-    legend: {
-      display: true,
-      position: "top" as const,
-      fullSize: true,
-      labels: {
-        font: {
-          size: 18,
-        },
-      },
-    },
-    // centerText: { text: "Doughnut" }, // pass custom text
-    // datalabels: {
-    //   color: "#f00",
-    //   formatter: (value: number, context: any) => {
-    //     console.log("value", value);
-    //     const dataset = context.chart.data.datasets[0].data;
-    //     const total = dataset.reduce((a: number, b: number) => a + b, 0);
-    //     const percentage = ((value / total) * 100).toFixed(1) + "%";
-    //     return percentage;
-    //   },
-    // },
-  },
-};
+// const doughnutOptions: ChartOptions<"doughnut"> = {
+//   cutout: "50%", // 👈 percentage of the radius cut out (thickness = 50%)
+//   plugins: {
+//     legend: {
+//       display: true,
+//       position: "top" as const,
+//       fullSize: true,
+//       labels: {
+//         font: {
+//           size: 18,
+//         },
+//       },
+//     },
+//     // centerText: { text: "Doughnut" }, // pass custom text
+//     // datalabels: {
+//     //   color: "#f00",
+//     //   formatter: (value: number, context: any) => {
+//     //     console.log("value", value);
+//     //     const dataset = context.chart.data.datasets[0].data;
+//     //     const total = dataset.reduce((a: number, b: number) => a + b, 0);
+//     //     const percentage = ((value / total) * 100).toFixed(1) + "%";
+//     //     return percentage;
+//     //   },
+//     // },
+//   },
+// };
 
 type ResourceChartsProps = {
   metric: SystemMetric | undefined;

@@ -37,5 +37,14 @@
 
     // "composite": true
   },
-  "include": ["src", "cypress/e2e"]
+  "include": ["src", "cypress/e2e"],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "vitest.config.ts",
+    "cypress",
+    "tests"
+  ]
 }

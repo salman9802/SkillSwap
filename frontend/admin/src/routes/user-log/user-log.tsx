@@ -7,7 +7,7 @@ import { GlobalLoader } from "@src/components/feedback/GlobalLoader";
 export const UserLog = () => {
   const [page, setPage] = React.useState(1);
 
-  const { data, isError, isLoading, error } = useLogs(page);
+  const { data, isError, isLoading } = useLogs(page);
 
   if (isLoading)
     return (

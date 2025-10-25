@@ -1,5 +1,3 @@
-import React from "react";
-
 export const ListHeader = () => {
   return (
     <div className="flex items-center justify-between px-4 font-bold text-gray-800">

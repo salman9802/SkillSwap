@@ -1,6 +1,6 @@
 import { Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
-import React from "react";
 import { MdExpandMore } from "react-icons/md";
+
 import { ListHeader } from "./ListHeader";
 import type { LogData } from "../types";
 
