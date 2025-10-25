@@ -11,11 +11,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hashPasswordMiddleware = void 0;
 const bcrypt_1 = require("../../lib/bcrypt");
+const modelsToHash = ["User", "Admin"];
 /** Prisma middleware to hash password before being saved / updated */
 const hashPasswordMiddleware = (params, next) => __awaiter(void 0, void 0, void 0, function* () {
-    if (params.model === "User" &&
-        (params.action === "create" || params.action === "update")) {
-        const password = params.args.data.password;
+    var _a, _b;
+    if (params.model &&
+        modelsToHash.includes(params.model) &&
+        (params.action === "create" ||
+            params.action === "update" ||
+            params.action === "findFirst")) {
+        const password = (_b = (_a = params.args) === null || _a === void 0 ? void 0 : _a.data) === null || _b === void 0 ? void 0 : _b.password;
         if (password) {
             const hashedPassword = yield (0, bcrypt_1.hashPassword)(password);
             params.args.data.password = hashedPassword;

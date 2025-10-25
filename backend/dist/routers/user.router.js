@@ -45,27 +45,62 @@ const demo_limit_middleware_1 = require("../middlewares/demo/demo-limit.middlewa
 const rate_limilt_1 = require("../middlewares/rate-limilt");
 const user_middleware_1 = require("../middlewares/user.middleware");
 const user_1 = require("../constants/user");
+const monitoring_middleware_1 = require("../middlewares/monitoring.middleware");
 const userRouter = express_1.default.Router();
 // Prefix: /api/user
-userRouter.post("/session", rate_limilt_1.loginLimiter, (0, error_1.errorCatch)(UserController.newUserSession)); // Creates new refresh & access token (login)
-userRouter.get("/session/access", (0, error_1.errorCatch)(UserController.newAccessToken)); // Creates new access token (refresh)
-userRouter.delete("/session", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.deleteUserSession)); // (logout)
+userRouter.post("/session", rate_limilt_1.loginLimiter, (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.login",
+}), (0, error_1.errorCatch)(UserController.newUserSession)); // Creates new refresh & access token (login)
+userRouter.get("/session/access", (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.new-access-token",
+}), (0, error_1.errorCatch)(UserController.newAccessToken)); // Creates new access token (refresh)
+userRouter.delete("/session", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.logout",
+}), (0, error_1.errorCatch)(UserController.deleteUserSession)); // (logout)
 // user account routes
 userRouter
     .route("/account")
-    .post(rate_limilt_1.registerLimiter, (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForUserAccount), (0, error_1.errorCatch)(UserController.createUserAccount)) // Creates new user account (registeration)
-    .get((0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.userAccountDetails)) // get user account details
+    .post(rate_limilt_1.registerLimiter, (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForUserAccount), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.signup",
+}), (0, error_1.errorCatch)(UserController.createUserAccount)) // Creates new user account (registeration)
+    .get((0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.account-details",
+}), (0, error_1.errorCatch)(UserController.userAccountDetails)) // get user account details
     .put((0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.updateUser)); // update user
-userRouter.put("/upload-picture", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(multer_1.upload.single("picture")), (0, error_1.errorCatch)(UserController.updateUserPicture)); // update user picture
-userRouter.get("/dashboard", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.dashboard));
-userRouter.post("/new-request", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForSkillswapRequest), (0, error_1.errorCatch)((0, user_middleware_1.requiredCoins)(user_1.NEW_REQUEST_FEE)), (0, error_1.errorCatch)(UserController.createNewRequest));
-userRouter.get("/marketplace", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.marketplace));
-userRouter.get("/request/:id", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.request));
-userRouter.post("/ss-session", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForSkillswapSession), (0, error_1.errorCatch)(UserController.newSkillSwapSession));
-userRouter.get("/ss-session", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.skillswapSessions));
-userRouter.get("/ss-session/:id", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.skillswapSession));
-userRouter.put("/ss-session/:id", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.updateSkillswapSession));
-userRouter.put("/ss-session/:id/reject", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.rejectSkillswapSession));
-userRouter.post("/ss-session/:id/review", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.reviewSkillswapSession));
-userRouter.get("/ss-session/:id/chat", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(UserController.skillswapSessionChat));
+userRouter.put("/upload-picture", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(multer_1.upload.single("picture")), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.update-pic",
+}), (0, error_1.errorCatch)(UserController.updateUserPicture)); // update user picture
+userRouter.get("/dashboard", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.dashboard",
+}), (0, error_1.errorCatch)(UserController.dashboard));
+userRouter.post("/new-request", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForSkillswapRequest), (0, error_1.errorCatch)((0, user_middleware_1.requiredCoins)(user_1.NEW_REQUEST_FEE)), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.new-skillswap-request",
+}), (0, error_1.errorCatch)(UserController.createNewRequest));
+userRouter.get("/marketplace", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.marketplace",
+}), (0, error_1.errorCatch)(UserController.marketplace));
+userRouter.get("/request/:id", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.skillswap-request",
+}), (0, error_1.errorCatch)(UserController.request));
+userRouter.post("/ss-session", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, error_1.errorCatch)(demo_limit_middleware_1.demoLimitForSkillswapSession), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.new-skillswap-session",
+}), (0, error_1.errorCatch)(UserController.newSkillSwapSession));
+userRouter.get("/ss-session", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.skillswap-sessions",
+}), (0, error_1.errorCatch)(UserController.skillswapSessions));
+userRouter.get("/ss-session/:id", rate_limilt_1.readRateLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.skillswap-session",
+}), (0, error_1.errorCatch)(UserController.skillswapSession));
+userRouter.put("/ss-session/:id", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.skillswap-session-update",
+}), (0, error_1.errorCatch)(UserController.updateSkillswapSession));
+userRouter.put("/ss-session/:id/reject", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.skillswap-session-reject",
+}), (0, error_1.errorCatch)(UserController.rejectSkillswapSession));
+userRouter.post("/ss-session/:id/review", rate_limilt_1.createLimiter, (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.skillswap-session-review",
+}), (0, error_1.errorCatch)(UserController.reviewSkillswapSession));
+userRouter.get("/ss-session/:id/chat", (0, error_1.errorCatch)(auth_middleware_1.userHasAccess), (0, monitoring_middleware_1.userMonitoring)({
+    type: "user.skillswap-session-chat",
+}), (0, error_1.errorCatch)(UserController.skillswapSessionChat));
 exports.default = userRouter;

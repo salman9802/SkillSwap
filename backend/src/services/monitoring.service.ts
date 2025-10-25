@@ -4,7 +4,8 @@ import { AdminLog, Prisma } from "../../generated/prisma";
 
 import prisma from "../db/client";
 import { BatchQueue } from "../lib/queue";
-import { CpuCondition, CPU_CONDITION } from "@shared-types/system-metrics";
+import { CPU_CONDITION, CpuCondition } from "../types/monitoring";
+// import { CpuCondition, CPU_CONDITION } from "@shared-types/system-metrics";
 
 export class MonitoringService {
   static RES_BUFFER_SIZE = 100;

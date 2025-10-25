@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createPrismaClient = void 0;
 const client_1 = require("../../generated/prisma/client");
+// import { hashPassword } from "../lib/bcrypt";
 const hashPassword_1 = require("../middlewares/prisma/hashPassword");
 const prisma = new client_1.PrismaClient();
 // doesn't work
@@ -30,3 +32,9 @@ const prisma = new client_1.PrismaClient();
 // });
 prisma.$use(hashPassword_1.hashPasswordMiddleware);
 exports.default = prisma;
+const createPrismaClient = () => {
+    const prisma = new client_1.PrismaClient();
+    prisma.$use(hashPassword_1.hashPasswordMiddleware);
+    return prisma;
+};
+exports.createPrismaClient = createPrismaClient;

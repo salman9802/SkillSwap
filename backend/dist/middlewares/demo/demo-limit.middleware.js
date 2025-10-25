@@ -16,9 +16,7 @@ exports.demoLimitForUserAccount = exports.demoLimitForSkillswapRequest = exports
 const error_1 = require("../../lib/error");
 const client_1 = __importDefault(require("../../db/client"));
 const http_1 = require("../../constants/http");
-// resource limits
-const DEMO_LIMIT = 10;
-const USER_ACCOUNT_LIMIT = 100;
+const config_1 = require("../../config/config");
 const demoLimitForSkillswapSession = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = req.user;
     const createdSessionCount = yield client_1.default.skillSwapSession.count({
@@ -35,7 +33,7 @@ const demoLimitForSkillswapSession = (req, res, next) => __awaiter(void 0, void 
             },
         },
     });
-    (0, error_1.appAssert)(createdSessionCount <= DEMO_LIMIT, http_1.STATUS_CODES.TOO_MANY_REQUEST, "You've reached the demo limit.");
+    (0, error_1.appAssert)(createdSessionCount <= config_1.ServerConfig.getConfig().DEMO_LIMIT, http_1.STATUS_CODES.TOO_MANY_REQUEST, "You've reached the demo limit.");
     next();
 });
 exports.demoLimitForSkillswapSession = demoLimitForSkillswapSession;
@@ -46,13 +44,13 @@ const demoLimitForSkillswapRequest = (req, res, next) => __awaiter(void 0, void 
             requesterId: user.id,
         },
     });
-    (0, error_1.appAssert)(createdRequestCount <= DEMO_LIMIT, http_1.STATUS_CODES.TOO_MANY_REQUEST, "You've reached the demo limit.");
+    (0, error_1.appAssert)(createdRequestCount <= config_1.ServerConfig.getConfig().DEMO_LIMIT, http_1.STATUS_CODES.TOO_MANY_REQUEST, "You've reached the demo limit.");
     next();
 });
 exports.demoLimitForSkillswapRequest = demoLimitForSkillswapRequest;
 const demoLimitForUserAccount = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const createdUserAccountCount = yield client_1.default.user.count({});
-    (0, error_1.appAssert)(createdUserAccountCount <= USER_ACCOUNT_LIMIT, http_1.STATUS_CODES.TOO_MANY_REQUEST, "Demo limit reached! Cannot create account. Please contact developer.");
+    (0, error_1.appAssert)(createdUserAccountCount <= config_1.ServerConfig.getConfig().USER_ACCOUNT_LIMIT, http_1.STATUS_CODES.TOO_MANY_REQUEST, "Demo limit reached! Cannot create account. Please contact developer.");
     next();
 });
 exports.demoLimitForUserAccount = demoLimitForUserAccount;

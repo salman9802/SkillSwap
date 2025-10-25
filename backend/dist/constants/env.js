@@ -8,13 +8,13 @@ const path_1 = __importDefault(require("path"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({
     path: path_1.default.join(__dirname, "..", "..", "..", ".env"),
-    // debug: true,
+    debug: true,
 });
 const safe_1 = __importDefault(require("@colors/colors/safe"));
 const time_1 = __importDefault(require("./time"));
 const zod_1 = __importDefault(require("zod"));
 const envSchema = zod_1.default.object({
-    NODE_ENV: zod_1.default.enum(["development", "production"]),
+    NODE_ENV: zod_1.default.enum(["development", "production", "test"]),
     DATABASE_URL: zod_1.default.string(),
     ACCESS_TOKEN_SECRET: zod_1.default.string(),
     REFRESH_TOKEN_SECRET: zod_1.default.string(),

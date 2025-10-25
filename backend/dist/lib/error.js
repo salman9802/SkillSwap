@@ -8,12 +8,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.prettifyError = exports.appAssert = exports.errorCatch = exports.AppError = void 0;
-const node_assert_1 = __importDefault(require("node:assert"));
 const error_1 = require("../constants/error");
 const env_1 = require("../constants/env");
 /** Custom app error */
@@ -35,7 +31,13 @@ const errorCatch = (asyncController) => (req, res, next) => __awaiter(void 0, vo
 });
 exports.errorCatch = errorCatch;
 /** Asserts an condition & throws AppError if falsy */
-const appAssert = (condition, httpStatusCode, message, appErrorCode = error_1.AppErrorCodes.APP_ERROR) => (0, node_assert_1.default)(condition, new AppError(httpStatusCode, message, appErrorCode));
+const appAssert = (condition, httpStatusCode, message, appErrorCode = error_1.AppErrorCodes.APP_ERROR
+// ) => assert(condition, new AppError(httpStatusCode, message, appErrorCode));
+) => {
+    if (!condition) {
+        throw new AppError(httpStatusCode, message, appErrorCode);
+    }
+};
 exports.appAssert = appAssert;
 const prettifyError = (error) => env_1.ENV.NODE_ENV !== "production"
     ? error === null || error === void 0 ? void 0 : error.replace(/(\r\n|\n|\r)+/gm, ":::").split(":::").filter((l) => l.length)

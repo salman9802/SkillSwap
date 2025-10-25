@@ -17,7 +17,8 @@ exports.MonitoringService = void 0;
 const os_1 = __importDefault(require("os"));
 const client_1 = __importDefault(require("../db/client"));
 const queue_1 = require("../lib/queue");
-const system_metrics_1 = require("@shared-types/system-metrics");
+const monitoring_1 = require("../types/monitoring");
+// import { CpuCondition, CPU_CONDITION } from "@shared-types/system-metrics";
 class MonitoringService {
     //   static SYSTEM_METRIC_INTERVAL = 10000; // 10s
     //   static systemMetricIntervalId: NodeJS.Timeout;
@@ -51,7 +52,7 @@ class MonitoringService {
             cpuCondition = "CRITICAL"; // CPU heavily overloaded
         return {
             // cpuUsage: os.loadavg()[0], // 1-min avg
-            cpuCondition: system_metrics_1.CPU_CONDITION[cpuCondition],
+            cpuCondition: monitoring_1.CPU_CONDITION[cpuCondition],
             cpuLoadPercent: (load / cores) * 100,
             memoryUsage: process.memoryUsage().rss / 1024 / 1024, // in MB
             totalMemory: os_1.default.totalmem() / 1024 / 1024, // in MB

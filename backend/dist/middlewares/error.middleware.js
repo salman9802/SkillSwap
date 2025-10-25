@@ -113,9 +113,9 @@ const errorMiddleware = (error, req, res, next) => {
                 });
                 return;
             default:
-                // Server-related error.
+                // Server-related error. (default)
                 res.status(http_1.STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-                    message: "Something went wrong",
+                    message: error.message || "Something went wrong",
                     code: error_1.AppErrorCodes.SERVER_ERROR,
                     stack: errorStack,
                 });
@@ -124,7 +124,7 @@ const errorMiddleware = (error, req, res, next) => {
     }
     // Server-related error. (default)
     res.status(http_1.STATUS_CODES.INTERNAL_SERVER_ERROR).json({
-        message: "Something went wrong",
+        message: error.message || "Something went wrong",
         code: error_1.AppErrorCodes.SERVER_ERROR,
         stack: errorStack,
     });
